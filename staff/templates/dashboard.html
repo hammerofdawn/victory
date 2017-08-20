@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}
+Dashboard - Chaos, Genki
+{% endblock %}
+
+{% block content %}
+<section role="content">
+  <div class="container">
+    <h1 class="line-top">Hello {{ user.extendeduser.nickname }}.</h1>
+    <div class="custompanel">
+      <h2 class="line-top">All news:</h2>
+      {% for article in articles %}
+      <div class="post">
+        <div class="postinfo">
+          <p class="postowner">{{ article.author.extendeduser.nickname }}</p>
+          <p class="posttitle line-topsmall">{{ article.title }}</p>
+        </div>
+        <div class="postcontent">
+          {{ article.body }}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

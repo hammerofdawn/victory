@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}
+{{ requested_user.extendeduser.nickname }}, Genki Staff
+{% endblock %}
+
+{% block content %}
+<div class="bgbox">
+  <div class="banner banner--scaled">
+    <div class="banner" style="background-image: url('{% static 'img/userpreload.png' %}')"></div>
+    <div class="banner" style="background-image: url('{{ requested_user.extendeduser.background.url }}')"></div>
+    <div class="banner-shade banner-shade--darker"></div>
+  </div>
+  <section role="content">
+    <div class="container">
+      <div class="cl-white">
+        <div class="details-box clearfix">
+          <div class="usrimg">
+            <img class="artwork" src="{{ requested_user.extendeduser.avatar.url }}">
+          </div>
+          <h1 class="line-topwhite">{{ requested_user.extendeduser.nickname }}</h1>
+          <h3>Phone: <a href="tel:{{ user.extendeduser.phone_number }}"><u>{{ requested_user.extendeduser.phone_number }}</u></a></h3>
+          <div class="options push-right">
+            <a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
+            <a href="#" target="_blank"><i class="fa fa-twitter"></i></a>
+            <a href="#" target="_blank"><i class="fa fa-soundcloud"></i></a>
+            <a href="#" target="_blank"><i class="fa fa-youtube-play"></i></a>
+          </div>
+          <div>
+            <button class="basicbutton">Message</button>
+            <button class="basicbutton">Edit</button>
+            <button class="redbutton">Write Review</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<section role="content">
+  <div class="container">
+    <div class="custompanel">
+      <div>
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="active"><a href="#information" aria-controls="information" role="tab" data-toggle="tab">Information</a></li>
+          <li ><a href="#description" aria-controls="description" role="tab" data-toggle="tab">Description</a></li>
+          <li ><a class="tabred" href="#reviews" aria-controls="reviews" role="tab" data-toggle="tab">Reviews</a></li>
+        </ul>
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane fade in active" id="information">
+            User information
+          </div>
+          <div role="tabpanel" class="tab-pane fade" id="description">
+            User has no description.
+          </div>
+          <div role="tabpanel" class="tab-pane fade" id="reviews">
+            User has no Reviews.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

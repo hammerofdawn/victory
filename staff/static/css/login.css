@@ -1,0 +1,34 @@
+body {
+	background-image: url('/assets/img/bgimg.jpg');
+	background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.innercontainer {
+    position: relative;
+    min-width: 350px;
+    max-width: 500px;
+    margin: 2em auto;
+    padding: 4em 3em 4em 3em;
+    background: #fafafa;
+    border: 1px solid #ebebeb;
+    box-shadow: 0 0 35px rgba(0, 0, 0, 0.77);
+}
+
+.logoimg {
+    text-align: center;
+    margin-bottom: 38px;
+}
+
+.text {
+	text-align: center;
+    margin-bottom: 20px;
+}
+
+.full-width {
+    width:100%;
+}
+
+.margintop-10 {
+    margin-top:10px;
+}

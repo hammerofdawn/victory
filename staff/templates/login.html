@@ -1,0 +1,49 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login - Chaos, Genki</title>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/login.css' %}" rel="stylesheet">
+  </head>
+  <body>
+    <div class="innercontainer">
+      <div class="logoimg">
+        <img class="img-responsive" src="{% static 'img/crewlogo.png' %}">
+      </div>
+      <div class="text">
+        <h3>Login</h3>
+      </div>
+      <hr>
+      <div>
+        <form action="dashboard" method="POST">
+          <div class="form-group">
+            <label for="username">Email or Username</label>
+            <input type="text" class="form-control" id="username" placeholder="Genkiisawsome">
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" placeholder="Password">
+          </div>
+          <hr>
+          <button type="submit" class="btn btn-primary full-width"><strong>Login</strong></button>
+        </form>
+        <div class="row margintop-10">
+          <div class="col-lg-6">
+            <a href="forgotpassword" class="btn btn-danger full-width" role="button">Forgot password?</a>
+          </div>
+          <div class="col-lg-6">
+            <a href="register" class="btn btn-warning full-width" role="button">Register</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/login.js' %}"></script>
+  </body>
+</html>
