@@ -25,7 +25,9 @@ SECRET_KEY = 'yh%3#y18q$-)k#+1=ca_v*9*dt%bin(z*t-@m28t-xijf+-_8)'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'victory-dsdeniso.c9users.io',
+]
 
 
 # Application definition
