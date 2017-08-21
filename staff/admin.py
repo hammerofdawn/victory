@@ -4,7 +4,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
 
 # Register your models here.
-from .models import ExtendedUser, Team, DriversLicenceCategories, Language, Article
+from .models import ExtendedUser, Team, DriversLicenceCategories, Language, Article, TShirt, Sock, Review, Alert
 
 class UserInline(admin.StackedInline):
     model = ExtendedUser
@@ -24,3 +24,7 @@ admin.site.register(Team, TeamAdmin)
 admin.site.register(DriversLicenceCategories)
 admin.site.register(Language)
 admin.site.register(Article)
+admin.site.register(TShirt)
+admin.site.register(Sock)
+admin.site.register(Review)
+admin.site.register(Alert)
