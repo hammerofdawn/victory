@@ -5,33 +5,33 @@ from django.core.validators import RegexValidator, MinValueValidator, MaxValueVa
 
 # Create your models here.
 class Team(models.Model):
-    name = models.CharField(max_length=16)
+	name = models.CharField(max_length=16)
 
-    logo = models.ImageField(upload_to='teams/avatars')
-    background = models.ImageField(upload_to='teams/backgrounds')
+	logo = models.ImageField(upload_to='teams/avatars')
+	background = models.ImageField(upload_to='teams/backgrounds')
 
-    requirements = models.TextField(blank=True)
+	requirements = models.TextField(blank=True)
 
-    people_needed = models.PositiveSmallIntegerField()
+	people_needed = models.PositiveSmallIntegerField()
 
-    teamleaders = models.ManyToManyField(User)
+	teamleaders = models.ManyToManyField(User)
 
-    def __str__(self):
-        return self.name
+	def __str__(self):
+		return self.name
 
 
 class DriversLicenceCategories(models.Model): # No plural
-    category = models.CharField(max_length=3)
+	category = models.CharField(max_length=3)
 
-    def __str__(self):
-        return self.category
+	def __str__(self):
+		return self.category
 
 
 class Language(models.Model):
-    name = models.CharField(max_length=16)
+	name = models.CharField(max_length=16)
 
-    def __str__(self):
-        return self.name
+	def __str__(self):
+		return self.name
 
 
 class TShirt(models.Model):
