@@ -22,19 +22,19 @@
   <body>
     <header>
       <nav class="mainnavbar">
-        <a class="alogo" href="/staff/dashboard">
+        <a class="alogo" href="{% url 'index' %}">
           <img class="logob" src="{% static 'img/logo.png' %}">
         </a>
         <div class="navdivlinkscustom">
           <ul class="nav brs aaj">
             <li class="qp">
-              <a class="qn navicons" href="/staff/dashboard" title="Dashboard" data-toggle="tooltip" data-placement="right">
+              <a class="qn navicons" href="{% url 'index' %}" title="Dashboard" data-toggle="tooltip" data-placement="right">
                 <i class="fa fa-home" aria-hidden="true"></i>
                 <small class="brt axz">Dashboard</small>
               </a>
             </li>
             <li class="qp">
-              <a class="qn navicons" href="/staff/teams" title="Teams" data-toggle="tooltip" data-placement="right">
+              <a class="qn navicons" href="{% url 'teams' %}" title="Teams" data-toggle="tooltip" data-placement="right">
                 <i class="fa fa-book" aria-hidden="true"></i>
                 <small class="brt axz">Teams</small>
               </a>
@@ -46,19 +46,19 @@
               </a>
             </li>
             <li class="qp">
-              <a class="qn navicons" href="/staff/users/" title="All users" data-toggle="tooltip" data-placement="right">
+              <a class="qn navicons" href="{% url 'users' %}" title="All users" data-toggle="tooltip" data-placement="right">
                 <i class="fa fa-users" aria-hidden="true"></i>
                 <small class="brt axz">Users</small>
               </a>
             </li>
             <li class="qp">
-              <a class="qn navicons" href="/staff/users/{{ logged_in_user.pk }}" title="My Profile" data-toggle="tooltip" data-placement="right">
+              <a class="qn navicons" href="{% url 'user' logged_in_user.pk %}" title="My Profile" data-toggle="tooltip" data-placement="right">
                 <img src="{{ logged_in_user.extendeduser.avatar.url }}" alt="Nickname" class="wc">
                 <small class="brt axz">Profile</small>
               </a>
             </li>
             <li class="qp">
-              <a class="qn navicons" href="/admin/dashboard" title="Chaos Settings" data-toggle="tooltip" data-placement="right">
+              <a class="qn navicons" href="{% url 'index' %}" title="Chaos Settings" data-toggle="tooltip" data-placement="right">
                 <i class="fa fa-cogs" aria-hidden="true"></i>
                 <small class="brt axz">Settings</small>
               </a>

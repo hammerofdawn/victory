@@ -30,7 +30,7 @@ def staff(request):
 '''
 
 @login_required
-def dashboard(request):
+def index(request):
     logged_in_user = get_object_or_404(User, pk=request.user.pk)
     articles = Article.objects.all()
 
@@ -75,7 +75,7 @@ def teams(request):
     return render(request, 'teams.html', context)
 
 @login_required
-def team(request, team_id):
+def team(request, team_pk):
     logged_in_user = get_object_or_404(User, pk=request.user.pk)
     context = {
         'logged_in_user': logged_in_user,
