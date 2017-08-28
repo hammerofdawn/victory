@@ -17,9 +17,7 @@
     <div class="container">
       <div class="cl-white">
         <div class="details-box clearfix">
-          <div class="usrimg">
-            <img class="artwork" src="{{ requested_user.extendeduser.avatar.url }}">
-          </div>
+          <img class="artwork" src="{{ requested_user.extendeduser.avatar.url }}">
           <h1 class="line-topwhite">{{ requested_user.extendeduser.nickname }}</h1>
           <h3>Phone: <a href="tel:{{ user.extendeduser.phone_number }}"><u>{{ requested_user.extendeduser.phone_number }}</u></a></h3>
           <div class="options push-right">
@@ -43,14 +41,21 @@
   <div class="container">
     <div class="custompanel">
       <div>
-        <ul class="nav nav-tabs" role="tablist">
+        <ul class="nav nav-tabs hidden-xs visible-sm-*" role="tablist">
           <li class="active"><a href="#information" aria-controls="information" role="tab" data-toggle="tab">Information</a></li>
           <li ><a href="#description" aria-controls="description" role="tab" data-toggle="tab">Description</a></li>
           <li ><a class="tabred" href="#reviews" aria-controls="reviews" role="tab" data-toggle="tab">Reviews</a></li>
         </ul>
+        <div class="visible-xs-* hidden-sm hidden-md hidden-lg">
+          Nothing here YET!
+        </div>
+        <hr>
         <div class="tab-content">
           <div role="tabpanel" class="tab-pane fade in active" id="information">
-            User information
+            <div class="row">
+              <div class="col-md-6">.col-md-6</div>
+              <div class="col-md-6">.col-md-6</div>
+            </div>
           </div>
           <div role="tabpanel" class="tab-pane fade" id="description">
             User has no description.

@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'victory-dsdeniso.c9users.io',
+    'localhost',
 ]
 
 
