@@ -14,6 +14,17 @@ a {
 .mainnavbar {
     margin-top: -20px;
 }
+
+.nav:before {
+  display: table;
+  content: " ";
+}
+
+.nav:after {
+  display: table;
+  content: " ";
+}
+
 @media (min-width: 768px) {
     .mainnavbar {
         z-index: 100;
@@ -60,14 +71,6 @@ a {
     -ms-flex-direction: column !important;
     flex-direction: column !important;
 }
-.nav {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    padding-left: 0;
-    margin-bottom: 0;
-    list-style: none;
-}
 .brs > .qp {
     float: none;
     display: inline-block;
@@ -78,6 +81,7 @@ a {
     }
 }
 .brs > .qp > .qn {
+    display: block;
     position: relative;
     padding: 10px 12px;
     font-size: 30px;
@@ -92,28 +96,6 @@ a {
 }
 .brs > .qp + .qp {
     margin-left: -3px;
-}
-.brs > .qp + .qp > .qn.active,
-.brs > .qp + .qp > .qn.active:focus,
-.brs > .qp + .qp > .qn.active:hover,
-.brs > .qp + .qp > .qn.active:active {
-    color: #555;
-    background-color: #fff;
-}
-.brs > .qp + .qp > .qn.active .bz,
-.brs > .qp + .qp > .qn.active:focus .bz,
-.brs > .qp + .qp > .qn.active:hover .bz,
-.brs > .qp + .qp > .qn.active:active .bz {
-    border-color: #fff;
-}
-@media (min-width: 768px) {
-    .brs > .qp + .qp {
-        margin-left: 0;
-    }
-    .brs > .qp + .qp > .qn {
-        border-top: 1px solid #fff;
-        border-right: 0;
-    }
 }
 .brs > .qp > .qn > img {
     width: 35px;
@@ -150,9 +132,6 @@ a {
         white-space: nowrap;
         background-color: #f5f8fa;
     }
-    .brs > .qp + .qp > .qn {
-        border-left: 1px solid #fff;
-    }
     .aaj {
         flex-direction: inherit !important;
     }
@@ -161,6 +140,32 @@ a {
         min-width: 78px;
     }
 }
+
+.vic-active {
+  background: #5a5a5a;
+  color: white !important;
+}
+
+.vic-active:hover,
+.vic-active:active {
+  color: white !important;
+}
+
+.brs > .qp > .qn:hover {
+  background: #5a5a5a;
+  color: white !important;
+}
+
+.vic-active {
+  background: #5a5a5a;
+  color: white !important;
+}
+
+.vic-active:hover,
+.vic-active:active {
+  color: white !important;
+}
+
 section {
     padding: 2rem 0;
     margin-left: 85px;
@@ -228,9 +233,9 @@ h3 {
     }
 }
 .custompanel {
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-    padding: 2rem 2rem 2.5rem;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    padding: 2em 1.5em 2em;
     background: white;
     box-shadow: 0 0 35px rgba(0, 0, 0, 0.1);
 }
@@ -273,14 +278,14 @@ p {
     content: "";
     width: 100px;
     height: 4px;
-    background: #000;
+    background: #383838;
     display: block;
 }
 .line-topsmall::before {
     content: "";
     width: 100px;
     height: 2px;
-    background: #000;
+    background: #383838;
     display: block;
 }
 .line-topwhite::before {
@@ -445,181 +450,9 @@ p {
     display: inline-block;
     margin: .5rem 1em .5em 0;
 }
-.searchbar {
-    font-size: 14px;
-    box-shadow: 0 0 0;
-    border: 0;
-    border-radius: 0;
-    border-bottom: 3px solid #ccc;
-    background: #eee;
-    padding: 1rem;
-    transition: border-color .4s ease;
-}
-.searchbar:focus {
-    outline: none;
-    -webkit-box-shadow: none !important;
-    -moz-box-shadow: none !important;
-    box-shadow: none !important;
-    border-bottom: 3px solid dodgerblue;
-}
-.searchsubmit {
-    background: dodgerblue;
-    color: white;
-    border-bottom: 3px solid dodgerblue;
-    border-left: none;
-    border-top: none;
-    border-right: none;
-    text-decoration: none;
-    cursor: pointer;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    font-size: 14px;
-    font-weight: bold;
-    padding: 1rem;
-    -webkit-transition: background 0.5s ease, color 0.4s ease, border-color 0.5s ease, all 0.4s ease;
-    transition: background 0.5s ease, color 0.4s ease, border-color 0.5s ease, all 0.4s ease;
-}
-.searchsubmit:hover {
-    background: #383838;
-    border-color: #383838;
-    color: white;
-}
-.basicbutton {
-    background: dodgerblue;
-    color: white;
-    border-bottom: none;
-    border-left: none;
-    border-top: none;
-    border-right: none;
-    text-decoration: none;
-    cursor: pointer;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    font-size: 14px;
-    font-weight: bold;
-    padding: 1rem;
-    -webkit-transition: background 0.5s ease, color 0.4s ease, border-color 0.5s ease, all 0.4s ease;
-    transition: background 0.5s ease, color 0.4s ease, border-color 0.5s ease, all 0.4s ease;
-}
-.redbutton {
-    background: #d9534f;
-    color: white;
-    border-bottom: none;
-    border-left: none;
-    border-top: none;
-    border-right: none;
-    text-decoration: none;
-    cursor: pointer;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    font-size: 14px;
-    font-weight: bold;
-    padding: 1rem;
-    -webkit-transition: background 0.5s ease, color 0.4s ease, border-color 0.5s ease, all 0.4s ease;
-    transition: background 0.5s ease, color 0.4s ease, border-color 0.5s ease, all 0.4s ease;
-}
-.redbutton:hover,
-.redbutton:focus {
-    background: #383838;
-    border-color: #383838;
-    color: white;
-}
-.greenbutton {
-    background: #5cb85c;
-    color: white;
-    border-bottom: none;
-    border-left: none;
-    border-top: none;
-    border-right: none;
-    text-decoration: none;
-    cursor: pointer;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    font-size: 14px;
-    font-weight: bold;
-    padding: 1rem;
-    -webkit-transition: background 0.5s ease, color 0.4s ease, border-color 0.5s ease, all 0.4s ease;
-    transition: background 0.5s ease, color 0.4s ease, border-color 0.5s ease, all 0.4s ease;
-}
-.greenbutton:hover,
-.greenbutton:focus {
-    background: #383838;
-    border-color: #383838;
-    color: white;
-}
-.teamapplybutton {
-    background: #5cb85c;
-    color: white;
-    border-bottom: 3px solid #5cb85c;
-    border-left: none;
-    border-top: none;
-    border-right: none;
-    text-decoration: none;
-    cursor: pointer;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    font-size: 14px;
-    font-weight: bold;
-    padding: 1rem;
-    -webkit-transition: background 0.5s ease, color 0.4s ease, border-color 0.5s ease, all 0.4s ease;
-    transition: background 0.5s ease, color 0.4s ease, border-color 0.5s ease, all 0.4s ease;
-}
-.teamapplybutton:hover,
-.teamapplybutton:focus {
-    background: #383838;
-    border-color: #383838;
-    color: white;
-}
 button[disabled],
 html input[disabled] {
     cursor: not-allowed;
-}
-.basicbutton:hover {
-    background: #383838;
-    border-color: #383838;
-    color: white;
-}
-.listteams {
-    background: dodgerblue;
-    color: white;
-    border-bottom: 3px solid dodgerblue;
-    border-left: none;
-    border-top: none;
-    border-right: none;
-    text-decoration: none;
-    cursor: pointer;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    font-size: 14px;
-    font-weight: bold;
-    padding: 1rem;
-    -webkit-transition: background 0.5s ease, color 0.4s ease, border-color 0.5s ease, all 0.4s ease;
-    transition: background 0.5s ease, color 0.4s ease, border-color 0.5s ease, all 0.4s ease;
-}
-.listteams:hover,
-.listteams:focus,
-.listteams:active {
-    text-decoration: none;
-    background: #383838;
-    border-color: #383838;
-    color: white;
-}
-@media screen and (max-width: 768px) {
-    .listteams {
-        margin-bottom: 5px;
-        width: 100%;
-    }
-    .searchbar {
-        margin-bottom: 5px;
-        width: 100%;
-    }
-    .teamapplybutton {
-        margin-bottom: 5px;
-        width: 100%;
-    }
-    .searchsubmit {
-        width: 100%;
-    }
 }
 table {
     width: 100%;
@@ -756,7 +589,7 @@ a.silent {
 .usr-list li label.title {
     margin-top: 15px;
     font-weight: 800;
-    font-size: 1.2rem;
+    font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
@@ -821,34 +654,7 @@ a.silent {
         overflow: hidden;
     }
 }
-.nav-tabs {
-    border-bottom: none;
-    margin-bottom: 15px;
-}
-.nav-tabs>li.active>a,
-.nav-tabs>li.active>a:focus,
-.nav-tabs>li.active>a:hover {
-    font-weight: bold;
-    text-transform: uppercase;
-    color: #fff;
-    background-color: dodgerblue;
-    border: 3px solid dodgerblue;
-}
-.nav-tabs>li>a {
-    margin-right: 0px;
-    text-transform: uppercase;
-    font-weight: bold;
-    border: 3px solid dodgerblue;
-    border-radius: 0;
-}
-.nav-tabs>li>a:hover,
-.nav-tabs>li>a:focus {
-    font-weight: bold;
-    text-transform: uppercase;
-    color: #fff;
-    background-color: dodgerblue;
-    border: 3px solid dodgerblue;
-}
+
 .tooltip-inner {
     text-transform: uppercase;
     font-size: 14px;
@@ -878,30 +684,63 @@ a.silent {
     color: dodgerblue;
     transition: all 0.4s ease;
 }
-.tabred {
-    border: 3px solid #d9534f !important;
-    transition: all 0.4s ease;
+
+.nav-tabs {
+    border-bottom: 0px !important;
 }
-.tabred:hover,
-.tabred:focus,
-.nav-tabs>li.active>a.tabred {
-    background-color: #d9534f !important;
-    transition: all 0.4s ease;
+
+.vic-tablink {
+    display: block;
+    padding: .5rem 1rem;
+    border: 3px solid dodgerblue;
+    border-radius: unset;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background-color: #fff;
+    text-decoration: none;
 }
-/* The switch - the box around the slider */
+
+.vic-tablink:focus,
+.vic-tablink:active,
+.vic-tablink:hover {
+    background-color: dodgerblue;
+    color: white;
+    text-decoration: none !important;
+}
+
+.vic-tablink.active {
+    background-color: dodgerblue;
+    color: white;
+}
+
+.vic-tablink.vic-tablink-red{
+    border-color: #dc3545;
+}
+
+.vic-tablink-red.active {
+  background-color: #dc3545;
+}
+
+.vic-tablink-red:focus,
+.vic-tablink-red:active,
+.vic-tablink-red:hover {
+  background-color: #dc3545;
+  color: white;
+  text-decoration: none !important;
+}
 
 .switch {
     position: absolute;
-    display: block;
+    margin-left: 6px;
+    display: inline-flex;
     width: 40px;
     height: 24px;
 }
-/* Hide default HTML checkbox */
 
 .switch input {
     display: none;
 }
-/* The slider */
 
 .slider {
     position: absolute;
@@ -936,7 +775,6 @@ input:checked + .slider:before {
     -ms-transform: translateX(16px);
     transform: translateX(16px);
 }
-/* Rounded sliders */
 
 .slider.round {
     border-radius: 34px;
@@ -948,27 +786,134 @@ input:checked + .slider:before {
     width: 100%!important;
 }
 
-
-.basicbutton-reversed {
-    background: transparent;
-    margin-right: 0px;
-    text-transform: uppercase;
-    font-weight: bold;
-    border: 3px solid dodgerblue;
-    border-radius: 0;
-    padding: 1rem;
-    -webkit-transition: background 0.5s ease, color 0.4s ease, border-color 0.5s ease, all 0.4s ease;
-    transition: background 0.5s ease, color 0.4s ease, border-color 0.5s ease, all 0.4s ease;
-
+.full-width {
+    width:100% !important;
 }
 
-.basicbutton-reversed:focus,
-.basicbutton-reversed:hover {
-    font-weight: bold;
+.vicbtn-bottom{
+  margin-bottom: 0.2em;
+}
+
+.vic-block {
+  display: block !important;
+}
+
+.vic-bb-3-blue {
+  border-bottom: 3px solid dodgerblue;
+}
+
+.vicbtn {
+		display: inline-block;
+		text-align: center;
+		border-bottom: none;
+    border-left: none;
+    border-top: none;
+    border-right: none;
+    text-decoration: none;
+    cursor: pointer;
+    letter-spacing: 2px;
+		white-space: nowrap;
+		vertical-align: middle;
     text-transform: uppercase;
-    color: #fff;
-    background-color: dodgerblue;
-    border: 3px solid dodgerblue;
-    -webkit-transition: background 0.5s ease, color 0.4s ease, border-color 0.5s ease, all 0.4s ease;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 0.6em 0.8em 0.6em 0.8em;
+		-webkit-transition: background 0.5s ease, color 0.4s ease, border-color 0.5s ease, all 0.4s ease;
     transition: background 0.5s ease, color 0.4s ease, border-color 0.5s ease, all 0.4s ease;
+}
+
+.vicbtn-blue {
+    background: dodgerblue;
+    color: white;
+}
+.vicbtn-blue:hover,
+.vicbtn-blue:focus {
+		text-decoration: none;
+    background: #383838;
+    color: white;
+}
+
+.vicbtn-yellow {
+    background: #ffc107;
+    color: #000;
+}
+.vicbtn-yellow:hover,
+.vicbtn-yellow:focus {
+		text-decoration: none;
+    background: #383838;
+    color: White;
+}
+
+.vicbtn-red {
+    background: #dc3545;
+    color: white;
+}
+.vicbtn-red:hover,
+.vicbtn-red:focus {
+		text-decoration: none;
+    background: #383838;
+    color: White;
+}
+
+.vicbtn-green {
+    background: #28a745;
+    color: white;
+}
+.vicbtn-green:hover,
+.vicbtn-green:focus {
+		text-decoration: none;
+    background: #383838;
+    color: White;
+}
+
+.victext-input {
+			display: inline-block;
+	    font-size: 14px;
+	    box-shadow: 0 0 0;
+	    border: 0;
+	    border-radius: 0;
+	    border-bottom: 3px solid #ccc;
+	    background: #eee;
+	    padding: 0.6em 0.8em 0.6em 0.8em;
+	    transition: border-color .4s ease;
+}
+
+.victext-input:focus,
+.victext-input:active {
+		outline: none;
+		-webkit-box-shadow: none !important;
+		-moz-box-shadow: none !important;
+		box-shadow: none !important;
+		border-bottom: 3px solid dodgerblue;
+}
+
+.vic-bb-3-blue {
+  border-bottom: 3px solid dodgerblue;
+}
+.vic-bb-3-yellow {
+  border-bottom: 3px solid #ffc107;
+}
+.vic-bb-3-red {
+  border-bottom: 3px solid #dc3545;
+}
+.vic-bb-3-green {
+  border-bottom: 3px solid #28a745;
+}
+.vic-bb-3-blue:hover,
+.vic-bb-3-blue:focus,
+.vic-bb-3-yellow:hover,
+.vic-bb-3-yellow:focus,
+.vic-bb-3-red:hover,
+.vic-bb-3-red:focus,
+.vic-bb-3-green:hover,
+.vic-bb-3-green:focus {
+		border-bottom: 3px solid #383838;
+}
+
+@media screen and (max-width: 768px) {
+    .vicbtn,
+    .victext-input {
+      width: 100%;
+      margin-bottom: 0.2em;
+    }
 }
