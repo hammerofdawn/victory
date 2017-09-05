@@ -11,30 +11,42 @@ Users - Chaos, Genki
   <div class="container">
     <h1 class="line-top">Users.</h1>
     <div>
-      <button onclick="location.href='list';" class="listteams">List Users</button>
-      <input class="searchbar" type="text" placeholder="Search" name="search" value="">
-      <button class="searchsubmit">Search</button>
+      <a href="list" class="vicbtn vicbtn-blue vic-bb-3-blue">List Users</a>
+      <form style="display:inline-block;" action="../search" method="post">
+        <input class="victext-input" type="text" placeholder="Search" name="search" value="">
+        <button type="submit" class="vicbtn vicbtn-blue vic-bb-3-blue">Search</button>
+      </form>
     </div>
-    <div class="custompanel">
-      <div>
-        <ul class="usr-list user-list">
-          {% for user in users %}
-          <li>
-            <a class="silent" href="/staff/users/{{ user.pk }}" title="username">
-              <div class="image-wrapper">
-                <img src="{% static 'img/userpreload.png' %}" class="preload">
-                <img src="{{ user.extendeduser.avatar.url }}">
-              </div>
-              <div class="hover-wrapper">
-                <label class="title one-line-ellipsis">{{ user.extendeduser.nickname }}</label>
-                <label class="title one-line-ellipsis">{{ user.extendeduser.phone_number }}</label>
-              </div>
-            </a>
-          </li>
-          {% endfor %}
-        </ul>
+      <div class="custompanel">
+        <div>
+          <ul class="usr-list user-list">
+            <li>
+              <a class="silent" href="/users/id" title="username">
+                <div class="image-wrapper">
+                  <img src="../assets/img/userpreload.png" class="preload">
+                  <img src="../assets/img/userimg/spooch.jpg?image_width=512">
+                </div>
+                <div class="hover-wrapper">
+                  <label class="title one-line-ellipsis">Alexander "Spooch" Holtz</label>
+                  <label class="title one-line-ellipsis">Phone: 12345678</label>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a class="silent" href="/users/id" title="username">
+                <div class="image-wrapper">
+                  <img src="../assets/img/userpreload.png" class="preload">
+                  <img src="../assets/img/userimg/jesperrisom.jpg?image_width=512">
+                </div>
+                <div class="hover-wrapper">
+                  <label class="title one-line-ellipsis">Jesper "JesperRisom" Risom</label>
+                  <label class="title one-line-ellipsis">Phone: 12345678</label>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 {% endblock %}
