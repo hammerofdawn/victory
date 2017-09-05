@@ -29,6 +29,9 @@ def staff(request):
     return render(request, 'dashboard.html', context)
 '''
 
+def welcome(request):
+    return render(request, 'welcome.html', {})
+
 @login_required
 def index(request):
     logged_in_user = get_object_or_404(User, pk=request.user.pk)
