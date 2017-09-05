@@ -32,6 +32,9 @@ def staff(request):
 def welcome(request):
     return render(request, 'welcome.html', {})
 
+def register(request):
+    return render(request, 'register.html', {})
+
 @login_required
 def index(request):
     logged_in_user = get_object_or_404(User, pk=request.user.pk)
