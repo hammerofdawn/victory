@@ -1,0 +1,242 @@
+body {
+	background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.custompanel {
+		min-width: 350px;
+		max-width: 500px;
+		position: relative;
+		margin: 2em auto;
+    padding: 2em 1.5em 2em;
+    background: white;
+    box-shadow: 0 0 35px rgba(0, 0, 0, 0.1);
+}
+
+.logoimg {
+    text-align: center;
+    margin-bottom: 38px;
+}
+
+.text {
+	text-align: center;
+    margin-bottom: 20px;
+}
+
+.full-width {
+    width:100% !important;
+}
+
+.margintop-10 {
+    margin-top:10px;
+}
+
+.img-responsive {
+    display: block;
+    max-width: 100%;
+    height: auto;
+		user-drag: none;
+		user-select: none;
+		-moz-user-select: none;
+		-webkit-user-drag: none;
+		-webkit-user-select: none;
+		-ms-user-select: none;
+}
+
+.vic-flex {
+	display: inline-block;
+}
+
+.vicbtn-bottom{
+  margin-bottom: 0.2em;
+}
+
+.vic-block {
+  display: block !important;
+}
+
+.vic-bb-3-blue {
+  border-bottom: 3px solid dodgerblue;
+}
+
+.vicbtn {
+		display: inline-block;
+		text-align: center;
+		border-bottom: none;
+    border-left: none;
+    border-top: none;
+    border-right: none;
+    text-decoration: none;
+    cursor: pointer;
+    letter-spacing: 2px;
+		white-space: nowrap;
+		vertical-align: middle;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 0.8em;
+		-webkit-transition: background 0.5s ease, color 0.4s ease, border-color 0.5s ease, all 0.4s ease;
+    transition: background 0.5s ease, color 0.4s ease, border-color 0.5s ease, all 0.4s ease;
+}
+
+.vicbtn-blue {
+    background: dodgerblue;
+    color: white;
+}
+.vicbtn-blue:hover,
+.vicbtn-blue:focus {
+		text-decoration: none;
+    background: #383838;
+    color: white;
+}
+
+.vicbtn-yellow {
+    background: #ffc107;
+    color: #000;
+}
+.vicbtn-yellow:hover,
+.vicbtn-yellow:focus {
+		text-decoration: none;
+    background: #383838;
+    color: White;
+}
+
+.vicbtn-red {
+    background: #dc3545;
+    color: white;
+}
+.vicbtn-red:hover,
+.vicbtn-red:focus {
+		text-decoration: none;
+    background: #383838;
+    color: White;
+}
+
+.vicbtn-green {
+    background: #28a745;
+    color: white;
+}
+.vicbtn-green:hover,
+.vicbtn-green:focus {
+		text-decoration: none;
+    background: #383838;
+    color: White;
+}
+
+.victext-input {
+			display: inline-block;
+	    font-size: 18px;
+	    box-shadow: 0 0 0;
+	    border: 0;
+	    border-radius: 0;
+	    border-bottom: 3px solid #ccc;
+	    background: #eee;
+	    padding: 0.6rem 1rem 0.4rem 1rem;
+	    transition: border-color .4s ease;
+}
+
+.victext-input:focus,
+.victext-input:active {
+		outline: none;
+		-webkit-box-shadow: none !important;
+		-moz-box-shadow: none !important;
+		box-shadow: none !important;
+		border-bottom: 3px solid dodgerblue;
+}
+
+.victext-input-verify {
+    width: 45px;
+    margin-right: 5px;
+    display: inline-block;
+    font-size: 18px;
+    box-shadow: 0 0 0;
+    border: 0;
+    border-radius: 0;
+    border-bottom: 3px solid #ccc;
+    background: #eee;
+    padding: 0.6rem 1rem 0.4rem 1rem;
+    transition: border-color .4s ease;
+		color: transparent;
+		text-shadow: 0 0 0 black;
+		text-align: center;
+}
+
+.victext-input-verify:focus,
+.victext-input-verify:active {
+		outline: none !important;
+		-webkit-box-shadow: none !important;
+		-moz-box-shadow: none !important;
+		box-shadow: none !important;
+		border-bottom: 3px solid dodgerblue;
+}
+
+.vic-varification-auto {
+    margin-left: auto;
+    margin-right: auto;
+    display: table;
+		margin-bottom: 1rem;
+}
+
+.vic-bb-3-blue {
+  border-bottom: 3px solid dodgerblue;
+}
+.vic-bb-3-yellow {
+  border-bottom: 3px solid #ffc107;
+}
+.vic-bb-3-red {
+  border-bottom: 3px solid #dc3545;
+}
+.vic-bb-3-green {
+  border-bottom: 3px solid #28a745;
+}
+.vic-bb-3-blue:hover,
+.vic-bb-3-blue:focus,
+.vic-bb-3-yellow:hover,
+.vic-bb-3-yellow:focus,
+.vic-bb-3-red:hover,
+.vic-bb-3-red:focus,
+.vic-bb-3-green:hover,
+.vic-bb-3-green:focus {
+		border-bottom: 3px solid #383838;
+}
+
+@media screen and (max-width: 768px) {
+    .vicbtn,
+    .victext-input {
+      width: 100%;
+      margin-bottom: 0.2em;
+    }
+}
+
+.viclabelline-bottom::after {
+    content: "";
+    width: 100px;
+    height: 2px;
+    background: #383838;
+    display: block;
+}
+
+.modal-custompanel {
+	min-width: 350px;
+	max-width: 500px;
+	position: relative;
+	margin: 2em auto;
+	padding: 1em 1em 1em;
+	background: white;
+	box-shadow: 0 0 35px rgba(0, 0, 0, 0.1);
+}
+
+.loader {
+	border: 9px solid #f3f3f3;
+	border-top: 9px solid #252e33;
+	border-radius: 50%;
+	width: 60px;
+	height: 60px;
+	animation: spin 1s linear infinite;
+	margin: 36px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
