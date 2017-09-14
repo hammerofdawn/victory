@@ -21,7 +21,7 @@ def login(request):
                        {'invalid': True }) # our template can detect this variable
         if user is not None:
             auth_login(request, user)
-            return render(request, 'dashboard.html', {})
+            return redirect('index')
     else:
         return render(request, 'login.html', {})
 
