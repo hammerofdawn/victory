@@ -54,10 +54,18 @@
                 <small class="brt axz">Profile</small>
               </a>
             </li>
+            {% if request.user.is_superuser %}
             <li class="qp">
               <a class="qn navicons" href="{% url 'index' %}" title="Chaos Settings" data-toggle="tooltip" data-placement="right">
                 <i class="fa fa-cogs" aria-hidden="true"></i>
                 <small class="brt axz">Settings</small>
+              </a>
+            </li>
+            {% endif %}
+            <li class="qp">
+              <a class="qn navicons" href="{% url 'logout' %}" title="Signout" data-toggle="tooltip" data-placement="right">
+                <i class="fa fa-sign-out" aria-hidden="true"></i>
+                <small class="brt axz">Signout</small>
               </a>
             </li>
           </ul>

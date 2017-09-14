@@ -44,6 +44,10 @@ def staff(request):
 def welcome(request):
     return render(request, 'welcome.html', {})
 
+def logout_view(request):
+    logout(request)
+    return redirect('login')
+
 def register(request):
     return render(request, 'register.html', {})
 
