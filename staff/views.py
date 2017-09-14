@@ -1,9 +1,10 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 
 # Create your views here.
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
-
+from django.contrib.auth import authenticate, logout
+from django.contrib.auth import login as auth_login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
@@ -11,7 +12,18 @@ from .models import Article
 
 
 def login(request):
-    return render(request, 'login.html')
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if (not user):
+            return render(request, "login.html",
+                       {'invalid': True }) # our template can detect this variable
+        if user is not None:
+            auth_login(request, user)
+            return render(request, 'dashboard.html', {})
+    else:
+        return render(request, 'login.html', {})
 
 '''
 @login_required

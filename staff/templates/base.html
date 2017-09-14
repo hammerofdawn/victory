@@ -49,7 +49,7 @@
               </a>
             </li>
             <li class="qp">
-              <a class="qn navicons" href="{% url 'user' logged_in_user.pk %}" title="My Profile" data-toggle="tooltip" data-placement="right">
+              <a class="qn navicons" href="{% url 'user' request.user.id%}" title="My Profile" data-toggle="tooltip" data-placement="right">
                 <img src="{{ logged_in_user.extendeduser.avatar.url }}" alt="Nickname" class="wc">
                 <small class="brt axz">Profile</small>
               </a>

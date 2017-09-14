@@ -21,19 +21,23 @@
       </div>
       <hr>
       <div>
-        <form action="2fauth" method="POST">
+        <form action="" method="POST">
+          {% csrf_token %}
+          {% if invalid %}
+              Your username/password combo doesn't match.
+          {% endif %}
           <div class="form-group">
-            <label class="viclabelline-bottom" for="username">Email Or Username</label>
-            <input type="text" class="victext-input vic-block full-width" id="username" placeholder="user@example.com">
+            <label class="viclabelline-bottom" for="id_username">Username</label>
+            <input type="text" class="victext-input vic-block full-width" name="username" autofocus maxlength="254" required id="id_username">
           </div>
           <div class="form-group">
-            <label class="viclabelline-bottom" for="password">Password</label>
-            <input type="password" class="victext-input vic-block full-width" id="password" placeholder="Password">
+            <label class="viclabelline-bottom" for="id_password">Password</label>
+            <input type="password" name="password" required id="id_password" class="victext-input vic-block full-width">
           </div>
           <hr>
-          <button type="submit" class="vicbtn vicbtn-blue vicbtn-bottom full-width"><strong>Login</strong></button>
+          <button type="submit" class="vicbtn vicbtn-blue vicbtn-bottom full-width" value="Log in"><strong>Login</strong></button>
         </form>
-        <a href="index" class="vicbtn vicbtn-red full-width" role="button"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+        <a href="{% url 'welcome' %}" class="vicbtn vicbtn-red full-width" role="button"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
         <hr>
         <p class="text-center uppercase">Copyright Genki 2017-2018 - IMAGE BY: <a href="#">MSV-FOTO</a></p>
         </div>
