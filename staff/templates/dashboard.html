@@ -20,7 +20,7 @@ Dashboard - Chaos, Genki
       {% for article in articles %}
       <div class="post">
         <div class="postinfo">
-          <p class="postowner">{{ article.author.extendeduser.nickname }} <span class="float-right">{{ article.created }}</span></p>
+          <p class="postowner">{{ article.author.extendeduser.nickname }} <span class="float-right">{{ article.created|date:"F j, Y, H:i"}}</span></p>
           <p class="posttitle line-topsmall">{{ article.title }}</p>
         </div>
         <div class="postcontent">
