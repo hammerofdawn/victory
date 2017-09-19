@@ -19,7 +19,7 @@ def login(request):
         user = auth_authenticate(request, username=username, password=password)
         if user is not None:
             auth_login(request, user)
-            return redirect('index')
+            return redirect('twofauth')
         else:
             return render(request, "login.html", {'invalid': True })
     else:
@@ -40,6 +40,9 @@ def staff(request):
 
     return render(request, 'dashboard.html', context)
 '''
+
+def twofauth(request):
+    return render(request, '2fauth.html', {})
 
 def welcome(request):
     return render(request, 'welcome.html', {})
