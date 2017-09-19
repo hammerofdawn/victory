@@ -20,30 +20,20 @@ Users - Chaos, Genki
       <div class="custompanel">
         <div>
           <ul class="usr-list user-list">
+            {% for user in users %}
             <li>
-              <a class="silent" href="/users/id" title="username">
+              <a class="silent" href="{% url 'user' user.pk %}" title="username">
                 <div class="image-wrapper">
-                  <img src="../assets/img/userpreload.png" class="preload">
-                  <img src="../assets/img/userimg/spooch.jpg?image_width=512">
+                  <img src="{% static 'img/userpreload.png' %}" class="preload">
+                  <img src="{{ user.extendeduser.avatar.url }}">
                 </div>
                 <div class="hover-wrapper">
-                  <label class="title one-line-ellipsis">Alexander "Spooch" Holtz</label>
-                  <label class="title one-line-ellipsis">Phone: 12345678</label>
+                  <label class="title one-line-ellipsis">{{ user.extendeduser.nickname }}</label>
+                  <label class="title one-line-ellipsis">Phone: {{ user.extendeduser.phone_number }}</label>
                 </div>
               </a>
             </li>
-            <li>
-              <a class="silent" href="/users/id" title="username">
-                <div class="image-wrapper">
-                  <img src="../assets/img/userpreload.png" class="preload">
-                  <img src="../assets/img/userimg/jesperrisom.jpg?image_width=512">
-                </div>
-                <div class="hover-wrapper">
-                  <label class="title one-line-ellipsis">Jesper "JesperRisom" Risom</label>
-                  <label class="title one-line-ellipsis">Phone: 12345678</label>
-                </div>
-              </a>
-            </li>
+            {% endfor %}
           </ul>
         </div>
       </div>
