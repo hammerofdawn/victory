@@ -23,8 +23,7 @@
           <h1 class="line-topwhite">{{ requested_user.extendeduser.nickname }}</h1>
           <h3>Phone: <a href="tel:{{ user.extendeduser.phone_number }}"><u>{{ requested_user.extendeduser.phone_number }}</u></a></h3>
           <div class="options push-right">
-            {% if requested_user.extendeduser.facebook_link == "None" %}
-            {% else %}
+            {% if requested_user.extendeduser.facebook_link %}
             <a href="{{requested_user.extendeduser.facebook_link}}" target="_blank"><i class="fa fa-facebook"></i></a>
             {% endif %}
             <a href="#" target="_blank"><i class="fa fa-twitter"></i></a>
