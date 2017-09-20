@@ -94,6 +94,9 @@ def login(request):
 
         redirect('2ndfactor')
 
+def twofauth(request):
+    return render(request, '2fauth.html', {})
+
 def welcome(request):
     return render(request, 'welcome.html', {})
 
