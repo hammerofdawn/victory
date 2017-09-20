@@ -19,13 +19,11 @@ class Team(models.Model):
 	def __str__(self):
 		return self.name
 
-
 class DriversLicenceCategories(models.Model): # No plural
 	category = models.CharField(max_length=3)
 
 	def __str__(self):
 		return self.category
-
 
 class Language(models.Model):
 	name = models.CharField(max_length=16)
@@ -33,14 +31,11 @@ class Language(models.Model):
 	def __str__(self):
 		return self.name
 
-
 class TShirt(models.Model):
     description = models.CharField(max_length=32)
 
-
 class Sock(models.Model):
     description = models.CharField(max_length=32)
-
 
 class Review(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -50,7 +45,6 @@ class Review(models.Model):
 
     def __str__(self):
         return str(self.overall_rating) + '/5, ' + self.user.extendeduser.nickname + '(' + self.user.username + ', ' + self.user.get_full_name() + ')'
-
 
 class ExtendedUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -69,7 +63,6 @@ class ExtendedUser(models.Model):
     child_record = models.DateField(null=True)
     special_considerations = models.TextField(blank=True)
 
-
 class Article(models.Model):
     author = models.ForeignKey(User)
     title = models.CharField(max_length=64)
@@ -79,9 +72,16 @@ class Article(models.Model):
     def __str__(self):
         return self.title
 
-
 class Alert(models.Model):
     title = models.CharField(max_length=32)
     body = models.TextField(blank=True)
     start = models.DateTimeField()
     end = models.DateTimeField()
+
+class Unauthenticated_session(models.Model):
+	user = models.ForeignKey(User)
+	token = models.CharField(max_length=36)
+	otp = models.PositiveSmallIntegerField()
+	created = models.DateTimeField(auto_now_add=True)
+	guesses_left = models.PositiveSmallIntegerField(default=3)
+	successful = models.BooleanField(default=False)

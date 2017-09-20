@@ -14,6 +14,7 @@ from .models import (
     Sock,
     Review,
     Alert,
+    Unauthenticated_session,
 )
 
 class UserInline(admin.StackedInline):
@@ -38,3 +39,4 @@ admin.site.register(TShirt)
 admin.site.register(Sock)
 admin.site.register(Review)
 admin.site.register(Alert)
+admin.site.register(Unauthenticated_session)
