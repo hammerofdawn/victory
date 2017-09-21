@@ -30,7 +30,7 @@ Now you're ready to install the requirements:
 $ pip install -r requirements.txt
 ```
 
-Then do regular Django stuff. This will be elaborated more later.
+Then do regular Django stuff. This will be elaborated later.
 
 ## Built With
 
