@@ -14,31 +14,33 @@ Teams - Chaos, Genki
     <div>
       <a href="apply" class="vicbtn vicbtn-green vic-bb-3-green">Apply</a>
       <button class="vicbtn vicbtn-blue vic-bb-3-blue">List Teams</button>
-      <form style="display:inline-block;" action="../search" method="post">
+      <form class="search-width" style="display:inline-block;" action="../search" method="post">
         <input class="victext-input" type="text" placeholder="Search" name="search" value="">
         <button type="submit" class="vicbtn vicbtn-blue vic-bb-3-blue">Search</button>
       </form>
     </div>
     <div class="custompanel">
-      <div class="team">
+      {% for team in teams %}
+      <div class="team" title="{{ team.name }}">
         <div class="bgbox bgbox--browse">
           <div class="banner banner--scaled">
-            <div class="banner" style="background-image: url('{% static 'img/teambg/18plus.jpg' %}')"></div>
+            <div class="banner" style="background-image: url('{{ team.background.url }}')"></div>
             <div class="banner-shade banner-shade--darker"></div>
           </div>
           <div class="cl-white">
             <div class="details-box clearfix">
-              <a href="id">
-                <img class="artwork" src="{% static 'img/teamlogo/18pluslaunge.png' %}">
-                <h2>18+ Launge</h2>
+              <a href="/staff/teams/{{ team.id }}">
+                <img class="artwork" src="{{ team.logo.url }}">
+                <h2>{{ team.name }}</h2>
               </a>
-              <h3>Team Leader: <a href="/users/id"><u>Alexander Holtz</u></a></h3>
-              <label>People Needed: 3/3</label>
-              <label>Base Requirements: 18 years or older, ready to work up to 14 hours</label>
+              <h3>Team Leader(s): <a href="/users/id"><u>%%%</u></a></h3>
+              <label>People Needed: {{ team.people_needed }}</label>
+              <label>Base Requirements: {{ team.requirements }}</label>
             </div>
           </div>
         </div>
       </div>
+      {% endfor %}
     </div>
   </div>
 </section>

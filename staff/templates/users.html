@@ -12,7 +12,7 @@ Users - Chaos, Genki
     <h1 class="line-top">Users.</h1>
     <div>
       <a href="list" class="vicbtn vicbtn-blue vic-bb-3-blue">List Users</a>
-      <form style="display:inline-block;" action="../search" method="post">
+      <form class="search-width" style="display:inline-block;" action="../search" method="post">
         <input class="victext-input" type="text" placeholder="Search" name="search" value="">
         <button type="submit" class="vicbtn vicbtn-blue vic-bb-3-blue">Search</button>
       </form>
@@ -22,7 +22,7 @@ Users - Chaos, Genki
           <ul class="usr-list user-list">
             {% for user in users %}
             <li>
-              <a class="silent" href="{% url 'user' user.pk %}" title="username">
+              <a class="silent" href="{% url 'user' user.pk %}" title="{{ user.extendeduser.nickname }}">
                 <div class="image-wrapper">
                   <img src="{% static 'img/userpreload.png' %}" class="preload">
                   <img src="{{ user.extendeduser.avatar.url }}">

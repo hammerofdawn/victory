@@ -9,7 +9,7 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
-from .models import Article, Unauthenticated_session
+from .models import Article, Unauthenticated_session, Team
 
 from uuid import uuid4
 from random import randint
@@ -140,8 +140,10 @@ def user(request, user_pk):
 @login_required
 def teams(request):
     logged_in_user = get_object_or_404(User, pk=request.user.pk)
+    teams = Team.objects.all()
     context = {
         'logged_in_user': logged_in_user,
+        'teams': teams,
     }
 
     return render(request, 'teams.html', context)

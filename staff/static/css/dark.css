@@ -81,6 +81,7 @@ a {
 @media (min-width: 768px) {
     .brs > .qp {
         display: block;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.23);
     }
 }
 .brs > .qp > .qn {
@@ -96,9 +97,6 @@ a {
     .brs > .qp > .qn {
         padding: 7px;
     }
-}
-.brs > .qp + .qp {
-    margin-left: -3px;
 }
 .brs > .qp > .qn > img {
     width: 35px;
@@ -133,7 +131,7 @@ a {
         overflow: auto;
         -webkit-overflow-scrolling: touch;
         white-space: nowrap;
-        background-color: #f5f8fa;
+        background-color: #30343e;
     }
     .aaj {
         flex-direction: inherit !important;
@@ -141,6 +139,7 @@ a {
     .brs > .qp {
         width: 78px;
         min-width: 78px;
+        border-right: 1px solid rgba(255, 255, 255, 0.23);
     }
 }
 
@@ -593,7 +592,7 @@ a.silent {
 .usr-list li label.title {
     margin-top: 15px;
     font-weight: 800;
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
@@ -634,15 +633,8 @@ a.silent {
         display: block;
         overflow: hidden;
     }
-    .user-list li a .image-wrapper {
-        transition: transform 0.6s ease, filter 0.5s ease, -webkit-filter 0.5s ease;
-    }
-    .user-list li a:hover .image-wrapper {
-        transform: translateY(-25px);
-    }
     .hover-wrapper {
         transition: bottom 0.4s ease;
-        position: absolute;
         bottom: 0px;
         padding: 1rem;
     }
@@ -920,7 +912,13 @@ input:checked + .slider:before {
       width: 100%;
       margin-bottom: 0.2em;
     }
+
+    .search-width {
+      width: 100%;
+    }
 }
+
+
 
 .userinfobox {
     padding: 0.6em 0.8em 0.5em 0.8em;
