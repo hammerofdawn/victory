@@ -6,16 +6,11 @@ from django.core.validators import RegexValidator, MinValueValidator, MaxValueVa
 # Create your models here.
 class Team(models.Model):
 	name = models.CharField(max_length=16)
-
 	logo = models.ImageField(upload_to='teams/avatars')
 	background = models.ImageField(upload_to='teams/backgrounds')
-
 	requirements = models.TextField(blank=True)
-
 	people_needed = models.PositiveSmallIntegerField()
-
 	teamleaders = models.ManyToManyField(User)
-
 	def __str__(self):
 		return self.name
 
