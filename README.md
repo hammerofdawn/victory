@@ -15,19 +15,19 @@ A step by step series of examples that tell you have to get a development env ru
 Start by setting up your virtualenv:
 
 ```
-virtualenv venv
+$ virtualenv venv
 ```
 
 Then activate it:
 
 ```
-source venv/bin/activate
+$ source venv/bin/activate
 ```
 
 Now you're ready to install the requirements:
 
 ```
-pip install -r requirements.txt
+$ pip install -r requirements.txt
 ```
 
 Then do regular Django stuff. This will be elaborated more later.
