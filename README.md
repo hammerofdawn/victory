@@ -2,7 +2,7 @@
 
 Chaos is past. Victory is present.
 
-Victory makes volunteer management awesome. It keeps track of applications, teams and contact information. Its interface is responsive and pleasure to use, making a once complicating task the easiest thing in the world.
+Victory makes volunteer management awesome. It keeps track of applications, teams and contact information. Its interface is responsive and a pleasure to use, making a once complicated task the easiest thing in the world.
 
 ## Getting Started
 
