@@ -43,7 +43,7 @@ We'll soon introduce a CONTRIBUTING.md. Until then, please contact us if you wou
 
 ## Authors
 
-* **Denis Smajlović** - *System architect.*
+* **Deni (Denis Smajlović)** - *System architect.*
 * **Meicki Jeldal** - *Web designer.*
 
 See also the list of [contributors](https://github.com/DSDeniso/victory/graphs/contributors) who participated in this project.
