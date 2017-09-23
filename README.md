@@ -34,7 +34,7 @@ Then do regular Django stuff. This will be elaborated later.
 
 * [Django](https://www.djangoproject.com/) - Web framework.
 * [virtualenv](https://virtualenv.pypa.io/en/stable/) - Isolated Python environments.
-* [Nexmo](https://www.nexmo.com/) - SMS gateway.
+* [tel.dk](https://tel.dk/) - SMS gateway.
 
 ## Contributing
 
