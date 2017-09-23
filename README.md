@@ -34,7 +34,7 @@ Then do regular Django stuff. This will be elaborated later.
 
 * [Django](https://www.djangoproject.com/) - Web framework.
 * [virtualenv](https://virtualenv.pypa.io/en/stable/) - Isolated Python environments.
-* [Bootstrap] (https://getbootstrap.com/) - Front-end component library.
+* [Bootstrap](https://getbootstrap.com/) - Front-end component library.
 * [tel.dk](https://tel.dk/) - SMS gateway.
 
 ## Contributing
