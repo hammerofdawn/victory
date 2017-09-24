@@ -10,6 +10,7 @@ urlpatterns = [
 	url(r'^register/$', views.register, name='register'),
 	url(r'^users/$', views.users, name='users'),
 	url(r'^users/(?P<user_pk>[0-9]+)/$', views.user, name='user'),
+	url(r'^me/settings$', views.usersettings, name='usersettings'),
 	url(r'^teams/$', views.teams, name='teams'),
 	url(r'^teams/(?P<team_pk>[0-9]+)/$', views.team, name='team'),
 ]

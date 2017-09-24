@@ -136,6 +136,16 @@ def user(request, user_pk):
 
 	return render(request, 'user.html', context)
 
+def usersettings(request):
+    if request.user.id:
+        logged_in_user = get_object_or_404(User, pk=request.user.id)
+        context = {
+            'logged_in_user': logged_in_user,
+        }
+        return render(request, 'usersettings.html', context)
+    else:
+        return redirect('/staff/home')
+
 
 @login_required
 def teams(request):
