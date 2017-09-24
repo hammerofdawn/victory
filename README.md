@@ -39,7 +39,7 @@ Then do regular Django stuff. This will be elaborated later.
 
 ## Contributing
 
-We'll soon introduce a CONTRIBUTING.md. Until then, please contact us if you would like to contribute.
+We love pull requests! We're still in the early stages and development is happening rapidly. You're always welcome to send a pull request which we'll review and (most probably) merge. Victory is a commercial system, but we're simply not able to compensate your work, which is why all contributions must be considered a donation. And then there's only one thing left to say: tabs.
 
 ## Authors
 
