@@ -203,7 +203,8 @@
 		list-style: none;
 		margin: 0;
 		padding: 0 5px;
-		width: 100%
+		width: 100%;
+		color:#000;
 }
 .select2-container--default .select2-selection--multiple .select2-selection__rendered li {
 		list-style: none
@@ -286,7 +287,8 @@
 }
 .select2-container--default .select2-results>.select2-results__options {
 		max-height: 200px;
-		overflow-y: auto
+		overflow-y: auto;
+		color:#000;
 }
 .select2-container--default .select2-results__option[role=group] {
 		padding: 0

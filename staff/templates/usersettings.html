@@ -64,6 +64,14 @@ User Settings - Chaos, Genki
              In case of emergency.
           </small>
         </div>
+        <div class="form-group ">
+          <label>Select teams you want to apply to.</label>
+          <select class="drivercategories form-control" multiple="multiple">
+            {% for category in driverslicence %}
+            <option value="{{category.id}}">{{category.category}}</option>
+            {% endfor %}
+          </select>
+        </div>
         <hr style="border-color:rgba(255, 255, 255, 0.23);">
         <button type="submit" class="vicbtn vicbtn-green">Save</button>
       </form>
@@ -74,6 +82,9 @@ User Settings - Chaos, Genki
 
 {% block scripts %}
 <script src="{% static 'js/application.js' %}"></script>
+<script type="text/javascript">
+  $('.drivercategories').select2();
+</script>
 {% endblock %}
 
 {% block modals %}

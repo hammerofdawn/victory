@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, render, redirect
 
-from .models import Article, Unauthenticated_session, Team
+from .models import Article, Unauthenticated_session, Team, DriversLicenceCategories
 
 from uuid import uuid4
 from random import randint
@@ -137,14 +137,16 @@ def user(request, user_pk):
 	return render(request, 'user.html', context)
 
 def usersettings(request):
-    if request.user.id:
-        logged_in_user = get_object_or_404(User, pk=request.user.id)
-        context = {
-            'logged_in_user': logged_in_user,
-        }
-        return render(request, 'usersettings.html', context)
-    else:
-        return redirect('/staff/home')
+	if request.user.id:
+		logged_in_user = get_object_or_404(User, pk=request.user.id)
+		driverslicence = DriversLicenceCategories.objects.all()
+		context = {
+			'driverslicence': driverslicence,
+			'logged_in_user': logged_in_user,
+		}
+		return render(request, 'usersettings.html', context)
+	else:
+		return redirect('/staff/home')
 
 
 @login_required
