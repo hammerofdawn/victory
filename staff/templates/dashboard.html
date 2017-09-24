@@ -8,27 +8,27 @@ Dashboard - Chaos, Genki
 
 {% block content %}
 <section role="content">
-  <div class="container">
-    <h1 class="line-top">Hello {{ user.extendeduser.nickname }}.</h1>
-    <div class="custompanel">
-      <div style="margin-bottom:10px;">
-        <form class="search-width" style="display:inline-block;" action="search" method="post">
-          <input class="victext-input" type="text" placeholder="Search" name="search" value="">
-          <button type="submit" class="vicbtn vicbtn-blue vic-bb-3-blue">Search</button>
-        </form>
-      </div>
-      {% for article in articles %}
-      <div class="post">
-        <div class="postinfo">
-          <p class="postowner">{{ article.author.extendeduser.nickname }} <span class="float-right">{{ article.created|date:"F j, Y, H:i"}}</span></p>
-          <p class="posttitle line-topsmall">{{ article.title }}</p>
-        </div>
-        <div class="postcontent">
-          {{ article.body }}
-        </div>
-      </div>
-      {% endfor %}
-    </div>
-  </div>
+	<div class="container">
+		<h1 class="line-top">Hello {{ user.extendeduser.nickname }}.</h1>
+		<div class="custompanel">
+			<div style="margin-bottom:10px;">
+				<form class="search-width" style="display:inline-block;" action="search" method="post">
+					<input class="victext-input" type="text" placeholder="Search" name="search" value="">
+					<button type="submit" class="vicbtn vicbtn-blue vic-bb-3-blue">Search</button>
+				</form>
+			</div>
+			{% for article in articles %}
+			<div class="post">
+				<div class="postinfo">
+					<p class="postowner">{{ article.author.extendeduser.nickname }} <span class="float-right">{{ article.created|date:"F j, Y, H:i"}}</span></p>
+					<p class="posttitle line-topsmall">{{ article.title }}</p>
+				</div>
+				<div class="postcontent">
+					{{ article.body }}
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
 </section>
 {% endblock %}

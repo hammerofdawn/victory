@@ -8,78 +8,78 @@
 
 {% block content %}
 <div class="bgbox">
-  <div class="banner banner--scaled">
-    <div class="banner" style="background-image: url('{% static 'img/userpreload.png' %}')"></div>
-    <div class="banner" style="background-image: url('{{ requested_user.extendeduser.background.url }}')"></div>
-    <div class="banner-shade banner-shade--darker"></div>
-  </div>
-  <section role="content">
-    <div class="container">
-      <div class="cl-white">
-        <div class="details-box clearfix">
-          <div class="usrimg">
-            <img class="artwork" src="{{ requested_user.extendeduser.avatar.url }}">
-          </div>
-          <h1 class="line-topwhite">{{ requested_user.extendeduser.nickname }}</h1>
-          <h3>Phone: <a href="tel:{{ user.extendeduser.phone_number }}"><u>{{ requested_user.extendeduser.phone_number }}</u></a></h3>
-          <div class="options push-right">
-            {% if requested_user.extendeduser.facebook_link %}
-            <a href="{{requested_user.extendeduser.facebook_link}}" target="_blank"><i class="fa fa-facebook"></i></a>
-            {% endif %}
-            {% if requested_user.extendeduser.twitter_link %}
-            <a href="{{ requested_user.extendeduser.twitter_link }}" target="_blank"><i class="fa fa-twitter"></i></a>
-            {% endif %}
-            {% if requested_user.extendeduser.soundcloud_link %}
-            <a href="{{ requested_user.extendeduser.soundcloud_link }}" target="_blank"><i class="fa fa-soundcloud"></i></a>
-            {% endif %}
-            {% if requested_user.extendeduser.youtube_link %}
-            <a href="{{ requested_user.extendeduser.youtube_link }}" target="_blank"><i class="fa fa-youtube-play"></i></a>
-            {% endif %}
-          </div>
-          <div>
-            <button class="vicbtn vicbtn-blue">Message</button>
-            <button class="vicbtn vicbtn-blue">Edit</button>
-            <button class="vicbtn vicbtn-red">Write Review</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+	<div class="banner banner--scaled">
+		<div class="banner" style="background-image: url('{% static 'img/userpreload.png' %}')"></div>
+		<div class="banner" style="background-image: url('{{ requested_user.extendeduser.background.url }}')"></div>
+		<div class="banner-shade banner-shade--darker"></div>
+	</div>
+	<section role="content">
+		<div class="container">
+			<div class="cl-white">
+				<div class="details-box clearfix">
+					<div class="usrimg">
+						<img class="artwork" src="{{ requested_user.extendeduser.avatar.url }}">
+					</div>
+					<h1 class="line-topwhite">{{ requested_user.extendeduser.nickname }}</h1>
+					<h3>Phone: <a href="tel:{{ user.extendeduser.phone_number }}"><u>{{ requested_user.extendeduser.phone_number }}</u></a></h3>
+					<div class="options push-right">
+						{% if requested_user.extendeduser.facebook_link %}
+						<a href="{{requested_user.extendeduser.facebook_link}}" target="_blank"><i class="fa fa-facebook"></i></a>
+						{% endif %}
+						{% if requested_user.extendeduser.twitter_link %}
+						<a href="{{ requested_user.extendeduser.twitter_link }}" target="_blank"><i class="fa fa-twitter"></i></a>
+						{% endif %}
+						{% if requested_user.extendeduser.soundcloud_link %}
+						<a href="{{ requested_user.extendeduser.soundcloud_link }}" target="_blank"><i class="fa fa-soundcloud"></i></a>
+						{% endif %}
+						{% if requested_user.extendeduser.youtube_link %}
+						<a href="{{ requested_user.extendeduser.youtube_link }}" target="_blank"><i class="fa fa-youtube-play"></i></a>
+						{% endif %}
+					</div>
+					<div>
+						<button class="vicbtn vicbtn-blue">Message</button>
+						<button class="vicbtn vicbtn-blue">Edit</button>
+						<button class="vicbtn vicbtn-red">Write Review</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 </div>
 <section role="content">
-  <div class="container">
-    <div class="custompanel">
-      <div>
-        <ul class="nav nav-tabs" id="userstab" role="tablist">
-          <li class="nav-item">
-            <a class="vic-tablink active" id="information-tab" data-toggle="tab" href="#information" role="tab" aria-controls="information" aria-expanded="true">Information</a>
-          </li>
-          <li class="nav-item">
-            <a class="vic-tablink" id="description-tab" data-toggle="tab" href="#description" role="tab" aria-controls="description" aria-expanded="true">Description</a>
-          </li>
-          <li class="nav-item">
-            <a class="vic-tablink vic-tablink-red" id="reviews-tab" data-toggle="tab" href="#reviews" role="tab" aria-controls="reviews">Reviews</a>
-          </li>
-        </ul>
-        <hr>
-        <div class="tab-content">
-          <div class="tab-pane fade show active" id="information" role="tabpanel" aria-labelledby="information-tab">
-            <div class="form-group">
-              <p class="userinfobox">Name: <b>{{ requested_user.first_name }} {{ requested_user.last_name }}</b></p>
-            </div>
-            <div class="form-group">
-              <p class="userinfobox">Email: <b>{{ requested_user.email }}</b></p>
-            </div>
-          </div>
-          <div class="tab-pane fade" id="description" role="tabpanel" aria-labelledby="description-tab">
-            <b>Nothing here yet</b>
-          </div>
-          <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
-            <b>Reviews</b>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+	<div class="container">
+		<div class="custompanel">
+			<div>
+				<ul class="nav nav-tabs" id="userstab" role="tablist">
+					<li class="nav-item">
+						<a class="vic-tablink active" id="information-tab" data-toggle="tab" href="#information" role="tab" aria-controls="information" aria-expanded="true">Information</a>
+					</li>
+					<li class="nav-item">
+						<a class="vic-tablink" id="description-tab" data-toggle="tab" href="#description" role="tab" aria-controls="description" aria-expanded="true">Description</a>
+					</li>
+					<li class="nav-item">
+						<a class="vic-tablink vic-tablink-red" id="reviews-tab" data-toggle="tab" href="#reviews" role="tab" aria-controls="reviews">Reviews</a>
+					</li>
+				</ul>
+				<hr>
+				<div class="tab-content">
+					<div class="tab-pane fade show active" id="information" role="tabpanel" aria-labelledby="information-tab">
+						<div class="form-group">
+							<p class="userinfobox">Name: <b>{{ requested_user.first_name }} {{ requested_user.last_name }}</b></p>
+						</div>
+						<div class="form-group">
+							<p class="userinfobox">Email: <b>{{ requested_user.email }}</b></p>
+						</div>
+					</div>
+					<div class="tab-pane fade" id="description" role="tabpanel" aria-labelledby="description-tab">
+						<b>Nothing here yet</b>
+					</div>
+					<div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
+						<b>Reviews</b>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </section>
 {% endblock %}

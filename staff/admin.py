@@ -5,28 +5,28 @@ from django.contrib.auth.models import User
 
 # Register your models here.
 from .models import (
-    ExtendedUser,
-    Team,
-    DriversLicenceCategories,
-    Language,
-    Article,
-    TShirt,
-    Sock,
-    Review,
-    Alert,
-    Unauthenticated_session,
+	ExtendedUser,
+	Team,
+	DriversLicenceCategories,
+	Language,
+	Article,
+	TShirt,
+	Sock,
+	Review,
+	Alert,
+	Unauthenticated_session,
 )
 
 class UserInline(admin.StackedInline):
-    model = ExtendedUser
-    can_delete = False
-    filter_horizontal = ['drivers_licence', 'languages']
+	model = ExtendedUser
+	can_delete = False
+	filter_horizontal = ['drivers_licence', 'languages']
 
 class UserAdmin(BaseUserAdmin):
-    inlines = (UserInline, )
+	inlines = (UserInline, )
 
 class TeamAdmin(admin.ModelAdmin):
-    filter_horizontal = ['teamleaders']
+	filter_horizontal = ['teamleaders']
 
 
 admin.site.unregister(User)

@@ -61,8 +61,8 @@ def login(request):
 
 				r = requests.post("https://api.tel.dk/api/1.0/message",
 					auth=HTTPBasicAuth(
-						'USERNAME',
-						'PASSWORD'
+						'denis@smajlovic.dk',
+						'f661aa3c-7327-403b-8271-7eb27ddb6071'
 					), headers={
 						'content-type': 'application/x-www-form-urlencoded',
 						'charset': 'utf-8',
