@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, render, redirect
 
-from .models import Article, Unauthenticated_session, Team, DriversLicenceCategories
+from .models import Article, UnauthenticatedSession, Team, DriversLicenceCategories
 
 from uuid import uuid4
 from random import randint
@@ -33,7 +33,7 @@ def login(request):
 
 			if len(otp) == 4:
 				print(token)
-				ua = Unauthenticated_session.objects.get(token=str(token))
+				ua = UnauthenticatedSession.objects.get(token=str(token))
 
 				if int(otp) == ua.otp:
 					ua.successful = True
@@ -62,7 +62,7 @@ def login(request):
 				r = requests.post("https://api.tel.dk/api/1.0/message",
 					auth=HTTPBasicAuth(
 						'EMAIL',
-						'SECRET_KEY'
+						'SECRET'
 					), headers={
 						'content-type': 'application/x-www-form-urlencoded',
 						'charset': 'utf-8',
@@ -74,7 +74,7 @@ def login(request):
 					}
 				)
 
-				us = Unauthenticated_session()
+				us = UnauthenticatedSession()
 				us.user = user
 				us.token = token
 				us.otp = otp
