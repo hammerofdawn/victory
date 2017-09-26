@@ -26,8 +26,8 @@
 						<label class="viclabelline-bottom" for="id_username">User/nickname</label>
 						<input type="text" class="victext-input vic-block full-width" id="id_username" name="username" placeholder="victory">
 						<small id="phoneHelpBlock" class="form-text text-muted">
-	          		Used for logging in, and also your display name.
-	          </small>
+								Used for logging in, and also your display name.
+						</small>
 					</div>
 					<div class="form-row">
 						<div class="form-group col-md-6">
@@ -47,19 +47,19 @@
 						<label class="viclabelline-bottom" for="id_phone">Phone (Mobile with countrycode)</label>
 						<input required type="tel" class="victext-input vic-block full-width" id="id_phone" name="phone" placeholder="+4512345678">
 						<small id="phoneHelpBlock" class="form-text text-muted">
-	          		Used to contact you and also for 2 factor authentication.
-	          </small>
+								Used to contact you and also for 2 factor authentication.
+						</small>
 					</div>
 					<div class="form-row">
-				    <div class="form-group col-md-6">
+						<div class="form-group col-md-6">
 							<label class="viclabelline-bottom" for="id_postal_code">Postal code</label>
 							<input required type="text" class="victext-input vic-block full-width" id="id_postal_code" name="postal_code" placeholder="1577">
-				    </div>
-				    <div class="form-group col-md-6">
+						</div>
+						<div class="form-group col-md-6">
 							<label class="viclabelline-bottom" for="id_city">City</label>
 							<input required type="text" class="victext-input vic-block full-width" id="id_city" name="city" placeholder="Copenhagen">
-				    </div>
-				  </div>
+						</div>
+					</div>
 					<hr>
 					<div class="form-group">
 						<label class="viclabelline-bottom" for="id_password">Password</label>
@@ -84,7 +84,7 @@
 		<script src="{% static 'js/login.js' %}"></script>
 		<script>
 		$(document).ready(function () {
-		   $("#id_password,#id_password_retyped").keyup(checkPasswordMatch);
+			 $("#id_password,#id_password_retyped").keyup(checkPasswordMatch);
 		});
 		</script>
 	</body>
