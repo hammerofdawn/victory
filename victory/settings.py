@@ -26,7 +26,6 @@ SECRET_KEY = 'yh%3#y18q$-)k#+1=ca_v*9*dt%bin(z*t-@m28t-xijf+-_8)'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-	'victory-dsdeniso.c9users.io',
 	'localhost',
 ]
 
