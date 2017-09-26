@@ -123,7 +123,7 @@ def users(request):
 		'users': users,
 	}
 
-	return render(request, 'users.html', context)
+	return render(request, 'usertemplates/users.html', context)
 
 @login_required
 def user(request, user_pk):
@@ -134,7 +134,7 @@ def user(request, user_pk):
 		'requested_user': requested_user,
 	}
 
-	return render(request, 'user.html', context)
+	return render(request, 'usertemplates/user.html', context)
 
 def usersettings(request):
 	if request.user.id:
@@ -144,7 +144,7 @@ def usersettings(request):
 			'driverslicence': driverslicence,
 			'logged_in_user': logged_in_user,
 		}
-		return render(request, 'usersettings.html', context)
+		return render(request, 'usertemplates/usersettings.html', context)
 	else:
 		return redirect('/staff/home')
 
