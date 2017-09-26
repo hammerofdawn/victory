@@ -126,6 +126,6 @@ LOGIN_URL='/staff/login'
 LOGIN_REDIRECT_URL='/staff/dashboard'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = ''
+MEDIA_URL = 'http://localhost:8080/'
 
 AUTHENTICATION_BACKENDS = ('victory.backends.CaseInsensitiveModelBackend', )
