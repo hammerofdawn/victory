@@ -12,113 +12,113 @@ User Settings - Chaos, Genki
 
 {% block content %}
 <section role="content">
-  <div class="container">
-    <h1 class="line-top">Settings for {{ logged_in_user.extendeduser.nickname }}.</h1>
-    <div>
-      <a href="{% url 'index' %}" class="vicbtn vicbtn-red vicbtn-bottom"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
-    </div>
-    <div>
-      <a href="{% url 'usersettings' %}" class="vicbtn vicbtn-blue">General</a>
-      <a href="#" class="vicbtn vicbtn-blue">Description</a>
-      <a href="#" class="vicbtn vicbtn-blue">Profile images</a>
-      <button type="button" class="vicbtn vicbtn-blue" data-toggle="modal" data-target="#changepassword">Change Password</button>
-    </div>
-    <div class="custompanel">
-      <p>Everything with a * is required</p>
-      <hr style="border-color:rgba(255, 255, 255, 0.23);">
-      <form action="" method="post">
-        <div class="form-group">
-          <label for="username">Username*</label>
-          <input class="victext-input" type="text" placeholder="Username" name="username" value="{{ logged_in_user.username }}">
-          <small id="usernameHelpBlock" class="form-text text-muted">
-             You use this for logging in.
-          </small>
-        </div>
-        <div class="form-group">
-          <label for="first_name">First Name*</label>
-          <input class="victext-input" type="text" placeholder="First Name" name="first_name" value="{{ logged_in_user.first_name }}">
-        </div>
-        <div class="form-group">
-          <label for="last_name">Last Name*</label>
-          <input class="victext-input" type="text" placeholder="Last Name" name="last_name" value="{{ logged_in_user.last_name }}">
-        </div>
-        <div class="form-group">
-          <label for="nickname">Nickname*</label>
-          <input class="victext-input" type="text" placeholder="Nickname" name="nickname" value="{{ logged_in_user.extendeduser.nickname }}">
-          <small id="nicknameHelpBlock" class="form-text text-muted">
-             Nickname is showed on your profile for others.
-          </small>
-        </div>
-        <div class="form-group">
-          <label for="birthdate">Birthdate</label>
-          <input class="victext-input" type="text" placeholder="yyyy-mm-dd" name="birthdate" value="{{ logged_in_user.extendeduser.birthdate|date:"Y-m-d" }}">
-        </div>
-        <div class="form-group">
-          <label for="phone_number">Phone number*</label>
-          <input class="victext-input" type="text" placeholder="+Countrycode+Number" name="phone_number" value="{{ logged_in_user.extendeduser.phone_number }}">
-        </div>
-        <div class="form-group">
-          <label for="emergency_number">Emergency number*</label>
-          <input class="victext-input" type="text" placeholder="+Countrycode+Number" name="emergency_number" value="{{ logged_in_user.extendeduser.emergency_number }}">
-          <small id="emergency_numberHelpBlock" class="form-text text-muted">
-             In case of emergency.
-          </small>
-        </div>
-        <div class="form-group ">
-          <label>Select The driver licenses you have.</label>
-          <select class="drivercategories form-control" multiple="multiple">
-            {% for category in driverslicence %}
-            <option value="{{category.id}}">{{category.category}}</option>
-            {% endfor %}
-          </select>
-        </div>
-        <hr style="border-color:rgba(255, 255, 255, 0.23);">
-        <button type="submit" class="vicbtn vicbtn-green">Save</button>
-      </form>
-    </div>
-  </div>
+	<div class="container">
+		<h1 class="line-top">Settings for {{ logged_in_user.extendeduser.nickname }}.</h1>
+		<div>
+			<a href="{% url 'index' %}" class="vicbtn vicbtn-red vicbtn-bottom"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+		</div>
+		<div>
+			<a href="{% url 'usersettings' requested_user.extendeduser.pk %}" class="vicbtn vicbtn-blue">General</a>
+			<a href="#" class="vicbtn vicbtn-blue">Description</a>
+			<a href="#" class="vicbtn vicbtn-blue">Profile images</a>
+			<button type="button" class="vicbtn vicbtn-blue" data-toggle="modal" data-target="#changepassword">Change Password</button>
+		</div>
+		<div class="custompanel">
+			<p>Everything with a * is required</p>
+			<hr style="border-color:rgba(255, 255, 255, 0.23);">
+			<form action="" method="post">
+				<div class="form-group">
+					<label for="username">Username*</label>
+					<input class="victext-input" type="text" placeholder="Username" name="username" value="{{ logged_in_user.username }}">
+					<small id="usernameHelpBlock" class="form-text text-muted">
+						 You use this for logging in.
+					</small>
+				</div>
+				<div class="form-group">
+					<label for="first_name">First Name*</label>
+					<input class="victext-input" type="text" placeholder="First Name" name="first_name" value="{{ logged_in_user.first_name }}">
+				</div>
+				<div class="form-group">
+					<label for="last_name">Last Name*</label>
+					<input class="victext-input" type="text" placeholder="Last Name" name="last_name" value="{{ logged_in_user.last_name }}">
+				</div>
+				<div class="form-group">
+					<label for="nickname">Nickname*</label>
+					<input class="victext-input" type="text" placeholder="Nickname" name="nickname" value="{{ logged_in_user.extendeduser.nickname }}">
+					<small id="nicknameHelpBlock" class="form-text text-muted">
+						 Nickname is showed on your profile for others.
+					</small>
+				</div>
+				<div class="form-group">
+					<label for="birthdate">Birthdate</label>
+					<input class="victext-input" type="text" placeholder="yyyy-mm-dd" name="birthdate" value="{{ logged_in_user.extendeduser.birthdate|date:"Y-m-d" }}">
+				</div>
+				<div class="form-group">
+					<label for="phone_number">Phone number*</label>
+					<input class="victext-input" type="text" placeholder="+Countrycode+Number" name="phone_number" value="{{ logged_in_user.extendeduser.phone_number }}">
+				</div>
+				<div class="form-group">
+					<label for="emergency_number">Emergency number*</label>
+					<input class="victext-input" type="text" placeholder="+Countrycode+Number" name="emergency_number" value="{{ logged_in_user.extendeduser.emergency_number }}">
+					<small id="emergency_numberHelpBlock" class="form-text text-muted">
+						 In case of emergency.
+					</small>
+				</div>
+				<div class="form-group ">
+					<label>Select The driver licenses you have.</label>
+					<select class="drivercategories form-control" multiple="multiple">
+						{% for category in driverslicence %}
+						<option value="{{category.id}}">{{category.category}}</option>
+						{% endfor %}
+					</select>
+				</div>
+				<hr style="border-color:rgba(255, 255, 255, 0.23);">
+				<button type="submit" class="vicbtn vicbtn-green">Save</button>
+			</form>
+		</div>
+	</div>
 </section>
 {% endblock %}
 
 {% block scripts %}
 <script src="{% static 'js/application.js' %}"></script>
 <script type="text/javascript">
-  $('.drivercategories').select2();
+	$('.drivercategories').select2();
 </script>
 {% endblock %}
 
 {% block modals %}
 <!-- Modal -->
 <div class="modal fade" id="changepassword" tabindex="-1" role="dialog" aria-labelledby="changepassword" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="custompanel">
-      <div class="modal-header">
-        <h5 class="modal-title" id="ChangePasswordModalLabel">Change password</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form>
-        <div class="modal-body">
-          <div class="form-group">
-            <label for="current_password">Current Password</label>
-            <input class="victext-input" type="password" placeholder="password" name="current_password">
-          </div>
-          <div class="form-group">
-            <label for="new_password">New Password</label>
-            <input class="victext-input" type="password" placeholder="password" name="new_password">
-          </div>
-          <div class="form-group">
-            <label for="new_password_again">New Password Again</label>
-            <input class="victext-input" type="password" placeholder="password" name="new_password_again">
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="vicbtn vicbtn-blue" data-dismiss="modal">Close</button>
-          <button type="submit" class="vicbtn vicbtn-green">Change</button>
-        </div>
-      </form>
-    </div>
-  </div>
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="custompanel">
+			<div class="modal-header">
+				<h5 class="modal-title" id="ChangePasswordModalLabel">Change password</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form>
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="current_password">Current Password</label>
+						<input class="victext-input" type="password" placeholder="password" name="current_password">
+					</div>
+					<div class="form-group">
+						<label for="new_password">New Password</label>
+						<input class="victext-input" type="password" placeholder="password" name="new_password">
+					</div>
+					<div class="form-group">
+						<label for="new_password_again">New Password Again</label>
+						<input class="victext-input" type="password" placeholder="password" name="new_password_again">
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="vicbtn vicbtn-blue" data-dismiss="modal">Close</button>
+					<button type="submit" class="vicbtn vicbtn-green">Change</button>
+				</div>
+			</form>
+		</div>
+	</div>
 </div>
 {% endblock %}

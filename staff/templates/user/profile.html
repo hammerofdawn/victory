@@ -38,8 +38,8 @@
 					</div>
 					<div>
 						<button class="vicbtn vicbtn-blue">Message</button>
-						{% if requested_user.extendeduser.pk == request.user.id %}
-						<a href="{% url 'usersettings' %}" class="vicbtn vicbtn-blue">Edit</a>
+						{% if editable %}
+						<a href="{% url 'usersettings' requested_user.extendeduser.pk %}" class="vicbtn vicbtn-blue">Edit</a>
 						{% endif %}
 						<button class="vicbtn vicbtn-red">Write Review</button>
 					</div>

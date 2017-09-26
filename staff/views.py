@@ -123,28 +123,32 @@ def users(request):
 		'users': users,
 	}
 
-	return render(request, 'usertemplates/users.html', context)
+	return render(request, 'users.html', context)
 
 @login_required
 def user(request, user_pk):
 	logged_in_user = get_object_or_404(User, pk=request.user.pk)
 	requested_user = get_object_or_404(User, pk=user_pk)
+
 	context = {
 		'logged_in_user': logged_in_user,
 		'requested_user': requested_user,
+		'editable': True # Has to do actual permission logic.
 	}
 
-	return render(request, 'usertemplates/user.html', context)
+	return render(request, 'user/profile.html', context)
 
-def usersettings(request):
+def usersettings(request, user_pk):
 	if request.user.id:
-		logged_in_user = get_object_or_404(User, pk=request.user.id)
+		logged_in_user = get_object_or_404(User, pk=request.user.pk)
+		requested_user = get_object_or_404(User, pk=user_pk)
 		driverslicence = DriversLicenceCategories.objects.all()
 		context = {
-			'driverslicence': driverslicence,
 			'logged_in_user': logged_in_user,
+			'requested_user': requested_user,
+			'driverslicence': driverslicence,
 		}
-		return render(request, 'usertemplates/usersettings.html', context)
+		return render(request, 'user/settings.html', context)
 	else:
 		return redirect('/staff/home')
 
