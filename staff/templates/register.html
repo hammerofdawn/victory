@@ -29,13 +29,15 @@
 	          		Used for logging in, and also your display name.
 	          </small>
 					</div>
-					<div class="form-group">
-						<label class="viclabelline-bottom" for="id_first_name">First Name</label>
-						<input required type="text" class="victext-input vic-block full-width" id="id_first_name" name="first_name" placeholder="Peter">
-					</div>
-					<div class="form-group">
-						<label class="viclabelline-bottom" for="id_last_name">Last Name</label>
-						<input required type="text" class="victext-input vic-block full-width" id="id_last_name" name="last_name" placeholder="Petersen">
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							<label class="viclabelline-bottom" for="id_first_name">First Name</label>
+							<input required type="text" class="victext-input vic-block full-width" id="id_first_name" name="first_name" placeholder="Peter">
+						</div>
+						<div class="form-group col-md-6">
+							<label class="viclabelline-bottom" for="id_last_name">Last Name</label>
+							<input required type="text" class="victext-input vic-block full-width" id="id_last_name" name="last_name" placeholder="Petersen">
+						</div>
 					</div>
 					<div class="form-group">
 						<label class="viclabelline-bottom" for="id_email">Email</label>
@@ -45,9 +47,19 @@
 						<label class="viclabelline-bottom" for="id_phone">Phone (Mobile with countrycode)</label>
 						<input required type="tel" class="victext-input vic-block full-width" id="id_phone" name="phone" placeholder="+4512345678">
 						<small id="phoneHelpBlock" class="form-text text-muted">
-	          		Used to contact you and also for 2 factor authendication.
+	          		Used to contact you and also for 2 factor authentication.
 	          </small>
 					</div>
+					<div class="form-row">
+				    <div class="form-group col-md-6">
+							<label class="viclabelline-bottom" for="id_postal_code">Postal code</label>
+							<input required type="text" class="victext-input vic-block full-width" id="id_postal_code" name="postal_code" placeholder="1577">
+				    </div>
+				    <div class="form-group col-md-6">
+							<label class="viclabelline-bottom" for="id_city">City</label>
+							<input required type="text" class="victext-input vic-block full-width" id="id_city" name="city" placeholder="Copenhagen">
+				    </div>
+				  </div>
 					<hr>
 					<div class="form-group">
 						<label class="viclabelline-bottom" for="id_password">Password</label>
