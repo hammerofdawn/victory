@@ -14,7 +14,7 @@ from .models import (
 	Sock,
 	Review,
 	Alert,
-	Unauthenticated_session,
+	UnauthenticatedSession,
 )
 
 class UserInline(admin.StackedInline):
@@ -28,6 +28,8 @@ class UserAdmin(BaseUserAdmin):
 class TeamAdmin(admin.ModelAdmin):
 	filter_horizontal = ['teamleaders']
 
+class UnauthenticatedSessionAdmin(admin.ModelAdmin):
+	list_display = ('user', 'token', 'successful')
 
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
@@ -39,4 +41,4 @@ admin.site.register(TShirt)
 admin.site.register(Sock)
 admin.site.register(Review)
 admin.site.register(Alert)
-admin.site.register(Unauthenticated_session)
+admin.site.register(UnauthenticatedSession, UnauthenticatedSessionAdmin)

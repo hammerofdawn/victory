@@ -77,10 +77,13 @@ class Alert(models.Model):
 	start = models.DateTimeField()
 	end = models.DateTimeField()
 
-class Unauthenticated_session(models.Model):
+class UnauthenticatedSession(models.Model):
 	user = models.ForeignKey(User)
 	token = models.CharField(max_length=36)
 	otp = models.PositiveSmallIntegerField()
 	created = models.DateTimeField(auto_now_add=True)
 	guesses_left = models.PositiveSmallIntegerField(default=3)
 	successful = models.BooleanField(default=False)
+
+	def __str__(self):
+		return self.user.username
