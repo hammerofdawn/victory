@@ -11,14 +11,15 @@ Users - Chaos, Genki
 	<div class="container">
 		<h1 class="line-top">Users.</h1>
 		<div>
-			<a href="list" class="vicbtn vicbtn-blue vic-bb-3-blue">List Users</a>
+			<button id="listviewbtn" onclick="listview()" class="vicbtn vicbtn-blue vic-bb-3-blue">List Users</button>
+			<button id="browseviewbtn" onclick="browseviewbtn()" style="display:none;" class="vicbtn vicbtn-blue vic-bb-3-blue">Browse Users</button>
 			<form class="search-width" style="display: inline-flex;" action="../search" method="post">
 				<input class="victext-input" type="text" placeholder="Search" name="search" value="">
 				<button type="submit" class="vicbtn vicbtn-blue vic-bb-3-blue">Search</button>
 			</form>
 		</div>
 			<div class="custompanel">
-				<div>
+				<div id="browseview">
 					<ul class="usr-list user-list">
 						{% for user in users %}
 						<li>
@@ -29,12 +30,60 @@ Users - Chaos, Genki
 								</div>
 								<div class="hover-wrapper">
 									<label class="title one-line-ellipsis">{{ user.extendeduser.nickname }}</label>
+									{% if user.extendeduser.phone_number %}
 									<label class="title one-line-ellipsis">Phone: {{ user.extendeduser.phone_number }}</label>
+									{% else %}
+									<label class="title one-line-ellipsis">Phone: None</label>
+									{% endif %}
 								</div>
 							</a>
 						</li>
 						{% endfor %}
 					</ul>
+				</div>
+				<div style="display:none;" id="listviewfield">
+					<table class="one-line">
+						<thead>
+							<tr>
+								<th>
+									<a href="#">Name<span class="fa fa-sort"></span></a>
+								</th>
+								<th>
+									<a href="#">Phone<span class="fa fa-sort"></span></a>
+								</th>
+								<th class="col-xs-hidden col-md-visible">
+									<a href="#">Team<span class="fa fa-sort"></span></a>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for user in users %}
+							<tr>
+								<td>
+									<a href="{% url 'user' user.pk %}">
+										<b>{{ user.extendeduser.nickname }}</b>
+									</a>
+								</td>
+								<td>
+									{% if user.extendeduser.phone_number %}
+									<a href="tel:{{ user.extendeduser.phone_number }}">
+										{{ user.extendeduser.phone_number }}
+									</a>
+									{% else %}
+									<a href="#">
+										None
+									</a>
+									{% endif %}
+								</td>
+								<td class="col-xs-hidden col-md-visible">
+									<a href="{% url 'teams' %}">
+										-//-
+									</a>
+								</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>

@@ -13,34 +13,83 @@ Teams - Chaos, Genki
 		<h1 class="line-top">Teams.</h1>
 		<div>
 			<a href="apply" class="vicbtn vicbtn-green vic-bb-3-green">Apply</a>
-			<button class="vicbtn vicbtn-blue vic-bb-3-blue">List Teams</button>
+			<button id="listviewbtn" onclick="listview()" class="vicbtn vicbtn-blue vic-bb-3-blue">List Users</button>
+			<button id="browseviewbtn" onclick="browseviewbtn()" style="display:none;" class="vicbtn vicbtn-blue vic-bb-3-blue">Browse Users</button>
 			<form class="search-width" style="display: inline-flex;" action="../search" method="post">
 				<input class="victext-input" type="text" placeholder="Search" name="search" value="">
 				<button type="submit" class="vicbtn vicbtn-blue vic-bb-3-blue">Search</button>
 			</form>
 		</div>
 		<div class="custompanel">
+			<div id="browseview">
 			{% for team in teams %}
-			<div class="team" title="{{ team.name }}">
-				<div class="bgbox bgbox--browse">
-					<div class="banner banner--scaled">
-						<div class="banner" style="background-image: url('{{ team.background.url }}')"></div>
-						<div class="banner-shade banner-shade--darker"></div>
-					</div>
-					<div class="cl-white">
-						<div class="details-box clearfix">
-							<a href="/staff/teams/{{ team.id }}">
-								<img class="artwork" src="{{ team.logo.url }}">
-								<h2>{{ team.name }}</h2>
-							</a>
-							<h3>Team Leader(s): <a href="/users/id"><u>%%%</u></a></h3>
-							<label>People Needed: {{ team.people_needed }}</label>
-							<label>Base Requirements: {{ team.requirements }}</label>
+				<div class="team" title="{{ team.name }}">
+					<div class="bgbox bgbox--browse">
+						<div class="banner banner--scaled">
+							<div class="banner" style="background-image: url('{{ team.background.url }}')"></div>
+							<div class="banner-shade banner-shade--darker"></div>
+						</div>
+						<div class="cl-white">
+							<div class="details-box clearfix">
+								<a href="/staff/teams/{{ team.id }}">
+									<img class="artwork" src="{{ team.logo.url }}">
+									<h2>{{ team.name }}</h2>
+								</a>
+								<h3>Team Leader(s): <a href="/users/id"><u>%%%</u></a></h3>
+								<label>People Needed: {{ team.people_needed }}</label>
+								<label>Base Requirements: {{ team.requirements }}</label>
+							</div>
 						</div>
 					</div>
 				</div>
+				{% endfor %}
 			</div>
-			{% endfor %}
+			<div style="display:none;" id="listviewfield">
+				<table class="one-line">
+					<thead>
+						<tr>
+							<th>
+								<a href="#">Team Name<span class="fa fa-sort"></span></a>
+							</th>
+							<th class="col-xs-hidden col-md-visible">
+								<a href="#">Team Leaders<span class="fa fa-sort"></span></a>
+							</th>
+							<th>
+								<a href="#">Team max<span class="fa fa-sort"></span></a>
+							</th>
+							<th class="col-xs-hidden col-md-visible">
+								<a href="#">Requirements<span class="fa fa-sort"></span></a>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for team in teams %}
+						<tr>
+							<td>
+								<a href="/staff/teams/{{ team.id }}">
+									{{ team.name }}
+								</a>
+							</td>
+							<td class="col-xs-hidden col-md-visible">
+								<a href="{% url 'users' %}">
+									%%%
+								</a>
+							</td>
+							<td>
+								<p>{{ team.people_needed }}</p>
+							</td>
+							<td class="col-xs-hidden col-md-visible">
+							{% if team.requirements %}
+								<p>{{ team.requirements }}</p>
+							{% else %}
+								<p>None</p>
+							{% endif %}
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
 </section>
