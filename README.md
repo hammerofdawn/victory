@@ -35,7 +35,7 @@ Then do regular Django stuff. This will be elaborated later.
 * [Django](https://www.djangoproject.com/) - Web framework.
 * [virtualenv](https://virtualenv.pypa.io/en/stable/) - Isolated Python environments.
 * [Bootstrap](https://getbootstrap.com/) - Front-end component library.
-* [Font Awesome 5 Pro](https://fontawesome.com/) - Icon library/SVG Framework.
+* [Font Awesome 4](https://fontawesome.com/) - Icon library.
 * [tel.dk](https://tel.dk/) - SMS gateway.
 
 ## Contributing
