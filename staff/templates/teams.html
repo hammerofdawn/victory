@@ -13,8 +13,8 @@ Teams - Chaos, Genki
 		<h1 class="line-top">Teams.</h1>
 		<div>
 			<a href="apply" class="vicbtn vicbtn-green vic-bb-3-green">Apply</a>
-			<button id="listviewbtn" onclick="listview()" class="vicbtn vicbtn-blue vic-bb-3-blue">List Teams</button>
-			<button id="browseviewbtn" onclick="browseviewbtn()" style="display:none;" class="vicbtn vicbtn-blue vic-bb-3-blue">Browse Teams</button>
+			<button id="listviewbtn" onclick="listview()" class="vicbtn vicbtn-blue vic-bb-3-blue">List Users</button>
+			<button id="browseviewbtn" onclick="browseviewbtn()" style="display:none;" class="vicbtn vicbtn-blue vic-bb-3-blue">Browse Users</button>
 			<form class="search-width" style="display: inline-flex;" action="../search" method="post">
 				<input class="victext-input" type="text" placeholder="Search" name="search" value="">
 				<button type="submit" class="vicbtn vicbtn-blue vic-bb-3-blue">Search</button>
@@ -22,7 +22,7 @@ Teams - Chaos, Genki
 		</div>
 		<div class="custompanel">
 			<div id="browseview">
-			{% for team in teams %}
+				{% for team in teams %}
 				<div class="team" title="{{ team.name }}">
 					<div class="bgbox bgbox--browse">
 						<div class="banner banner--scaled">
