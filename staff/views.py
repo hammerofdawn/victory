@@ -13,9 +13,37 @@ from uuid import uuid4
 from random import randint
 import requests
 from requests.auth import HTTPBasicAuth
+import os
 
 
 # Create your views here.
+
+def index(request):
+	if request.user.is_authenticated():
+		logged_in_user = get_object_or_404(User, pk=request.user.pk)
+		articles = Article.objects.all()
+
+		context = {
+			'logged_in_user': logged_in_user,
+			'articles': articles,
+		}
+
+		return render(request, 'dashboard.html', context)
+	else:
+		return render(request, 'welcome.html')
+
+def teams(request):
+	teams = Team.objects.all()
+
+	context = {
+		'teams': teams,
+	}
+
+	if request.user.is_authenticated():
+		logged_in_user = get_object_or_404(User, pk=request.user.pk)
+		context['logged_in_user'] = logged_in_user
+
+	return render(request, 'teams.html', context)
 
 def login(request):
 	if request.method == 'POST':
@@ -32,7 +60,6 @@ def login(request):
 			otp = otpdigit1 + otpdigit2 + otpdigit3 + otpdigit4
 
 			if len(otp) == 4:
-				print(token)
 				ua = UnauthenticatedSession.objects.get(token=str(token))
 
 				if int(otp) == ua.otp:
@@ -61,8 +88,8 @@ def login(request):
 
 				r = requests.post("https://api.tel.dk/api/1.0/message",
 					auth=HTTPBasicAuth(
-						'EMAIL',
-						'SECRET'
+						os.environ['VICTORY_TELDK_EMAIL'],
+						os.environ['VICTORY_TELDK_SECRET'],
 					), headers={
 						'content-type': 'application/x-www-form-urlencoded',
 						'charset': 'utf-8',
@@ -86,33 +113,18 @@ def login(request):
 				return render(request, "login.html", {'invalid': True })
 		else:
 			return render(request, "login.html")
-
-
 	else:
 		return render(request, 'login.html')
 
-def welcome(request):
-	return render(request, 'welcome.html', {})
+#def welcome(request):
+#	return render(request, 'welcome.html', {})
 
 def logout(request):
 	auth_logout(request)
-	return redirect('login')
+	return redirect('index')
 
 def register(request):
 	return render(request, 'register.html', {})
-
-@login_required
-def index(request):
-	logged_in_user = get_object_or_404(User, pk=request.user.pk)
-	articles = Article.objects.all()
-
-	context = {
-		'logged_in_user': logged_in_user,
-		'articles': articles,
-	}
-
-	return render(request, 'dashboard.html', context)
-
 
 @login_required
 def users(request):
@@ -151,18 +163,6 @@ def usersettings(request, user_pk):
 		return render(request, 'user/settings.html', context)
 	else:
 		return redirect('/staff/home')
-
-
-@login_required
-def teams(request):
-	logged_in_user = get_object_or_404(User, pk=request.user.pk)
-	teams = Team.objects.all()
-	context = {
-		'logged_in_user': logged_in_user,
-		'teams': teams,
-	}
-
-	return render(request, 'teams.html', context)
 
 @login_required
 def team(request, team_pk):
