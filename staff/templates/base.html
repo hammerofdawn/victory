@@ -14,7 +14,7 @@
 		</title>
 		<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 		<link rel="stylesheet" href="{% static 'css/dark.css' %}">
-		<script src="https://use.fontawesome.com/9a965477d7.js"></script>
+		<link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
 		{% block header %}
 		{% endblock %}
 	</head>
@@ -33,6 +33,7 @@
 								<small class="brt axz">Dashboard</small>
 							</a>
 						</li>
+
 						{% url 'teams' as url_teams %}
 						<li class="qp">
 							<a class="qn navicons {% if request.get_full_path == url_teams %} vic-active {% endif %}" href="{{ url_teams }}" title="Teams" data-toggle="tooltip" data-placement="right">
@@ -40,13 +41,17 @@
 								<small class="brt axz">Teams</small>
 							</a>
 						</li>
-						{% url 'team' as url_team %}
+
+						{% for team in thisdoesnotexistplz %}
 						<li class="qp">
 							<a class="qn navicons" href="/staff/teams/0" title="My Team" data-toggle="tooltip" data-placement="right">
 								<i class="fa fa-bookmark" aria-hidden="true"></i>
 								<small class="brt axz">My Team</small>
 							</a>
 						</li>
+						{% endfor %}
+
+						{% if user.is_authenticated %}
 						{% url 'users' as url_users %}
 						<li class="qp">
 							<a class="qn navicons {% if request.get_full_path == url_users %} vic-active {% endif %}" href="{% url 'users' %}" title="All users" data-toggle="tooltip" data-placement="right">
@@ -54,6 +59,9 @@
 								<small class="brt axz">Users</small>
 							</a>
 						</li>
+						{% endif %}
+
+						{% if user.is_authenticated %}
 						{% url 'user' request.user.pk as url_user %}
 						<li class="qp">
 							<a class="qn navicons {% if request.get_full_path == url_user %} vic-active {% endif %}" href="{{ url_user }}" title="My Profile" data-toggle="tooltip" data-placement="right">
@@ -61,6 +69,8 @@
 								<small class="brt axz">Profile</small>
 							</a>
 						</li>
+						{% endif %}
+
 						{% if request.user.is_superuser %}
 						<li class="qp">
 							<a class="qn navicons" href="{% url 'index' %}" title="Chaos Settings" data-toggle="tooltip" data-placement="right">
@@ -69,12 +79,30 @@
 							</a>
 						</li>
 						{% endif %}
+
+						{% if user.is_authenticated %}
 						<li class="qp">
-							<a class="qn navicons" href="{% url 'logout' %}" title="Signout" data-toggle="tooltip" data-placement="right">
+							<a class="qn navicons" href="{% url 'logout' %}" title="Log out" data-toggle="tooltip" data-placement="right">
 								<i class="fa fa-sign-out" aria-hidden="true"></i>
-								<small class="brt axz">Signout</small>
+								<small class="brt axz">Log out</small>
 							</a>
 						</li>
+						{% else %}
+						{% url 'login' as url_login %}
+						<li class="qp">
+							<a class="qn navicons {% if request.get_full_path == url_login %} vic-active {% endif %}" href="{% url 'login' %}" title="Log in" data-toggle="tooltip" data-placement="right">
+								<i class="fa fa-sign-in" aria-hidden="true"></i>
+								<small class="brt axz">Log in</small>
+							</a>
+						</li>
+						{% url 'register' as url_register %}
+						<li class="qp">
+							<a class="qn navicons {% if request.get_full_path == url_register %} vic-active {% endif %}" href="{% url 'register' %}" title="Register" data-toggle="tooltip" data-placement="right">
+								<i class="fa fa-user-plus" aria-hidden="true"></i>
+								<small class="brt axz">Register</small>
+							</a>
+						</li>
+						{% endif %}
 					</ul>
 				 </div>
 			</nav>

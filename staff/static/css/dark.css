@@ -672,46 +672,46 @@ a.silent {
 		transition: all 0.4s ease;
 }
 .details-box > h3 > a > u {
-		color: white;
-		transition: all 0.4s ease;
+	color: white;
+	transition: all 0.4s ease;
 }
 .details-box > h3 > a > u:hover,
 .details-box > h3 > a > u:focus {
-		color: dodgerblue;
-		transition: all 0.4s ease;
+	color: dodgerblue;
+	transition: all 0.4s ease;
 }
 
 .nav-tabs {
-		border-bottom: 0px !important;
+	border-bottom: 0px !important;
 }
 
 .vic-tablink {
-		display: block;
-		padding: .5rem 1rem;
-		border: 3px solid dodgerblue;
-		border-radius: unset;
-		font-weight: bold;
-		letter-spacing: 1px;
-		text-transform: uppercase;
-		background-color: #252830;
-		text-decoration: none;
+	display: block;
+	padding: .5rem 1rem;
+	border: 3px solid dodgerblue;
+	border-radius: unset;
+	font-weight: bold;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	background-color: #252830;
+	text-decoration: none;
 }
 
 .vic-tablink:focus,
 .vic-tablink:active,
 .vic-tablink:hover {
-		background-color: dodgerblue;
-		color: white;
-		text-decoration: none !important;
+	background-color: dodgerblue;
+	color: white;
+	text-decoration: none !important;
 }
 
 .vic-tablink.active {
-		background-color: dodgerblue;
-		color: white;
+	background-color: dodgerblue;
+	color: white;
 }
 
 .vic-tablink.vic-tablink-red{
-		border-color: #dc3545;
+	border-color: #dc3545;
 }
 
 .vic-tablink-red.active {
@@ -727,63 +727,63 @@ a.silent {
 }
 
 .switch {
-		position: absolute;
-		margin-left: 6px;
-		display: inline-flex;
-		width: 40px;
-		height: 24px;
+	position: absolute;
+	margin-left: 6px;
+	display: inline-flex;
+	width: 40px;
+	height: 24px;
 }
 
 .switch input {
-		display: none;
+	display: none;
 }
 
 .slider {
-		position: absolute;
-		cursor: pointer;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		background-color: #ccc;
-		-webkit-transition: .4s;
-		transition: .4s;
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #ccc;
+	-webkit-transition: .4s;
+	transition: .4s;
 }
 .slider:before {
-		position: absolute;
-		content: "";
-		height: 16px;
-		width: 16px;
-		left: 4px;
-		bottom: 4px;
-		background-color: white;
-		-webkit-transition: .4s;
-		transition: .4s;
+	position: absolute;
+	content: "";
+	height: 16px;
+	width: 16px;
+	left: 4px;
+	bottom: 4px;
+	background-color: white;
+	-webkit-transition: .4s;
+	transition: .4s;
 }
 input:checked + .slider {
-		background-color: #2196F3;
+	background-color: #2196F3;
 }
 input:focus + .slider {
-		box-shadow: 0 0 1px #2196F3;
+	box-shadow: 0 0 1px #2196F3;
 }
 input:checked + .slider:before {
-		-webkit-transform: translateX(16px);
-		-ms-transform: translateX(16px);
-		transform: translateX(16px);
+	-webkit-transform: translateX(16px);
+	-ms-transform: translateX(16px);
+	transform: translateX(16px);
 }
 
 .slider.round {
-		border-radius: 34px;
+	border-radius: 34px;
 }
 .slider.round:before {
-		border-radius: 50%;
+	border-radius: 50%;
 }
 .select2 {
-		width: 100%!important;
+	width: 100%!important;
 }
 
 .full-width {
-		width:100% !important;
+	width:100% !important;
 }
 
 .vicbtn-bottom{
@@ -799,88 +799,88 @@ input:checked + .slider:before {
 }
 
 .vicbtn {
-		display: inline-block;
-		text-align: center;
-		border-bottom: none;
-		border-left: none;
-		border-top: none;
-		border-right: none;
-		text-decoration: none;
-		cursor: pointer;
-		letter-spacing: 2px;
-		white-space: nowrap;
-		vertical-align: middle;
-		text-transform: uppercase;
-		font-size: 14px;
-		font-weight: bold;
-		padding: 0.6em 0.8em 0.6em 0.8em;
-		-webkit-transition: background 0.5s ease, color 0.4s ease, border-color 0.5s ease, all 0.4s ease;
-		transition: background 0.5s ease, color 0.4s ease, border-color 0.5s ease, all 0.4s ease;
+	display: inline-block;
+	text-align: center;
+	border-bottom: none;
+	border-left: none;
+	border-top: none;
+	border-right: none;
+	text-decoration: none;
+	cursor: pointer;
+	letter-spacing: 2px;
+	white-space: nowrap;
+	vertical-align: middle;
+	text-transform: uppercase;
+	font-size: 14px;
+	font-weight: bold;
+	padding: 0.6em 0.8em 0.6em 0.8em;
+	-webkit-transition: background 0.5s ease, color 0.4s ease, border-color 0.5s ease, all 0.4s ease;
+	transition: background 0.5s ease, color 0.4s ease, border-color 0.5s ease, all 0.4s ease;
 }
 
 .vicbtn-blue {
-		background: dodgerblue;
-		color: white;
+	background: dodgerblue;
+	color: white;
 }
 .vicbtn-blue:hover,
 .vicbtn-blue:focus {
-		text-decoration: none;
-		background: #383838;
-		color: white;
+	text-decoration: none;
+	background: #383838;
+	color: white;
 }
 
 .vicbtn-yellow {
-		background: #ffc107;
-		color: #000;
+	background: #ffc107;
+	color: #000;
 }
 .vicbtn-yellow:hover,
 .vicbtn-yellow:focus {
-		text-decoration: none;
-		background: #383838;
-		color: White;
+	text-decoration: none;
+	background: #383838;
+	color: White;
 }
 
 .vicbtn-red {
-		background: #dc3545;
-		color: white;
+	background: #dc3545;
+	color: white;
 }
 .vicbtn-red:hover,
 .vicbtn-red:focus {
-		text-decoration: none;
-		background: #383838;
-		color: White;
+	text-decoration: none;
+	background: #383838;
+	color: White;
 }
 
 .vicbtn-green {
-		background: #28a745;
-		color: white;
+	background: #28a745;
+	color: white;
 }
 .vicbtn-green:hover,
 .vicbtn-green:focus {
-		text-decoration: none;
-		background: #383838;
-		color: White;
+	text-decoration: none;
+	background: #383838;
+	color: White;
 }
 
 .victext-input {
-			display: inline-block;
-			font-size: 14px;
-			box-shadow: 0 0 0;
-			border: 0;
-			border-radius: 0;
-			border-bottom: 3px solid #ccc;
-			background: #eee;
-			padding: 0.6em 0.8em 0.6em 0.8em;
-			transition: border-color .4s ease;
+	display: inline-block;
+	font-size: 14px;
+	box-shadow: 0 0 0;
+	border: 0;
+	border-radius: 0;
+	border-bottom: 3px solid #ccc;
+	background: #eee;
+	padding: 0.6em 0.8em 0.6em 0.8em;
+	transition: border-color .4s ease;
 }
 
 .victext-input:focus,
 .victext-input:active {
-		outline: none;
-		-webkit-box-shadow: none !important;
-		-moz-box-shadow: none !important;
-		box-shadow: none !important;
-		border-bottom: 3px solid dodgerblue;
+	outline: none;
+	-webkit-box-shadow: none !important;
+	-moz-box-shadow: none !important;
+	box-shadow: none !important;
+	border-bottom: 3px solid dodgerblue;
 }
 
 .vic-bb-3-blue {
@@ -903,26 +903,26 @@ input:checked + .slider:before {
 .vic-bb-3-red:focus,
 .vic-bb-3-green:hover,
 .vic-bb-3-green:focus {
-		border-bottom: 3px solid #383838;
+	border-bottom: 3px solid #383838;
 }
 
 @media screen and (max-width: 768px) {
-		.vicbtn,
-		.victext-input {
-			width: 100%;
-			margin-bottom: 0.2em;
-		}
+	.vicbtn,
+	.victext-input {
+		width: 100%;
+		margin-bottom: 0.2em;
+	}
 
-		.search-width {
-			width: 100%;
-		}
+	.search-width {
+		width: 100%;
+	}
 }
 
 
 
 .userinfobox {
-		padding: 0.6em 0.8em 0.5em 0.8em;
-		color: #000;
-		background-color: #eee;
-		border-bottom: 3px solid #ccc;
+	padding: 0.6em 0.8em 0.5em 0.8em;
+	color: #000;
+	background-color: #eee;
+	border-bottom: 3px solid #ccc;
 }
