@@ -9,22 +9,26 @@
 {% block content %}
 <div class="bgbox">
 	<div class="banner banner--scaled">
-		<div class="banner" style="background-image: url('{% static 'img/teambg/18plus.jpg' %}')"></div>
+		<div class="banner" style="background-image: url('{{ requested_team.background.url }}')"></div>
 		<div class="banner-shade banner-shade--darker"></div>
 	</div>
 	<section role="content">
 		<div class="container">
 			<div class="cl-white">
 				<div class="details-box clearfix">
-					<img class="artwork" src="{% static 'img/teamlogo/18pluslaunge.png' %}">
-					<h1 class="line-topwhite">18+ Launge</h1>
+					<img class="artwork" src="{{ requested_team.logo.url }}">
+					<h1 class="line-topwhite">{{ requested_team.name }}</h1>
 					<h3>Team Leader: <a href="/users/id"><u>Alexander Holtz</u></a></h3>
 					<h4>People Needed: 3/3</h4>
 					<h4>Base Requirements: 18 years or older, ready to work up to 14 hours</h4>
 					<label>This team is full and doesn't accept any more applications at the moment.</label>
 					<div>
-						<button disabled class="vicbtn vicbtn-green">Apply</button>
+						{% if user.is_authenticated %}
+						<button class="vicbtn vicbtn-green">Apply</button>
+						{% endif %}
+						{% if userhaspermissionthatdoesnotexistyet %}
 						<button class="vicbtn vicbtn-blue">Edit</button>
+						{% endif %}
 					</div>
 				</div>
 			</div>
