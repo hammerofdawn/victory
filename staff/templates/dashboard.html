@@ -20,11 +20,11 @@ Dashboard - Chaos, Genki
 			{% for article in articles %}
 			<div class="post">
 				<div class="postinfo">
-					<p class="postowner">{{ article.author.extendeduser.nickname }} <span class="float-right">{{ article.created|date:"F j, Y, H:i"}}</span></p>
+					<p class="postowner"><a href="{% url 'user' article.author.pk %}">{{ article.author.extendeduser.nickname }}</a><span class="float-right">{{ article.created|date:"F j, Y, H:i"}}</span></p>
 					<p class="posttitle line-topsmall">{{ article.title }}</p>
 				</div>
 				<div class="postcontent">
-					{{ article.body }}
+					{{ article.body|linebreaksbr }}
 				</div>
 			</div>
 			{% endfor %}

@@ -150,25 +150,33 @@ def user(request, user_pk):
 
 	return render(request, 'user/profile.html', context)
 
-def usersettings(request, user_pk):
-	if request.user.id:
-		logged_in_user = get_object_or_404(User, pk=request.user.pk)
-		requested_user = get_object_or_404(User, pk=user_pk)
-		driverslicence = DriversLicenceCategories.objects.all()
-		context = {
-			'logged_in_user': logged_in_user,
-			'requested_user': requested_user,
-			'driverslicence': driverslicence,
-		}
-		return render(request, 'user/settings.html', context)
-	else:
-		return redirect('/staff/home')
-
 @login_required
-def team(request, team_pk):
+def usersettings(request, user_pk):
 	logged_in_user = get_object_or_404(User, pk=request.user.pk)
+	requested_user = get_object_or_404(User, pk=user_pk)
+	driverslicence = DriversLicenceCategories.objects.all()
+
 	context = {
 		'logged_in_user': logged_in_user,
+		'requested_user': requested_user,
+		'driverslicence': driverslicence,
 	}
 
+	return render(request, 'user/settings.html', context)
+
+def team(request, team_pk):
+	requested_team = get_object_or_404(Team, pk=team_pk)
+
+	context = {
+		'requested_team': requested_team,
+	}
+
+	if request.user.is_authenticated():
+		logged_in_user = get_object_or_404(User, pk=request.user.pk)
+		context['logged_in_user'] = logged_in_user
+
 	return render(request, 'team.html', context)
+
+@login_required
+def apply(request):
+	return render(request, 'apply.html')

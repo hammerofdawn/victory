@@ -4,15 +4,35 @@ from django.contrib.auth.models import User
 from django.core.validators import RegexValidator, MinValueValidator, MaxValueValidator
 
 # Create your models here.
+
 class Team(models.Model):
 	name = models.CharField(max_length=16)
 	logo = models.ImageField(upload_to='teams/avatars')
 	background = models.ImageField(upload_to='teams/backgrounds')
 	requirements = models.TextField(blank=True)
 	people_needed = models.PositiveSmallIntegerField()
-	teamleaders = models.ManyToManyField(User)
+	members = models.ManyToManyField(User, through='TeamMembership')
+
 	def __str__(self):
 		return self.name
+
+class TeamMembership(models.Model):
+	user = models.ForeignKey(User)
+	team = models.ForeignKey(Team)
+	leader = models.BooleanField()
+
+class Group(models.Model):
+	name = models.CharField(max_length=32)
+	members = models.ManyToManyField(User, through='GroupMembership')
+	team = models.ForeignKey(Team)
+
+	def __str__(self):
+		return self.name
+
+class GroupMembership(models.Model):
+	user = models.ForeignKey(User)
+	group = models.ForeignKey(Group)
+	leader = models.BooleanField()
 
 class DriversLicenceCategories(models.Model): # No plural
 	category = models.CharField(max_length=3)
