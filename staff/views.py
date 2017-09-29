@@ -167,6 +167,18 @@ def usersettings(request, user_pk):
 
 	return render(request, 'user/settings.html', context)
 
+@login_required
+def usersettingsdescription(request, user_pk):
+	logged_in_user = get_object_or_404(User, pk=request.user.pk)
+	requested_user = get_object_or_404(User, pk=user_pk)
+
+	context = {
+		'logged_in_user': logged_in_user,
+		'requested_user': requested_user,
+	}
+
+	return render(request, 'user/description.html', context)
+
 def team(request, team_pk):
 	requested_team = get_object_or_404(Team, pk=team_pk)
 
