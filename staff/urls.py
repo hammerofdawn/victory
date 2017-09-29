@@ -12,6 +12,7 @@ urlpatterns = [
 	url(r'^users/(?P<user_pk>[0-9]+)/$', views.user, name='user'),
 	url(r'^users/(?P<user_pk>[0-9]+)/settings/$', views.usersettings, name='usersettings'),
 	url(r'^users/(?P<user_pk>[0-9]+)/settings/description$', views.usersettingsdescription, name='usersettingsdescription'),
+	url(r'^users/(?P<user_pk>[0-9]+)/settings/image$', views.usersettingsimage, name='usersettingsimage'),
 	url(r'^teams/$', views.teams, name='teams'),
 	url(r'^teams/(?P<team_pk>[0-9]+)/$', views.team, name='team'),
 	url(r'^apply/$', views.apply, name='apply'),

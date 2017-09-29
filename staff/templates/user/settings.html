@@ -20,7 +20,7 @@ User Settings - Chaos, Genki
 		<div>
 			<a href="{% url 'usersettings' requested_user.extendeduser.pk %}" class="vicbtn vicbtn-green">General</a>
 			<a href="{% url 'usersettingsdescription' requested_user.extendeduser.pk %}" class="vicbtn vicbtn-blue">Description</a>
-			<a href="#" class="vicbtn vicbtn-blue">Profile images</a>
+			<a href="{% url 'usersettingsimage' requested_user.extendeduser.pk %}" class="vicbtn vicbtn-blue">Profile images</a>
 			<button type="button" class="vicbtn vicbtn-blue" data-toggle="modal" data-target="#changepassword">Change Password</button>
 		</div>
 		<div class="custompanel">
