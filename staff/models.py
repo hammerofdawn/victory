@@ -9,9 +9,28 @@ class Team(models.Model):
 	name = models.CharField(max_length=16)
 	logo = models.ImageField(upload_to='teams/avatars')
 	background = models.ImageField(upload_to='teams/backgrounds')
-	requirements = models.TextField(blank=True)
+	description = models.TextField(blank=True)
 	people_needed = models.PositiveSmallIntegerField()
 	members = models.ManyToManyField(User, through='TeamMembership')
+	accepts_applications = models.BooleanField()
+
+	@property
+	def teamleaders_listable(self):
+		leaders = self.members.filter(teammembership__leader=True)
+		string = leaders[0].extendeduser.nickname
+
+		for leader in leaders[1:]:
+			string += ", " + leader.extendeduser.nickname
+
+		return string
+
+	@property
+	def multiple_teamleaders(self):
+		if len(self.members.filter(teammembership__leader=True)) > 1:
+			return True
+		else:
+			return False
+
 
 	def __str__(self):
 		return self.name

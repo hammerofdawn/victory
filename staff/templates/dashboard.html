@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block title %}
-Dashboard - Chaos, Genki
+Victory
 {% endblock %}
 
 {% block content %}
@@ -11,12 +11,14 @@ Dashboard - Chaos, Genki
 	<div class="container">
 		<h1 class="line-top">Hello {{ user.extendeduser.nickname }}.</h1>
 		<div class="custompanel">
+			{% if searchfunctionisimplemented %}
 			<div style="margin-bottom:10px;">
 				<form class="search-width" style="display: inline-flex;" action="search" method="post">
 					<input class="victext-input" type="text" placeholder="Search" name="search" value="">
 					<button type="submit" class="vicbtn vicbtn-blue vic-bb-3-blue">Search</button>
 				</form>
 			</div>
+			{% endif %}
 			{% for article in articles %}
 			<div class="post">
 				<div class="postinfo">

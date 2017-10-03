@@ -37,11 +37,15 @@
 						{% endif %}
 					</div>
 					<div>
+						{% if thisshouldnotexist %}
 						<button class="vicbtn vicbtn-blue">Message</button>
+						{% endif %}
 						{% if editable %}
 						<a href="{% url 'usersettings' requested_user.extendeduser.pk %}" class="vicbtn vicbtn-blue">Edit</a>
 						{% endif %}
+						{% if userhasrightsthatdonotexist %}
 						<button class="vicbtn vicbtn-red">Write Review</button>
+						{% endif %}
 					</div>
 				</div>
 			</div>
@@ -59,9 +63,11 @@
 					<li class="nav-item">
 						<a class="vic-tablink" id="description-tab" data-toggle="tab" href="#description" role="tab" aria-controls="description" aria-expanded="true">Description</a>
 					</li>
+					{% if functionalityenabled %}
 					<li class="nav-item">
 						<a class="vic-tablink vic-tablink-red" id="reviews-tab" data-toggle="tab" href="#reviews" role="tab" aria-controls="reviews">Reviews</a>
 					</li>
+					{% endif %}
 				</ul>
 				<hr>
 				<div class="tab-content">

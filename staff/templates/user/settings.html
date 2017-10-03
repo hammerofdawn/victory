@@ -15,12 +15,12 @@ User Settings - Chaos, Genki
 	<div class="container">
 		<h1 class="line-top">Settings for {{ logged_in_user.extendeduser.nickname }}.</h1>
 		<div>
-			<a href="{% url 'index' %}" class="vicbtn vicbtn-red vicbtn-bottom"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+			<a href="{% url 'user' requested_user.extendeduser.pk %}" class="vicbtn vicbtn-red vicbtn-bottom"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
 		</div>
 		<div>
-			<a href="{% url 'usersettings' requested_user.extendeduser.pk %}" class="vicbtn vicbtn-blue">General</a>
-			<a href="#" class="vicbtn vicbtn-blue">Description</a>
-			<a href="#" class="vicbtn vicbtn-blue">Profile images</a>
+			<a href="{% url 'usersettings' requested_user.extendeduser.pk %}" class="vicbtn vicbtn vicbtn-green">General</a>
+			<a href="{% url 'userdescription' requested_user.extendeduser.pk %}" class="vicbtn vicbtn-blue">Description</a>
+			<a href="{% url 'userimage' requested_user.extendeduser.pk %}" class="vicbtn vicbtn-blue">Profile images</a>
 			<button type="button" class="vicbtn vicbtn-blue" data-toggle="modal" data-target="#changepassword">Change Password</button>
 		</div>
 		<div class="custompanel">
@@ -29,37 +29,37 @@ User Settings - Chaos, Genki
 			<form action="" method="post">
 				<div class="form-group">
 					<label for="username">Username*</label>
-					<input class="victext-input" type="text" placeholder="Username" name="username" value="{{ logged_in_user.username }}">
+					<input class="victext-input vic-block full-width" type="text" placeholder="Username" name="username" value="{{ logged_in_user.username }}">
 					<small id="usernameHelpBlock" class="form-text text-muted">
 						 You use this for logging in.
 					</small>
 				</div>
 				<div class="form-group">
 					<label for="first_name">First Name*</label>
-					<input class="victext-input" type="text" placeholder="First Name" name="first_name" value="{{ logged_in_user.first_name }}">
+					<input class="victext-input vic-block full-width" type="text" placeholder="First Name" name="first_name" value="{{ logged_in_user.first_name }}">
 				</div>
 				<div class="form-group">
 					<label for="last_name">Last Name*</label>
-					<input class="victext-input" type="text" placeholder="Last Name" name="last_name" value="{{ logged_in_user.last_name }}">
+					<input class="victext-input vic-block full-width" type="text" placeholder="Last Name" name="last_name" value="{{ logged_in_user.last_name }}">
 				</div>
 				<div class="form-group">
 					<label for="nickname">Nickname*</label>
-					<input class="victext-input" type="text" placeholder="Nickname" name="nickname" value="{{ logged_in_user.extendeduser.nickname }}">
+					<input class="victext-input vic-block full-width" type="text" placeholder="Nickname" name="nickname" value="{{ logged_in_user.extendeduser.nickname }}">
 					<small id="nicknameHelpBlock" class="form-text text-muted">
 						 Nickname is showed on your profile for others.
 					</small>
 				</div>
 				<div class="form-group">
 					<label for="birthdate">Birthdate</label>
-					<input class="victext-input" type="text" placeholder="yyyy-mm-dd" name="birthdate" value="{{ logged_in_user.extendeduser.birthdate|date:"Y-m-d" }}">
+					<input class="victext-input vic-block full-width" type="text" placeholder="yyyy-mm-dd" name="birthdate" value="{{ logged_in_user.extendeduser.birthdate|date:"Y-m-d" }}">
 				</div>
 				<div class="form-group">
 					<label for="phone_number">Phone number*</label>
-					<input class="victext-input" type="text" placeholder="+Countrycode+Number" name="phone_number" value="{{ logged_in_user.extendeduser.phone_number }}">
+					<input class="victext-input vic-block full-width" type="text" placeholder="+Countrycode+Number" name="phone_number" value="{{ logged_in_user.extendeduser.phone_number }}">
 				</div>
 				<div class="form-group">
 					<label for="emergency_number">Emergency number*</label>
-					<input class="victext-input" type="text" placeholder="+Countrycode+Number" name="emergency_number" value="{{ logged_in_user.extendeduser.emergency_number }}">
+					<input class="victext-input vic-block full-width" type="text" placeholder="+Countrycode+Number" name="emergency_number" value="{{ logged_in_user.extendeduser.emergency_number }}">
 					<small id="emergency_numberHelpBlock" class="form-text text-muted">
 						 In case of emergency.
 					</small>
@@ -102,15 +102,15 @@ User Settings - Chaos, Genki
 				<div class="modal-body">
 					<div class="form-group">
 						<label for="current_password">Current Password</label>
-						<input class="victext-input" type="password" placeholder="password" name="current_password">
+						<input class="victext-input vic-block full-width" type="password" placeholder="password" name="current_password">
 					</div>
 					<div class="form-group">
 						<label for="new_password">New Password</label>
-						<input class="victext-input" type="password" placeholder="password" name="new_password">
+						<input class="victext-input vic-block full-width" type="password" placeholder="password" name="new_password">
 					</div>
 					<div class="form-group">
-						<label for="new_password_again">New Password Again</label>
-						<input class="victext-input" type="password" placeholder="password" name="new_password_again">
+						<label for="new_password_again">Retype New Password</label>
+						<input class="victext-input vic-block full-width" type="password" placeholder="password" name="new_password_again">
 					</div>
 				</div>
 				<div class="modal-footer">

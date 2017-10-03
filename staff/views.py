@@ -164,12 +164,39 @@ def usersettings(request, user_pk):
 
 	return render(request, 'user/settings.html', context)
 
+@login_required
+def userdescription(request, user_pk):
+	logged_in_user = get_object_or_404(User, pk=request.user.pk)
+	requested_user = get_object_or_404(User, pk=user_pk)
+
+	context = {
+		'logged_in_user': logged_in_user,
+		'requested_user': requested_user,
+	}
+
+	return render(request, 'user/description.html', context)
+
+@login_required
+def userimage(request, user_pk):
+	logged_in_user = get_object_or_404(User, pk=request.user.pk)
+	requested_user = get_object_or_404(User, pk=user_pk)
+
+	context = {
+		'logged_in_user': logged_in_user,
+		'requested_user': requested_user,
+	}
+
+	return render(request, 'user/images.html', context)
+
 def team(request, team_pk):
 	requested_team = get_object_or_404(Team, pk=team_pk)
 
 	context = {
 		'requested_team': requested_team,
 	}
+
+	if requested_team.multiple_teamleaders:
+		context["multiple_teamleaders"] = True
 
 	if request.user.is_authenticated():
 		logged_in_user = get_object_or_404(User, pk=request.user.pk)
@@ -179,4 +206,14 @@ def team(request, team_pk):
 
 @login_required
 def apply(request):
-	return render(request, 'apply.html')
+	teams = Team.objects.all()
+
+	context = {
+		'teams': teams,
+	}
+
+	if request.user.is_authenticated():
+		logged_in_user = get_object_or_404(User, pk=request.user.pk)
+		context['logged_in_user'] = logged_in_user
+
+	return render(request, 'apply.html', context)
