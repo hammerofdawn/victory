@@ -29,24 +29,24 @@ Teams
 		<div class="custompanel">
 			<div id="browseview">
 				{% for team in teams %}
-				<div class="team" title="{{ team.name }}">
-					<div class="bgbox bgbox--browse">
-						<div class="banner banner--scaled">
-							<div class="banner" style="background-image: url('{{ team.background.url }}')"></div>
-							<div class="banner-shade banner-shade--darker"></div>
-						</div>
-						<div class="cl-white">
-							<div class="details-box clearfix">
-								<a href="{% url 'team' team.pk %}">
+				<a href="{% url 'team' team.pk %}">
+					<div class="team" title="{{ team.name }}">
+						<div class="bgbox bgbox--browse">
+							<div class="banner banner--scaled">
+								<div class="banner" style="background-image: url('{{ team.background.url }}')"></div>
+								<div class="banner-shade banner-shade--darker"></div>
+							</div>
+							<div class="cl-white">
+								<div class="details-box clearfix">
 									<img class="artwork" src="{{ team.logo.url }}">
 									<h2>{{ team.name }}</h2>
-								</a>
-								<h3>Team Leader{% if multiple_teamleaders %}s{% endif %}: {{ team.teamleaders_listable }}</h3>
-								<label>People Needed: {{ team.people_needed }}</label>
+									<h3>Team Leader{% if multiple_teamleaders %}s{% endif %}: {{ team.teamleaders_listable }}</h3>
+									<label>People Needed: {{ team.people_needed }}</label>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
+				</a>
 				{% endfor %}
 			</div>
 			<div style="display:none;" id="listviewfield">
