@@ -62,19 +62,29 @@ def login(request):
 			if len(otp) == 4:
 				ua = UnauthenticatedSession.objects.get(token=str(token))
 
-				if int(otp) == ua.otp:
-					ua.successful = True
-					ua.save()
+				if ua.guesses_left > 0:
+					if ua.successful == False:
+						if int(otp) == ua.otp:
+							ua.successful = True
+							ua.save()
 
-					auth_login(request, ua.user)
-					return redirect('index')
+							auth_login(request, ua.user)
+							return redirect('index')
+						else:
+							ua.guesses_left -= 1
+							ua.save()
+
+							return render(request, "2ndfactor.html", {
+								'invalid': True,
+								'token': token
+							})
+					else:
+						return render(request, "2ndfactor.html", {
+							'error': "Token has already been used.",
+						})
 				else:
-					ua.guesses_left -= 1
-					ua.save()
-
 					return render(request, "2ndfactor.html", {
-						'invalid': True,
-						'token': token
+						'error': "Allowed number of attempts has been exceeded.",
 					})
 			else:
 				return render(request, "2ndfactor.html", {'error': True})
