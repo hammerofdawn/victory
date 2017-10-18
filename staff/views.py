@@ -136,6 +136,9 @@ def logout(request):
 def register(request):
 	return render(request, 'register.html', {})
 
+def registerimage(request):
+	return render(request, 'registerimage.html', {})
+
 @login_required
 def users(request):
 	logged_in_user = get_object_or_404(User, pk=request.user.pk)

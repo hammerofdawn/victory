@@ -18,9 +18,9 @@ User Settings - Chaos, Genki
 			<a href="{% url 'user' requested_user.extendeduser.pk %}" class="vicbtn vicbtn-red vicbtn-bottom"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
 		</div>
 		<div>
-			<a href="{% url 'usersettings' requested_user.extendeduser.pk %}" class="vicbtn vicbtn vicbtn-green">General</a>
-			<a href="{% url 'userdescription' requested_user.extendeduser.pk %}" class="vicbtn vicbtn-blue">Description</a>
-			<a href="{% url 'userimage' requested_user.extendeduser.pk %}" class="vicbtn vicbtn-blue">Profile images</a>
+			<a href="{% url 'usersettings' requested_user.extendeduser.pk %}" class="vicbtn vicbtn-green">General</a>
+			<a href="{% url 'usersettingsdescription' requested_user.extendeduser.pk %}" class="vicbtn vicbtn-blue">Description</a>
+			<a href="{% url 'usersettingsimage' requested_user.extendeduser.pk %}" class="vicbtn vicbtn-blue">Profile images</a>
 			<button type="button" class="vicbtn vicbtn-blue" data-toggle="modal" data-target="#changepassword">Change Password</button>
 		</div>
 		<div class="custompanel">
