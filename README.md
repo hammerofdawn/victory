@@ -45,7 +45,7 @@ We love pull requests! We're still in the early stages and development is happen
 ## Authors
 
 * **Denis Smajlović** - *System architect.*
-* **Meicki Jeldal** - *Web designer.*
+* **Meicki Jeldal** - *Designer and Full Stack Developer.*
 
 See also the list of [contributors](https://github.com/DSDeniso/victory/graphs/contributors) who participated in this project.
 

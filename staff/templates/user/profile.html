@@ -20,7 +20,8 @@
 					<div class="usrimg">
 						<img class="artwork" src="{{ requested_user.extendeduser.avatar.url }}">
 					</div>
-					<h1 class="line-topwhite">{{ requested_user.extendeduser.nickname }}</h1>
+					<h1>{{ requested_user.extendeduser.nickname }}</h1>
+					<h3 class="line-topwhite">{{ requested_user.get_full_name }}</h3>
 					<h3>Phone: <a href="tel:{{ user.extendeduser.phone_number }}"><u>{{ requested_user.extendeduser.phone_number }}</u></a></h3>
 					<div class="options push-right">
 						{% if requested_user.extendeduser.facebook_link %}
@@ -37,11 +38,15 @@
 						{% endif %}
 					</div>
 					<div>
+						{% if thisshouldnotexist %}
 						<button class="vicbtn vicbtn-blue">Message</button>
+						{% endif %}
 						{% if editable %}
 						<a href="{% url 'usersettings' requested_user.extendeduser.pk %}" class="vicbtn vicbtn-blue">Edit</a>
 						{% endif %}
+						{% if userhasrightsthatdonotexist %}
 						<button class="vicbtn vicbtn-red">Write Review</button>
+						{% endif %}
 					</div>
 				</div>
 			</div>
@@ -59,9 +64,11 @@
 					<li class="nav-item">
 						<a class="vic-tablink" id="description-tab" data-toggle="tab" href="#description" role="tab" aria-controls="description" aria-expanded="true">Description</a>
 					</li>
+					{% if functionalityenabled %}
 					<li class="nav-item">
 						<a class="vic-tablink vic-tablink-red" id="reviews-tab" data-toggle="tab" href="#reviews" role="tab" aria-controls="reviews">Reviews</a>
 					</li>
+					{% endif %}
 				</ul>
 				<hr>
 				<div class="tab-content">

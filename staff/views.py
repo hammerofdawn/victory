@@ -62,19 +62,29 @@ def login(request):
 			if len(otp) == 4:
 				ua = UnauthenticatedSession.objects.get(token=str(token))
 
-				if int(otp) == ua.otp:
-					ua.successful = True
-					ua.save()
+				if ua.guesses_left > 0:
+					if ua.successful == False:
+						if int(otp) == ua.otp:
+							ua.successful = True
+							ua.save()
 
-					auth_login(request, ua.user)
-					return redirect('index')
+							auth_login(request, ua.user)
+							return redirect('index')
+						else:
+							ua.guesses_left -= 1
+							ua.save()
+
+							return render(request, "2ndfactor.html", {
+								'invalid': True,
+								'token': token
+							})
+					else:
+						return render(request, "2ndfactor.html", {
+							'error': "Token has already been used.",
+						})
 				else:
-					ua.guesses_left -= 1
-					ua.save()
-
 					return render(request, "2ndfactor.html", {
-						'invalid': True,
-						'token': token
+						'error': "Allowed number of attempts has been exceeded.",
 					})
 			else:
 				return render(request, "2ndfactor.html", {'error': True})
@@ -168,7 +178,7 @@ def usersettings(request, user_pk):
 	return render(request, 'user/settings.html', context)
 
 @login_required
-def usersettingsdescription(request, user_pk):
+def userdescription(request, user_pk):
 	logged_in_user = get_object_or_404(User, pk=request.user.pk)
 	requested_user = get_object_or_404(User, pk=user_pk)
 
@@ -180,7 +190,7 @@ def usersettingsdescription(request, user_pk):
 	return render(request, 'user/description.html', context)
 
 @login_required
-def usersettingsimage(request, user_pk):
+def userimage(request, user_pk):
 	logged_in_user = get_object_or_404(User, pk=request.user.pk)
 	requested_user = get_object_or_404(User, pk=user_pk)
 
@@ -198,6 +208,9 @@ def team(request, team_pk):
 		'requested_team': requested_team,
 	}
 
+	if requested_team.multiple_teamleaders:
+		context["multiple_teamleaders"] = True
+
 	if request.user.is_authenticated():
 		logged_in_user = get_object_or_404(User, pk=request.user.pk)
 		context['logged_in_user'] = logged_in_user
@@ -206,4 +219,14 @@ def team(request, team_pk):
 
 @login_required
 def apply(request):
-	return render(request, 'apply.html')
+	teams = Team.objects.all()
+
+	context = {
+		'teams': teams,
+	}
+
+	if request.user.is_authenticated():
+		logged_in_user = get_object_or_404(User, pk=request.user.pk)
+		context['logged_in_user'] = logged_in_user
+
+	return render(request, 'apply.html', context)

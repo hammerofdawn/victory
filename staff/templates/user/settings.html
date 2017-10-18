@@ -15,7 +15,7 @@ User Settings - Chaos, Genki
 	<div class="container">
 		<h1 class="line-top">Settings for {{ logged_in_user.extendeduser.nickname }}.</h1>
 		<div>
-			<a href="{% url 'index' %}" class="vicbtn vicbtn-red vicbtn-bottom"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+			<a href="{% url 'user' requested_user.extendeduser.pk %}" class="vicbtn vicbtn-red vicbtn-bottom"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
 		</div>
 		<div>
 			<a href="{% url 'usersettings' requested_user.extendeduser.pk %}" class="vicbtn vicbtn-green">General</a>

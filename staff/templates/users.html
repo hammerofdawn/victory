@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block title %}
-Users - Chaos, Genki
+Users
 {% endblock %}
 
 {% block content %}
@@ -13,17 +13,19 @@ Users - Chaos, Genki
 		<div>
 			<button id="listviewbtn" onclick="listview()" class="vicbtn vicbtn-blue vic-bb-3-blue">List Users</button>
 			<button id="browseviewbtn" onclick="browseviewbtn()" style="display:none;" class="vicbtn vicbtn-blue vic-bb-3-blue">Browse Users</button>
+			{% if thisisnotsupporsedtoexist %}
 			<form class="search-width" style="display: inline-flex;" action="../search" method="post">
 				<input class="victext-input" type="text" placeholder="Search" name="search" value="">
 				<button type="submit" class="vicbtn vicbtn-blue vic-bb-3-blue">Search</button>
 			</form>
+			{% endif %}
 		</div>
 		<div class="custompanel">
 			<div id="browseview">
 				<ul class="usr-list user-list">
 					{% for user in users %}
 					<li>
-						<a class="silent" href="{% url 'user' user.pk %}" title="{{ user.extendeduser.nickname }}">
+						<a class="silent" href="{% url 'user' user.pk %}" title="{{ user.get_full_name }}">
 							<div class="image-wrapper">
 								<img src="{% static 'img/userpreload.png' %}" class="preload">
 								<img src="{{ user.extendeduser.avatar.url }}">
@@ -76,8 +78,8 @@ Users - Chaos, Genki
 								{% endif %}
 							</td>
 							<td class="col-xs-hidden col-md-visible">
-								<a href="{% url 'teams' %}">
-									-//-
+								<a>
+									Not admitted.
 								</a>
 							</td>
 						</tr>

@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block title %}
-18+ Launge - Chaos, Genki
+{{ requested_team.name }}
 {% endblock %}
 
 {% block content %}
@@ -18,13 +18,18 @@
 				<div class="details-box clearfix">
 					<img class="artwork" src="{{ requested_team.logo.url }}">
 					<h1 class="line-topwhite">{{ requested_team.name }}</h1>
-					<h3>Team Leader: <a href="/users/id"><u>Alexander Holtz</u></a></h3>
-					<h4>People Needed: 3/3</h4>
-					<h4>Base Requirements: 18 years or older, ready to work up to 14 hours</h4>
+					<h3>Team Leader{% if multiple_teamleaders %}s{% endif %}: {{ requested_team.teamleaders_listable }}</h3>
+					{% if peopleneededimplemented %}
+					<h4>People Needed: {{ requested_team.people_needed }}</h4>
+					{% endif %}
+					{% if applicationsclosed %}
 					<label>This team is full and doesn't accept any more applications at the moment.</label>
+					{% else %}
+					<br />
+					{% endif %}
 					<div>
 						{% if user.is_authenticated %}
-						<button class="vicbtn vicbtn-green">Apply</button>
+						<a href="{% url 'apply' %}" class="vicbtn vicbtn-green vic-bb-3-green">Apply</a>
 						{% endif %}
 						{% if userhaspermissionthatdoesnotexistyet %}
 						<button class="vicbtn vicbtn-blue">Edit</button>
@@ -43,35 +48,16 @@
 					<li class="nav-item">
 						<a class="vic-tablink active" id="description-tab" data-toggle="tab" href="#description" role="tab" aria-controls="description" aria-expanded="true">Description</a>
 					</li>
+					{% if teamhasmembers %}
 					<li class="nav-item">
 						<a class="vic-tablink" id="users-tab" data-toggle="tab" href="#users" role="tab" aria-controls="users">Users</a>
 					</li>
+					{% endif %}
 				</ul>
 				<hr>
 				<div class="tab-content">
 					<div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
-						<b>The 18+ Lounge is as the name suggest. A lounge with the age requirement of 18+.</b>
-						<br>
-						<br><b>What is the 18+ lounge?: </b>
-						<br>We aim to make the lounge a place for adult guests to search refugee from the mass and be able to enjoy a fresh beverage, relax, play a board game, enjoy a more silent atmosphere and participate in more adult oriented events (this will not be explicit content)
-						<br>
-						<br><b>Requirements: </b>
-						<br>- Be 18 years or older
-						<br>- Be ready to work up to 14 hours
-						<br>- Have a mature and open personality
-						<br>- Positive attitude and excellent communication skills
-						<br>- Be a Team player
-						<br>
-						<br><b>Responsibilities:</b>
-						<br> - Check customers’ identification and confirm it meets legal drinking age
-						<br> - Stay focused and nurture an excellent guest experience
-						<br> - Comply with all food and beverage regulations
-						<br> - Restock and replenish bar inventory and supplies
-						<br> - Prepare alcohol or non-alcohol beverages for bar and restaurant patrons
-						<br> - Interact with customers, take orders and serve snacks and drinks
-						<br> - Event facilitation
-						<br><br>
-						<b>This team is full and doesn't accept any more applications at the moment.</b>
+						{{ requested_team.description|safe|linebreaksbr }}
 					</div>
 					<div class="tab-pane fade" id="users" role="tabpanel" aria-labelledby="users-tab">
 						Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar helvetica VHS salvia yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit, sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park.

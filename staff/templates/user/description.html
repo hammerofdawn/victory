@@ -15,12 +15,12 @@ User Settings - Chaos, Genki
 	<div class="container">
 		<h1 class="line-top">Settings for {{ logged_in_user.extendeduser.nickname }}.</h1>
 		<div>
-			<a href="{% url 'index' %}" class="vicbtn vicbtn-red vicbtn-bottom"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+			<a href="{% url 'user' requested_user.extendeduser.pk %}" class="vicbtn vicbtn-red vicbtn-bottom"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
 		</div>
 		<div>
 			<a href="{% url 'usersettings' requested_user.extendeduser.pk %}" class="vicbtn vicbtn-blue">General</a>
-			<a href="{% url 'usersettingsdescription' requested_user.extendeduser.pk %}" class="vicbtn vicbtn-green">Description</a>
-			<a href="{% url 'usersettingsimage' requested_user.extendeduser.pk %}" class="vicbtn vicbtn-blue">Profile images</a>
+			<a href="{% url 'userdescription' requested_user.extendeduser.pk %}" class="vicbtn vicbtn-green">Description</a>
+			<a href="{% url 'userimage' requested_user.extendeduser.pk %}" class="vicbtn vicbtn-blue">Profile images</a>
 			<button type="button" class="vicbtn vicbtn-blue" data-toggle="modal" data-target="#changepassword">Change Password</button>
 		</div>
 		<div class="custompanel">
