@@ -12,8 +12,8 @@ from .models import Article, UnauthenticatedSession, Team, DriversLicenceCategor
 from uuid import uuid4
 from random import randint
 import requests
-from requests.auth import HTTPBasicAuth
 import os
+from requests_oauthlib import OAuth1Session
 
 
 # Create your views here.
@@ -64,7 +64,7 @@ def login(request):
 
 				if ua.guesses_left > 0:
 					if ua.successful == False:
-						if int(otp) == ua.otp:
+						if otp == ua.otp:
 							ua.successful = True
 							ua.save()
 
@@ -94,22 +94,18 @@ def login(request):
 
 			if user is not None:
 				token = str(uuid4())
-				otp = randint(1111, 9999)
+				otp = str(randint(1111, 9999))
 
-				r = requests.post("https://api.tel.dk/api/1.0/message",
-					auth=HTTPBasicAuth(
-						os.environ['VICTORY_TELDK_EMAIL'],
-						os.environ['VICTORY_TELDK_SECRET'],
-					), headers={
-						'content-type': 'application/x-www-form-urlencoded',
-						'charset': 'utf-8',
-					},
-					data={
-						'to': user.extendeduser.phone_number[1:],
-						'text': 'Victory login code:\n' + str(otp)[0:1] + ' ' + str(otp)[1:2] + ' ' + str(otp)[2:3] + ' ' + str(otp)[3:4],
-						'class': 0,
-					}
-				)
+				gwapi = OAuth1Session(os.environ['VICTORY_GATEWAYAPI_KEY'], client_secret=os.environ['VICTORY_GATEWAYAPI_SECRET'])
+
+				req = {
+					'message': 'Victory login code:\n{} {} {} {}'.format(otp[0:1], otp[1:2], otp[2:3], otp[3:4]),
+					'recipients': [{'msisdn': user.extendeduser.phone_number[1:]}],
+					'destaddr': 'DISPLAY',
+					'sender': 'VICTORY',
+				}
+				res = gwapi.post('https://gatewayapi.com/rest/mtsms', json=req)
+				res.raise_for_status()
 
 				us = UnauthenticatedSession()
 				us.user = user
