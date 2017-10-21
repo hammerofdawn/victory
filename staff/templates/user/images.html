@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}
+User Settings - Chaos, Genki
+{% endblock %}
+
+{% block header %}
+<link rel="stylesheet" href="{% static 'css/application.css' %}">
+{% endblock %}
+
+{% block content %}
+<section role="content">
+	<div class="container">
+		<h1 class="line-top">Settings for {{ logged_in_user.extendeduser.nickname }}.</h1>
+		<div>
+			<a href="{% url 'index' %}" class="vicbtn vicbtn-red vicbtn-bottom"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+		</div>
+		<div>
+			<a href="{% url 'usersettings' requested_user.extendeduser.pk %}" class="vicbtn vicbtn-blue">General</a>
+			<a href="{% url 'usersettingsdescription' requested_user.extendeduser.pk %}" class="vicbtn vicbtn-blue">Description</a>
+			<a href="{% url 'usersettingsimage' requested_user.extendeduser.pk %}" class="vicbtn vicbtn-green">Profile images</a>
+			<button type="button" class="vicbtn vicbtn-blue" data-toggle="modal" data-target="#changepassword">Change Password</button>
+		</div>
+		<div class="custompanel">
+			<hr style="border-color:rgba(255, 255, 255, 0.23);">
+			<form action="" method="post">
+				<div class="form-group">
+					<label for="avatar_file">Avatar</label>
+					<input style="color: #000;" class="victext-input vic-block full-width" type="file" name="avatar_file"></input>
+				</div>
+				<div class="form-group">
+					<label for="cover_file">Cover</label>
+					<input style="color: #000;" class="victext-input vic-block full-width" type="file" name="cover_file"></input>
+				</div>
+				<hr style="border-color:rgba(255, 255, 255, 0.23);">
+				<button type="submit" class="vicbtn vicbtn-green">Save</button>
+			</form>
+		</div>
+	</div>
+</section>
+{% endblock %}
+
+{% block modals %}
+<!-- Modal -->
+<div class="modal fade" id="changepassword" tabindex="-1" role="dialog" aria-labelledby="changepassword" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="custompanel">
+			<div class="modal-header">
+				<h5 class="modal-title" id="ChangePasswordModalLabel">Change password</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form>
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="current_password">Current Password</label>
+						<input class="victext-input vic-block full-width" type="password" placeholder="password" name="current_password">
+					</div>
+					<div class="form-group">
+						<label for="new_password">New Password</label>
+						<input class="victext-input vic-block full-width" type="password" placeholder="password" name="new_password">
+					</div>
+					<div class="form-group">
+						<label for="new_password_again">Retype New Password</label>
+						<input class="victext-input vic-block full-width" type="password" placeholder="password" name="new_password_again">
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="vicbtn vicbtn-blue" data-dismiss="modal">Close</button>
+					<button type="submit" class="vicbtn vicbtn-green">Change</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}
