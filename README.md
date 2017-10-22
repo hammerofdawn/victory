@@ -44,14 +44,14 @@ We love pull requests! We're still in the early stages and development is happen
 
 ## Authors
 
-* **Denis Smajlović** - *System architect.*
-* **Meicki Jeldal** - *Designer and Full Stack Developer.*
+* **Denis Smajlović** ([deni@radera.net](mailto:deni@radera.net)) - *System architect.*
+* **Meicki Jeldal** ([meicki@radera.net](mailto:deni@radera.net)) - *Designer and Full Stack Developer.*
 
 See also the list of [contributors](https://github.com/DSDeniso/victory/graphs/contributors) who participated in this project.
 
 ## License
 
-A license is yet to be written. Please [contact Denis](mailto:deni@radera.net) if you would like to use Victory.
+A license is yet to be written. Please contact Denis if you would like to use Victory.
 
 ## Acknowledgments
 
