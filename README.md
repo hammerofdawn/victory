@@ -45,7 +45,7 @@ We love pull requests! We're still in the early stages and development is happen
 ## Authors
 
 * **Denis Smajlović** ([deni@radera.net](mailto:deni@radera.net)) - *System architect.*
-* **Meicki Jeldal** ([meicki@radera.net](mailto:deni@radera.net)) - *Designer and Full Stack Developer.*
+* **Meicki Jeldal** ([meicki@radera.net](mailto:meicki@radera.net)) - *Designer and Full Stack Developer.*
 
 See also the list of [contributors](https://github.com/DSDeniso/victory/graphs/contributors) who participated in this project.
 
