@@ -51,7 +51,7 @@ See also the list of [contributors](https://github.com/DSDeniso/victory/graphs/c
 
 ## License
 
-A license is yet to be written. Please contact one of the authors if you would like to use Victory.
+A license is yet to be written. Please [contact Denis](mailto:deni@radera.net) if you would like to use Victory.
 
 ## Acknowledgments
 
