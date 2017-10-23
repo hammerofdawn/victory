@@ -23,9 +23,9 @@ User Settings - Chaos, Genki
 		<div class="custompanel">
 			<p>Everything with a * is required</p>
 			<hr style="border-color:rgba(255, 255, 255, 0.23);">
-			<div class="row">
-				<div class="col">
-					<form action="" method="post">
+			<form action="" method="post">
+				<div class="row">
+					<div class="col">
 						<div class="form-group">
 							<label for="username">Username*</label>
 							<input class="victext-input vic-block full-width" type="text" placeholder="Username" name="username" value="{{ logged_in_user.username }}">
@@ -75,22 +75,33 @@ User Settings - Chaos, Genki
 							<label for="description">Description</label>
 							<textarea rows="4" class="victext-input vic-block full-width" type="text" placeholder="Sometext...." name="description"></textarea>
 						</div>
+					</div>
+					<div class="col">
 						<div class="form-group">
-							<label for="avatar_file">Avatar</label>
+							<div class="setting-user-avatar">
+								<img class="user-avatar" src="{{ logged_in_user.extendeduser.avatar.url }}">
+							</div>
+							<label for="avatar_file">Change profile image.</label>
 							<input style="color: #000;" class="victext-input vic-block full-width" type="file" name="avatar_file"></input>
+							<small id="avatar_fileHelpBlock" class="form-text text-muted">
+								 Current: <a href="{{ logged_in_user.extendeduser.avatar.url }}">{{ logged_in_user.extendeduser.avatar.url }}</a>
+							</small>
 						</div>
 						<div class="form-group">
+							<div class="setting-user-avatar">
+								<img class="user-avatar" src="{{ logged_in_user.extendeduser.background.url }}">
+							</div>
 							<label for="cover_file">Cover</label>
 							<input style="color: #000;" class="victext-input vic-block full-width" type="file" name="cover_file"></input>
+							<small id="cover_fileHelpBlock" class="form-text text-muted">
+								 Current: <a href="{{ logged_in_user.extendeduser.background.url }}">{{ logged_in_user.extendeduser.background.url }}</a>
+							</small>
 						</div>
-						<hr style="border-color:rgba(255, 255, 255, 0.23);">
-						<button type="submit" class="vicbtn vicbtn-green">Save</button>
-					</form>
+					</div>
 				</div>
-				<div class="col">
-					sometext
-				</div>
-			</div>
+				<hr style="border-color:rgba(255, 255, 255, 0.23);">
+				<button type="submit" class="vicbtn vicbtn-green">Save</button>
+			</form>
 		</div>
 	</div>
 </section>
