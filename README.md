@@ -36,7 +36,7 @@ Then do regular Django stuff. This will be elaborated later.
 * [virtualenv](https://virtualenv.pypa.io/en/stable/) - Isolated Python environments.
 * [Bootstrap](https://getbootstrap.com/) - Front-end component library.
 * [Font Awesome 4](https://fontawesome.com/) - Icon library.
-* [tel.dk](https://tel.dk/) - SMS gateway.
+* [GatewayAPI](https://gatewayapi.com/) - SMS gateway.
 
 ## Contributing
 
@@ -44,14 +44,14 @@ We love pull requests! We're still in the early stages and development is happen
 
 ## Authors
 
-* **Denis Smajlović** - *System architect.*
-* **Meicki Jeldal** - *Designer and Full Stack Developer.*
+* **Denis Smajlović** ([deni@radera.net](mailto:deni@radera.net)) - *System architect.*
+* **Meicki Jeldal** ([meicki@radera.net](mailto:meicki@radera.net)) - *Designer and Full Stack Developer.*
 
 See also the list of [contributors](https://github.com/DSDeniso/victory/graphs/contributors) who participated in this project.
 
 ## License
 
-A license is yet to be written. Please contact one of the authors if you would like to use Victory.
+A license is yet to be written. Please contact Denis if you would like to use Victory.
 
 ## Acknowledgments
 

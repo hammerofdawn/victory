@@ -18,9 +18,6 @@ User Settings - Chaos, Genki
 			<a href="{% url 'user' requested_user.extendeduser.pk %}" class="vicbtn vicbtn-red vicbtn-bottom"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
 		</div>
 		<div>
-			<a href="{% url 'usersettings' requested_user.extendeduser.pk %}" class="vicbtn vicbtn-green">General</a>
-			<a href="{% url 'usersettingsdescription' requested_user.extendeduser.pk %}" class="vicbtn vicbtn-blue">Description</a>
-			<a href="{% url 'usersettingsimage' requested_user.extendeduser.pk %}" class="vicbtn vicbtn-blue">Profile images</a>
 			<button type="button" class="vicbtn vicbtn-blue" data-toggle="modal" data-target="#changepassword">Change Password</button>
 		</div>
 		<div class="custompanel">
@@ -71,6 +68,18 @@ User Settings - Chaos, Genki
 						<option value="{{category.id}}">{{category.category}}</option>
 						{% endfor %}
 					</select>
+				</div>
+				<div class="form-group">
+					<label for="description">Description</label>
+					<textarea rows="4" class="victext-input vic-block full-width" type="text" placeholder="Sometext...." name="description"></textarea>
+				</div>
+				<div class="form-group">
+					<label for="avatar_file">Avatar</label>
+					<input style="color: #000;" class="victext-input vic-block full-width" type="file" name="avatar_file"></input>
+				</div>
+				<div class="form-group">
+					<label for="cover_file">Cover</label>
+					<input style="color: #000;" class="victext-input vic-block full-width" type="file" name="cover_file"></input>
 				</div>
 				<hr style="border-color:rgba(255, 255, 255, 0.23);">
 				<button type="submit" class="vicbtn vicbtn-green">Save</button>
