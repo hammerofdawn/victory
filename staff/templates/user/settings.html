@@ -23,67 +23,74 @@ User Settings - Chaos, Genki
 		<div class="custompanel">
 			<p>Everything with a * is required</p>
 			<hr style="border-color:rgba(255, 255, 255, 0.23);">
-			<form action="" method="post">
-				<div class="form-group">
-					<label for="username">Username*</label>
-					<input class="victext-input vic-block full-width" type="text" placeholder="Username" name="username" value="{{ logged_in_user.username }}">
-					<small id="usernameHelpBlock" class="form-text text-muted">
-						 You use this for logging in.
-					</small>
+			<div class="row">
+				<div class="col">
+					<form action="" method="post">
+						<div class="form-group">
+							<label for="username">Username*</label>
+							<input class="victext-input vic-block full-width" type="text" placeholder="Username" name="username" value="{{ logged_in_user.username }}">
+							<small id="usernameHelpBlock" class="form-text text-muted">
+								 You use this for logging in.
+							</small>
+						</div>
+						<div class="form-group">
+							<label for="first_name">First Name*</label>
+							<input class="victext-input vic-block full-width" type="text" placeholder="First Name" name="first_name" value="{{ logged_in_user.first_name }}">
+						</div>
+						<div class="form-group">
+							<label for="last_name">Last Name*</label>
+							<input class="victext-input vic-block full-width" type="text" placeholder="Last Name" name="last_name" value="{{ logged_in_user.last_name }}">
+						</div>
+						<div class="form-group">
+							<label for="nickname">Nickname*</label>
+							<input class="victext-input vic-block full-width" type="text" placeholder="Nickname" name="nickname" value="{{ logged_in_user.extendeduser.nickname }}">
+							<small id="nicknameHelpBlock" class="form-text text-muted">
+								 Nickname is showed on your profile for others.
+							</small>
+						</div>
+						<div class="form-group">
+							<label for="birthdate">Birthdate</label>
+							<input class="victext-input vic-block full-width" type="text" placeholder="yyyy-mm-dd" name="birthdate" value="{{ logged_in_user.extendeduser.birthdate|date:"Y-m-d" }}">
+						</div>
+						<div class="form-group">
+							<label for="phone_number">Phone number*</label>
+							<input class="victext-input vic-block full-width" type="text" placeholder="+Countrycode+Number" name="phone_number" value="{{ logged_in_user.extendeduser.phone_number }}">
+						</div>
+						<div class="form-group">
+							<label for="emergency_number">Emergency number*</label>
+							<input class="victext-input vic-block full-width" type="text" placeholder="+Countrycode+Number" name="emergency_number" value="{{ logged_in_user.extendeduser.emergency_number }}">
+							<small id="emergency_numberHelpBlock" class="form-text text-muted">
+								 In case of emergency.
+							</small>
+						</div>
+						<div class="form-group ">
+							<label>Select The driver licenses you have.</label>
+							<select class="drivercategories form-control" multiple="multiple">
+								{% for category in driverslicence %}
+								<option value="{{category.id}}">{{category.category}}</option>
+								{% endfor %}
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="description">Description</label>
+							<textarea rows="4" class="victext-input vic-block full-width" type="text" placeholder="Sometext...." name="description"></textarea>
+						</div>
+						<div class="form-group">
+							<label for="avatar_file">Avatar</label>
+							<input style="color: #000;" class="victext-input vic-block full-width" type="file" name="avatar_file"></input>
+						</div>
+						<div class="form-group">
+							<label for="cover_file">Cover</label>
+							<input style="color: #000;" class="victext-input vic-block full-width" type="file" name="cover_file"></input>
+						</div>
+						<hr style="border-color:rgba(255, 255, 255, 0.23);">
+						<button type="submit" class="vicbtn vicbtn-green">Save</button>
+					</form>
 				</div>
-				<div class="form-group">
-					<label for="first_name">First Name*</label>
-					<input class="victext-input vic-block full-width" type="text" placeholder="First Name" name="first_name" value="{{ logged_in_user.first_name }}">
+				<div class="col">
+					sometext
 				</div>
-				<div class="form-group">
-					<label for="last_name">Last Name*</label>
-					<input class="victext-input vic-block full-width" type="text" placeholder="Last Name" name="last_name" value="{{ logged_in_user.last_name }}">
-				</div>
-				<div class="form-group">
-					<label for="nickname">Nickname*</label>
-					<input class="victext-input vic-block full-width" type="text" placeholder="Nickname" name="nickname" value="{{ logged_in_user.extendeduser.nickname }}">
-					<small id="nicknameHelpBlock" class="form-text text-muted">
-						 Nickname is showed on your profile for others.
-					</small>
-				</div>
-				<div class="form-group">
-					<label for="birthdate">Birthdate</label>
-					<input class="victext-input vic-block full-width" type="text" placeholder="yyyy-mm-dd" name="birthdate" value="{{ logged_in_user.extendeduser.birthdate|date:"Y-m-d" }}">
-				</div>
-				<div class="form-group">
-					<label for="phone_number">Phone number*</label>
-					<input class="victext-input vic-block full-width" type="text" placeholder="+Countrycode+Number" name="phone_number" value="{{ logged_in_user.extendeduser.phone_number }}">
-				</div>
-				<div class="form-group">
-					<label for="emergency_number">Emergency number*</label>
-					<input class="victext-input vic-block full-width" type="text" placeholder="+Countrycode+Number" name="emergency_number" value="{{ logged_in_user.extendeduser.emergency_number }}">
-					<small id="emergency_numberHelpBlock" class="form-text text-muted">
-						 In case of emergency.
-					</small>
-				</div>
-				<div class="form-group ">
-					<label>Select The driver licenses you have.</label>
-					<select class="drivercategories form-control" multiple="multiple">
-						{% for category in driverslicence %}
-						<option value="{{category.id}}">{{category.category}}</option>
-						{% endfor %}
-					</select>
-				</div>
-				<div class="form-group">
-					<label for="description">Description</label>
-					<textarea rows="4" class="victext-input vic-block full-width" type="text" placeholder="Sometext...." name="description"></textarea>
-				</div>
-				<div class="form-group">
-					<label for="avatar_file">Avatar</label>
-					<input style="color: #000;" class="victext-input vic-block full-width" type="file" name="avatar_file"></input>
-				</div>
-				<div class="form-group">
-					<label for="cover_file">Cover</label>
-					<input style="color: #000;" class="victext-input vic-block full-width" type="file" name="cover_file"></input>
-				</div>
-				<hr style="border-color:rgba(255, 255, 255, 0.23);">
-				<button type="submit" class="vicbtn vicbtn-green">Save</button>
-			</form>
+			</div>
 		</div>
 	</div>
 </section>

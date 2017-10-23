@@ -919,12 +919,19 @@ input:checked + .slider:before {
 		width: 100%;
 	}
 }
-
-
-
 .userinfobox {
 	padding: 0.6em 0.8em 0.5em 0.8em;
 	color: #000;
 	background-color: #eee;
 	border-bottom: 3px solid #ccc;
+}
+
+
+.close, .close:active, .close:hover {
+  color: #fff;
+}
+
+.close:active, .close:hover {
+  color: #fff;
+	cursor: pointer;
 }
