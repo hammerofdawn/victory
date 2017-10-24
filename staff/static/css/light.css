@@ -923,3 +923,24 @@ input:checked + .slider:before {
 		background-color: #eee;
 		border-bottom: 3px solid #ccc;
 }
+
+.close, .close:active, .close:hover {
+  color: #000;
+}
+
+.close:active, .close:hover {
+  color: #000;
+	cursor: pointer;
+}
+
+.setting-user-avatar {
+  text-align: center;
+  margin-bottom: 1em;
+}
+
+.user-avatar {
+	height: 200px;
+	border: 5px dashed black;
+	padding: 0.6em;
+	border-radius: 50%;
+}
