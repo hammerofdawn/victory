@@ -29,10 +29,8 @@
 					{% endif %}
 					<div>
 						{% if user.is_authenticated %}
-						<a href="{% url 'apply' %}" class="vicbtn vicbtn-green vic-bb-3-green">Apply</a>
-						{% endif %}
-						{% if userhaspermissionthatdoesnotexistyet %}
-						<button class="vicbtn vicbtn-blue">Edit</button>
+						<a href="{% url 'apply' %}" class="vicbtn vicbtn-green">Apply</a>
+						<a href="{% url 'teamsettings' requested_team.id %}" class="vicbtn vicbtn-blue">Edit</a>
 						{% endif %}
 					</div>
 				</div>
