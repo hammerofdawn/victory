@@ -15,10 +15,8 @@ Teams
 			{% if user.is_authenticated %}
 			<a href="{% url 'apply' %}" class="vicbtn vicbtn-green vic-bb-3-green">Apply</a>
 			{% endif %}
-			{% if viewsarereadytobechanged %}
 			<button id="listviewbtn" onclick="listview()" class="vicbtn vicbtn-blue vic-bb-3-blue">List Teams</button>
 			<button id="browseviewbtn" onclick="browseviewbtn()" style="display:none;" class="vicbtn vicbtn-blue vic-bb-3-blue">Browse Teams</button>
-			{% endif %}
 			{% if thisisnotsupporsedtoexist %}
 			<form class="search-width" style="display: inline-flex;" action="../search" method="post">
 				<input class="victext-input" type="text" placeholder="Search" name="search" value="">
