@@ -13,12 +13,23 @@
 			{% endblock %}
 		</title>
 		<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-		<link rel="stylesheet" href="{% static 'css/dark.css' %}">
+		{% if user.is_authenticated %}
+			{% if logged_in_user.extendeduser.theme.theme_Name == "Dark" %}
+				<link rel="stylesheet" href="{% static 'css/dark.css' %}">
+			{% elif logged_in_user.extendeduser.theme.theme_Name == "Light" %}
+				<link rel="stylesheet" href="{% static 'css/light.css' %}">
+			{% else %}
+				<link rel="stylesheet" href="{% static 'css/light.css' %}">
+			{% endif %}
+		{% else %}
+			<link rel="stylesheet" href="{% static 'css/light.css' %}">
+		{% endif %}
 		<link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}">
 		{% block header %}
 		{% endblock %}
 	</head>
 	<body>
+		{{logged_in_user.extendeduser.theme.theme_Name}}
 		<header>
 			<nav class="mainnavbar">
 				<a class="alogo" href="{% url 'index' %}">
@@ -107,7 +118,7 @@
 				 </div>
 			</nav>
 		</header>
-
+		<p>{{logged_in_user.extendeduser.theme}}</p>
 		{% block content %}
 		<section role="content">
 			<div class="container">

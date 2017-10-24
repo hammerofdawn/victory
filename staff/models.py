@@ -80,6 +80,13 @@ class Review(models.Model):
 	def __str__(self):
 		return str(self.overall_rating) + '/5, ' + self.user.extendeduser.nickname + '(' + self.user.username + ', ' + self.user.get_full_name() + ')'
 
+class Theme(models.Model):
+	theme_Name = models.CharField(max_length=16)
+	disabled = models.NullBooleanField()
+
+	def __str__(self):
+		return self.theme_Name
+
 class ExtendedUser(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
 	nickname = models.CharField(max_length=20)
@@ -101,6 +108,7 @@ class ExtendedUser(models.Model):
 	youtube_link = models.URLField(max_length=200, blank=True, null=True)
 	child_record = models.DateField(null=True, blank=True)
 	special_considerations = models.TextField(blank=True)
+	theme = models.ForeignKey(Theme, null=True, blank=False)
 
 class Article(models.Model):
 	author = models.ForeignKey(User)

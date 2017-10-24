@@ -20,6 +20,7 @@ from .models import (
 	Group,
 	GroupMembership,
 	TeamMembership,
+	Theme,
 )
 
 class UserInline(admin.StackedInline):
@@ -62,3 +63,4 @@ admin.site.register(Alert)
 admin.site.register(UnauthenticatedSession, UnauthenticatedSessionAdmin)
 admin.site.register(Group, GroupAdmin)
 admin.site.register(TeamMembership)
+admin.site.register(Theme)
