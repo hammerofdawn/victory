@@ -29,7 +29,6 @@
 		{% endblock %}
 	</head>
 	<body>
-		{{logged_in_user.extendeduser.theme.theme_Name}}
 		<header>
 			<nav class="mainnavbar">
 				<a class="alogo" href="{% url 'index' %}">
@@ -118,7 +117,6 @@
 				 </div>
 			</nav>
 		</header>
-		<p>{{logged_in_user.extendeduser.theme}}</p>
 		{% block content %}
 		<section role="content">
 			<div class="container">
