@@ -68,8 +68,8 @@ Users
 							</td>
 							<td>
 								{% if user.extendeduser.phone_number %}
-								<a href="tel:{{ user.extendeduser.phone_number }}">
-									{{ user.extendeduser.phone_number }}
+								<a class="phoneid" href="tel:{{ user.extendeduser.phone_number }}">
+									<i class="fa fa-phone" aria-hidden="true"></i> {{ user.extendeduser.phone_number }}
 								</a>
 								{% else %}
 								<a href="#">

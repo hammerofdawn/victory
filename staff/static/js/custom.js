@@ -3,6 +3,9 @@ function listview() {
 		$("#listviewbtn").hide();
 		$("#browseviewbtn").show();
 		$("#listviewfield").show();
+		if ($(window).width() < 767) {
+			$(".phoneid").addClass("vicbtn vicbtn-green");
+		}
 }
 
 function browseviewbtn() {
