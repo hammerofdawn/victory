@@ -949,3 +949,6 @@ input:checked + .slider:before {
 	padding: 0.6em;
 	border-radius: 50%;
 }
+.error {
+	color: red;
+}

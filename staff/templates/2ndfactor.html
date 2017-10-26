@@ -18,6 +18,9 @@ Log in
 	<hr>
 	<div class="text">
 		<h3>Mobile authentication</h3>
+		{% if error %}
+		<p class="error">{{ error }}</p>
+		{% endif %}
 		<p>
 			Please check your mobile for the 4 digit code.
 		</p>
