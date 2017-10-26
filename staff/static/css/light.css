@@ -14,10 +14,6 @@ a {
 .mainnavbar {
 		margin-top: -20px;
 }
-
-.nav {
-	flex-wrap:unset;
-}
 .nav:before {
 	display: table;
 	content: " ";
@@ -73,6 +69,7 @@ a {
 		-webkit-box-direction: normal !important;
 		-ms-flex-direction: column !important;
 		flex-direction: column !important;
+		flex-wrap:unset;
 }
 .brs > .qp {
 		float: none;
