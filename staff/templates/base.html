@@ -6,14 +6,15 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<link href="{% static 'img/icons/apple-touch-icon.png' %}" rel="apple-touch-icon" />
+		<link href="{% static 'img/icons/apple-touch-icon-152x152.png' %}" rel="apple-touch-icon" sizes="152x152" />
+		<link href="{% static 'img/icons/apple-touch-icon-167x167.png' %}" rel="apple-touch-icon" sizes="167x167" />
+		<link href="{% static 'img/icons/apple-touch-icon-180x180.png' %}" rel="apple-touch-icon" sizes="180x180" />
+		<link href="{% static 'img/icons/icon-hires.png' %}" rel="icon" sizes="192x192" />
+		<link href="{% static 'img/icons/icon-normal.png' %}" rel="icon" sizes="128x128" />
+		<link rel="shortcut icon" type="image/x-icon" href="{% static 'img/icons/favicon.ico' %}" />
 		<meta name="theme-color" content="#1997c6" />
-		<link href="{% static 'css/icons/apple-touch-icon.png' %}" rel="apple-touch-icon" />
-		<link href="{% static 'css/icons/apple-touch-icon-152x152.png' %}" rel="apple-touch-icon" sizes="152x152" />
-		<link href="{% static 'css/icons/apple-touch-icon-167x167.png' %}" rel="apple-touch-icon" sizes="167x167" />
-		<link href="{% static 'css/icons/apple-touch-icon-180x180.png' %}" rel="apple-touch-icon" sizes="180x180" />
-		<link href="{% static 'css/icons/icon-hires.png' %}" rel="icon" sizes="192x192" />
-		<link href="{% static 'css/icons/icon-normal.png' %}" rel="icon" sizes="128x128" />
-		<link rel="shortcut icon" type="image/x-icon" href="{% static 'css/icons/favicon.ico' %}" />
 		<title>
 			{% block title %}
 			Genki Staff
@@ -132,6 +133,7 @@
 					$('[data-toggle="tooltip"]').tooltip({container:'body'});
 			});
 		</script>
+		<script>(function(a,b,c){if(c in b&&b[c]){var d,e=a.location,f=/^(a|html)$/i;a.addEventListener("click",function(a){d=a.target;while(!f.test(d.nodeName))d=d.parentNode;"href"in d&&(d.href.indexOf("http")||~d.href.indexOf(e.host))&&(a.preventDefault(),e.href=d.href)},!1)}})(document,window.navigator,"standalone")</script>
 		{% block scripts %}
 		{% endblock %}
 	</body>
