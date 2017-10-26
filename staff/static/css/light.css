@@ -92,6 +92,7 @@ a {
 		color: inherit;
 		text-align: center;
 		border-radius: 0;
+		text-decoration: none;
 }
 @media (min-width: 768px) {
 		.brs > .qp > .qn {
@@ -675,6 +676,7 @@ a.silent {
 .details-box > h3 > a > u {
 		color: white;
 		transition: all 0.4s ease;
+		text-decoration: none;
 }
 .details-box > h3 > a > u:hover,
 .details-box > h3 > a > u:focus {
