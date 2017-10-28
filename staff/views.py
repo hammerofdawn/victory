@@ -6,9 +6,8 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, render, redirect
-
 from .models import Article, UnauthenticatedSession, Team, DriversLicenceCategories
-
+from .forms import SignUpForm
 from uuid import uuid4
 from random import randint
 import requests
@@ -133,7 +132,22 @@ def logout(request):
 	return redirect('index')
 
 def register(request):
-	return render(request, 'register.html', {})
+	if request.method == 'POST':
+		form = SignUpForm(request.POST)
+		if form.is_valid():
+			user = form.save()
+			user.refresh_from_db()  # load the profile instance created by the signal
+			user.extendeduser.postal_code = form.cleaned_data.get('postal_code')
+			user.extendeduser.phone_number = form.cleaned_data.get('phone_number')
+			user.extendeduser.nickname = form.cleaned_data.get('username')
+			user.save()
+			raw_password = form.cleaned_data.get('password1')
+			user = auth_authenticate(username=user.username, password=raw_password)
+			auth_login(request, user)
+			return redirect('index')
+	else:
+		form = SignUpForm()
+	return render(request, 'register.html', {'form': form})
 
 def registerimage(request):
 	return render(request, 'registerimage.html', {})
