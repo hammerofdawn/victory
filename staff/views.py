@@ -45,6 +45,9 @@ def teams(request):
 	return render(request, 'teams.html', context)
 
 def login(request):
+	if request.user.is_authenticated():
+		return redirect('index')
+	
 	if request.method == 'POST':
 		token = request.POST.get('token', None)
 		username = request.POST.get('username', None)
@@ -74,7 +77,7 @@ def login(request):
 							ua.save()
 
 							return render(request, "2ndfactor.html", {
-								'invalid': True,
+								'error': "The entered code was incorrect.",
 								'token': token
 							})
 					else:
@@ -83,7 +86,7 @@ def login(request):
 						})
 				else:
 					return render(request, "2ndfactor.html", {
-						'error': "Allowed number of attempts has been exceeded.",
+						'error': "Code has been entered incorrectly too many times.",
 					})
 			else:
 				return render(request, "2ndfactor.html", {'error': True})

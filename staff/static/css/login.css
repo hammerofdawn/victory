@@ -10,7 +10,6 @@ a {
 }
 
 .custompanel {
-	min-width: 350px;
 	max-width: 500px;
 	position: relative;
 	margin: 2em auto;
