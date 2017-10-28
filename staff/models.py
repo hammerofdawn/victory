@@ -2,6 +2,8 @@ from django.db import models
 
 from django.contrib.auth.models import User
 from django.core.validators import RegexValidator, MinValueValidator, MaxValueValidator
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 # Create your models here.
 
@@ -96,10 +98,10 @@ class ExtendedUser(models.Model):
 	phone_number = models.CharField(max_length=16, validators=[phone_number_regex], blank=True)
 	emergency_number = models.CharField(max_length=16, validators=[phone_number_regex], blank=True)
 	drivers_licence = models.ManyToManyField(DriversLicenceCategories, blank=True)
-	avatar = models.ImageField(upload_to='users/avatars')
-	background = models.ImageField(upload_to='users/backgrounds')
+	avatar = models.ImageField(upload_to='users/avatars', default='/static/img/userpreload.png') # Defaults points to media folder /static/ and so on
+	background = models.ImageField(upload_to='users/backgrounds', default='/static/img/userpreload.png') # Defaults points to media folder /static/ and so on
 	team = models.ForeignKey(Team, null=True, blank=True) # Skal der være on_delete her?
-	languages = models.ManyToManyField(Language)
+	languages = models.ManyToManyField(Language, blank=True, null=True)
 	tshirt = models.ForeignKey(TShirt, null=True, blank=True)
 	sock = models.ForeignKey(Sock, null=True, blank=True)
 	facebook_link = models.URLField(max_length=200, blank=True, null=True)
@@ -109,6 +111,12 @@ class ExtendedUser(models.Model):
 	child_record = models.DateField(null=True, blank=True)
 	special_considerations = models.TextField(blank=True)
 	theme = models.ForeignKey(Theme, null=True, blank=False)
+
+@receiver(post_save, sender=User)
+def update_user_extendeduser(sender, instance, created, **kwargs):
+    if created:
+        ExtendedUser.objects.create(user=instance)
+    instance.extendeduser.save()
 
 class Article(models.Model):
 	author = models.ForeignKey(User)

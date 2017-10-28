@@ -20,61 +20,75 @@ Register
 	</div>
 	<hr>
 	<div>
-		<form action="2fauth" method="POST">
-			<div class="form-group">
-				<label class="viclabelline-bottom" for="id_username">User/nickname</label>
-				<input type="text" class="victext-input vic-block full-width" id="id_username" name="username" placeholder="victory">
-				<small id="phoneHelpBlock" class="form-text text-muted">
-						Used for logging in, and also your display name.
-				</small>
+		{% if form.errors %}
+		<div class="alert alert-danger" role="alert">
+		  <ul>
+		    {% for key,value in form.errors.items %}
+		      <li>{{ key|escape }} : {{ value|escape }}</li>
+		    {% endfor %}
+		  </ul>
+		</div>
+		{% endif %}
+	<form action="" method="POST">
+		{% csrf_token %}
+		<div class="form-group">
+			<label class="viclabelline-bottom" for="id_username">User/nickname</label>
+			<input type="text" class="victext-input vic-block full-width" name="username" maxlength="150" autofocus required id="id_username" placeholder="Victory">
+			<small id="usernameHelpBlock" class="form-text text-muted">
+				50 characters or fewer. Letters, digits and @/./+/-/_ only.
+			</small>
+		</div>
+		<div class="form-row">
+			<div class="form-group col-md-6">
+				<label class="viclabelline-bottom" for="id_first_name">First Name</label>
+				<input type="text" class="victext-input vic-block full-width" name="first_name" maxlength="30" required id="id_first_name" placeholder="Peter">
 			</div>
-			<div class="form-row">
-				<div class="form-group col-md-6">
-					<label class="viclabelline-bottom" for="id_first_name">First Name</label>
-					<input required type="text" class="victext-input vic-block full-width" id="id_first_name" name="first_name" placeholder="Peter">
-				</div>
-				<div class="form-group col-md-6">
-					<label class="viclabelline-bottom" for="id_last_name">Last Name</label>
-					<input required type="text" class="victext-input vic-block full-width" id="id_last_name" name="last_name" placeholder="Petersen">
-				</div>
+			<div class="form-group col-md-6">
+				<label class="viclabelline-bottom" for="id_last_name">Last Name</label>
+				<input type="text" class="victext-input vic-block full-width" name="last_name" maxlength="30" required id="id_last_name" placeholder="Petersen">
 			</div>
-			<div class="form-group">
-				<label class="viclabelline-bottom" for="id_email">Email</label>
-				<input required type="email" class="victext-input vic-block full-width" id="id_email" name="email" placeholder="Email@example.dk">
-			</div>
-			<div class="form-group">
-				<label class="viclabelline-bottom" for="id_phone">Phone (Mobile with countrycode)</label>
-				<input required type="tel" class="victext-input vic-block full-width" id="id_phone" name="phone" placeholder="+4512345678">
-				<small id="phoneHelpBlock" class="form-text text-muted">
-						Used to contact you and also for 2 factor authentication.
-				</small>
-			</div>
-			<div class="form-row">
-				<div class="form-group col-md-6">
-					<label class="viclabelline-bottom" for="id_postal_code">Postal code</label>
-					<input required type="text" class="victext-input vic-block full-width" id="id_postal_code" name="postal_code" placeholder="1577">
-				</div>
-				<div class="form-group col-md-6">
-					<label class="viclabelline-bottom" for="id_city">City</label>
-					<input required type="text" class="victext-input vic-block full-width" id="id_city" name="city" placeholder="Copenhagen">
-				</div>
-			</div>
-			<hr>
-			<div class="form-group">
-				<label class="viclabelline-bottom" for="id_password">Password</label>
-				<input required type="password" class="victext-input vic-block full-width" id="id_password" name="password">
-			</div>
-			<div class="form-group">
-				<label class="viclabelline-bottom" for="id_password_retyped">Retype Password</label>
-				<input required type="password" class="victext-input vic-block full-width" id="id_password_retyped" name="password_retyped">
-			</div>
-			<div id="passwordchecking" style="display:none;" class="alert alert-danger" role="alert"></div>
-			<hr>
-			<button type="submit" class="vicbtn vicbtn-blue vicbtn-bottom full-width"><strong>Register</strong></button>
-			<a href="{{ request.META.HTTP_REFERER }}" class="vicbtn vicbtn-red full-width" role="button"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
-		</form>
+		</div>
+		<div class="form-group">
+			<label class="viclabelline-bottom" for="id_email">Email</label>
+			<input type="email" class="victext-input vic-block full-width" name="email" maxlength="254" required id="id_email" placeholder="Email@example.dk">
+		</div>
+		<div class="form-group">
+			<label class="viclabelline-bottom" for="id_phone_number">Phone (Mobile with countrycode)</label>
+			<input type="tel" class="victext-input vic-block full-width" name="phone_number" maxlength="16" required id="id_phone_number" placeholder="+4512345678">
+			<small id="phone_numberHelpBlock" class="form-text text-muted">
+					Used to contact you and also for 2 factor authentication.
+			</small>
+		</div>
+		<div class="form-group">
+			<label class="viclabelline-bottom" for="id_postal_code">Postal code</label>
+			<input type="text" class="victext-input vic-block full-width" name="postal_code" maxlength="10" required id="id_postal_code" placeholder="1577">
+		</div>
 		<hr>
-		<p class="text-center uppercase">Copyright Genki 2017-2018 - IMAGE BY: <a href="#">MSV-FOTO</a></p>
+		<div class="form-group">
+			<label class="viclabelline-bottom" for="id_password1">Password</label>
+			<input type="password" class="victext-input vic-block full-width" name="password1" required id="id_password1">
+			<small id="password1HelpBlock" class="form-text text-muted">
+				<ul>
+					<li>Your password can't be too similar to your other personal information</li>
+					<li>Least 8 characters</li>
+					<li>Can't be entirely numeric</li>
+				</ul>
+			</small>
+		</div>
+		<div class="form-group">
+			<label class="viclabelline-bottom" for="id_password2">Retype Password</label>
+			<input type="password" class="victext-input vic-block full-width" name="password2" required id="id_password2">
+			<small id="password2HelpBlock" class="form-text text-muted">
+				Enter the same password as before, for verification.
+			</small>
+		</div>
+		<div id="passwordchecking" style="display:none;" class="alert alert-danger" role="alert"></div>
+		<hr>
+		<button type="submit" class="vicbtn vicbtn-blue vicbtn-bottom full-width"><strong>Register</strong></button>
+		<a href="{{ request.META.HTTP_REFERER }}" class="vicbtn vicbtn-red full-width" role="button"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+	</form>
+	<hr>
+	<p class="text-center uppercase">Copyright Genki 2017-2018 - IMAGE BY: <a href="#">MSV-FOTO</a></p>
 	</div>
 </div>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -83,7 +97,7 @@ Register
 <script src="{% static 'js/login.js' %}"></script>
 <script>
 $(document).ready(function () {
-	 $("#id_password,#id_password_retyped").keyup(checkPasswordMatch);
+	 $("#id_password1,#id_password2").keyup(checkPasswordMatch);
 });
 </script>
 {% endblock %}
