@@ -89,13 +89,8 @@
 						{% if user.is_authenticated %}
 						{% url 'user' request.user.pk as url_user %}
 						<li class="qp">
-<<<<<<< HEAD
-							<a class="qn navicons {% if request.get_full_path == url_user %} vic-active {% endif %}" href="{{ url_user }}" title="My Profile" data-toggle="tooltip" data-placement="right">
-									<img src="{{ logged_in_user.extendeduser.avatar.url }}" alt="Nickname" class="wc">
-=======
 							<a class="qn navicons {% if request.get_full_path == url_user %} vic-active {% endif %}" href="{{ url_user }}" title="My Profile" data-placement="right">
 								<img src="{{ logged_in_user.extendeduser.avatar.url }}" alt="Nickname" class="wc">
->>>>>>> f6f2c90c4742cbcdc1e2899fcad5ccd11a38bdc3
 								<small class="brt axz">Profile</small>
 							</a>
 						</li>
