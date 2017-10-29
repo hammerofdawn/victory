@@ -124,6 +124,11 @@
 		</section>
 		{% endblock %}
 
+		<div id="feedback_btn">
+			<div title="Feedback & support" data-toggle="modal" data-target="#feedback_and_support" class="feedb-btn">
+				<i class="fa fa-comments fa-2x feedb-icon" aria-hidden="true"></i>
+			</div>
+		</div>
 		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
 		<script src="{% static 'js/bootstrap.min.js' %}"></script>
@@ -141,3 +146,42 @@
 
 {% block modals %}
 {% endblock %}
+
+<div class="modal fade" id="feedback_and_support" tabindex="-1" role="dialog" aria-labelledby="feedback_and_support" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="custompanel">
+			<div class="modal-header">
+				<h5 class="modal-title" id="ChangePasswordModalLabel">Feedback and support</h5><br>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form>
+				<div class="modal-body">
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							<label class="viclabelline-bottom" for="id_first_name">First Name</label>
+							<input type="text" class="victext-input vic-block full-width" name="first_name" maxlength="30" required id="id_first_name" placeholder="Peter" {% if user.is_authenticated %} value="{{ logged_in_user.first_name }}" {% endif %}>
+						</div>
+						<div class="form-group col-md-6">
+							<label class="viclabelline-bottom" for="id_last_name">Last Name</label>
+							<input type="text" class="victext-input vic-block full-width" name="last_name" maxlength="30" required id="id_last_name" placeholder="Petersen" {% if user.is_authenticated %} value="{{ logged_in_user.last_name }}" {% endif %}>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="viclabelline-bottom" for="id_email">Email</label>
+						<input type="email" class="victext-input vic-block full-width" name="email" maxlength="254" required id="id_email" placeholder="Email@example.dk" {% if user.is_authenticated %} value="{{ logged_in_user.email }}" {% endif %}>
+					</div>
+					<div class="form-group">
+						<label for="messagde">Messagde</label>
+						<textarea rows="4" class="victext-input vic-block full-width" type="text" placeholder="Sometext...." name="messagde"></textarea>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="vicbtn vicbtn-blue" data-dismiss="modal">Close</button>
+					<button type="submit" class="vicbtn vicbtn-green">Send</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
