@@ -5,9 +5,10 @@ from django.contrib.auth import logout as auth_logout
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.shortcuts import get_object_or_404, render, redirect
 from .models import Article, UnauthenticatedSession, Team, DriversLicenceCategories
-from .forms import SignUpForm
+from .forms import SignUpForm, UpdateProfileForm
 from uuid import uuid4
 from random import randint
 import requests
@@ -47,7 +48,7 @@ def teams(request):
 def login(request):
 	if request.user.is_authenticated():
 		return redirect('index')
-	
+
 	if request.method == 'POST':
 		token = request.POST.get('token', None)
 		username = request.POST.get('username', None)
@@ -178,16 +179,28 @@ def user(request, user_pk):
 
 @login_required
 def usersettings(request, user_pk):
+	if request.method == 'POST':
+		form = UpdateProfileForm(request.POST, instance=request.user)
+		if form.is_valid():
+			user = form.save()
+			user.refresh_from_db()  # load the profile instance created by the signal
+			user.extendeduser.postal_code = form.cleaned_data.get('postal_code')
+			user.extendeduser.phone_number = form.cleaned_data.get('phone_number')
+			user.extendeduser.nickname = form.cleaned_data.get('username')
+			user.save()
+			messages.success(request, "Your profile has been updated!")
+			return redirect('usersettings', user_pk=request.user.pk)
+
 	logged_in_user = get_object_or_404(User, pk=request.user.pk)
 	requested_user = get_object_or_404(User, pk=user_pk)
 	driverslicence = DriversLicenceCategories.objects.all()
-
+	form = UpdateProfileForm(instance=request.user)
 	context = {
 		'logged_in_user': logged_in_user,
 		'requested_user': requested_user,
 		'driverslicence': driverslicence,
+		'form'			: form,
 	}
-
 	return render(request, 'user/settings.html', context)
 
 def team(request, team_pk):
