@@ -90,7 +90,7 @@
 						{% url 'user' request.user.pk as url_user %}
 						<li class="qp">
 							<a class="qn navicons {% if request.get_full_path == url_user %} vic-active {% endif %}" href="{{ url_user }}" title="My Profile" data-placement="right">
-								<img src="{{ logged_in_user.extendeduser.avatar.url }}" alt="Nickname" class="wc">
+								<img style="border:1px solid #fff;" src="{{ logged_in_user.extendeduser.avatar.url }}" alt="Nickname" class="wc">
 								<small class="brt axz">Profile</small>
 							</a>
 						</li>
