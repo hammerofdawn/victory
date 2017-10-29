@@ -973,3 +973,32 @@ textarea {
 .error {
 	color: red;
 }
+
+.feedb-btn {
+  position: fixed;
+  right: 40px;
+  height: 58px;
+  width: 58px;
+  border-radius: 50%;
+  box-shadow: 0 2px 5px 0 rgba(255, 255, 255, 0.26);
+	background-color:#1997c6;
+  z-index: 9998;
+  cursor: pointer;
+  transform-origin: bottom;
+  bottom: 40px;
+  opacity: 1;
+  transform: scale(1);
+	-webkit-transition: background 0.5s ease, color 0.4s ease, border-color 0.5s ease, all 0.4s ease;
+	transition: background 0.5s ease, color 0.4s ease, border-color 0.5s ease, all 0.4s ease;
+}
+
+.feedb-btn:hover {
+	background-color: #dc3545;
+}
+
+.feedb-icon {
+  margin-left: 50%;
+  margin-top: 50%;
+  -webkit-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+}
