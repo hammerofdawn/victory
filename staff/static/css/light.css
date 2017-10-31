@@ -392,8 +392,9 @@ p {
 		display: block;
 		margin: 1rem auto;
 		padding: 0 1rem;
+}
+.details-box img.profile-artwork {
 		border-radius: 50%;
-		border: 1px solid #fff;
 }
 @media screen and (min-width: 992px) {
 		.details-box img.artwork {
