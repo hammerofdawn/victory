@@ -15,30 +15,13 @@
 		<link href="{% static 'img/icons/icon-normal.png' %}" rel="icon" sizes="128x128" />
 		<link rel="shortcut icon" type="image/x-icon" href="{% static 'img/icons/favicon.ico' %}" />
 		<meta name="theme-color" content="#1997c6" />
-		<link href="{% static 'css/icons/apple-touch-icon.png' %}" rel="apple-touch-icon" />
-		<link href="{% static 'css/icons/apple-touch-icon-152x152.png' %}" rel="apple-touch-icon" sizes="152x152" />
-		<link href="{% static 'css/icons/apple-touch-icon-167x167.png' %}" rel="apple-touch-icon" sizes="167x167" />
-		<link href="{% static 'css/icons/apple-touch-icon-180x180.png' %}" rel="apple-touch-icon" sizes="180x180" />
-		<link href="{% static 'css/icons/icon-hires.png' %}" rel="icon" sizes="192x192" />
-		<link href="{% static 'css/icons/icon-normal.png' %}" rel="icon" sizes="128x128" />
-		<link rel="shortcut icon" type="image/x-icon" href="{% static 'css/icons/favicon.ico' %}" />
 		<title>
 			{% block title %}
 			Genki Staff
 			{% endblock %}
 		</title>
 		<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-		{% if user.is_authenticated %}
-			{% if logged_in_user.extendeduser.theme.theme_Name == "Dark" %}
-				<link rel="stylesheet" href="{% static 'css/dark.css' %}">
-			{% elif logged_in_user.extendeduser.theme.theme_Name == "Light" %}
-				<link rel="stylesheet" href="{% static 'css/light.css' %}">
-			{% else %}
-				<link rel="stylesheet" href="{% static 'css/light.css' %}">
-			{% endif %}
-		{% else %}
-			<link rel="stylesheet" href="{% static 'css/light.css' %}">
-		{% endif %}
+		<link rel="stylesheet" href="{% static 'css/light.css' %}">
 		<link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}">
 		{% block header %}
 		{% endblock %}
@@ -90,7 +73,7 @@
 						{% url 'user' request.user.pk as url_user %}
 						<li class="qp">
 							<a class="qn navicons {% if request.get_full_path == url_user %} vic-active {% endif %}" href="{{ url_user }}" title="My Profile" data-placement="right">
-								<img style="border:1px solid #fff;" src="{{ logged_in_user.extendeduser.avatar.url }}" alt="Nickname" class="wc">
+								<img src="{{ logged_in_user.extendeduser.avatar.url }}" class="wc">
 								<small class="brt axz">Profile</small>
 							</a>
 						</li>
@@ -132,6 +115,7 @@
 				 </div>
 			</nav>
 		</header>
+
 		{% block content %}
 		<section role="content">
 			<div class="container">
@@ -172,7 +156,8 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<form>
+			<form action="{% url 'contact' %}" method="POST">
+				{% csrf_token %}
 				<div class="modal-body">
 					<div class="form-row">
 						<div class="form-group col-md-6">
@@ -189,8 +174,8 @@
 						<input type="email" class="victext-input vic-block full-width" name="email" maxlength="254" required id="id_email" placeholder="Email@example.dk" {% if user.is_authenticated %} value="{{ logged_in_user.email }}" {% endif %}>
 					</div>
 					<div class="form-group">
-						<label for="messagde">Message</label>
-						<textarea rows="4" class="victext-input vic-block full-width" type="text" placeholder="Sometext...." name="messagde"></textarea>
+						<label for="id_message">Message</label>
+						<textarea rows="4" id="id_message" class="victext-input vic-block full-width" type="text" placeholder="Sometext...." name="message"></textarea>
 					</div>
 				</div>
 				<div class="modal-footer">

@@ -9,8 +9,8 @@ from django.dispatch import receiver
 
 class Team(models.Model):
 	name = models.CharField(max_length=16)
-	logo = models.ImageField(upload_to='teams/avatars')
-	background = models.ImageField(upload_to='teams/backgrounds')
+	logo = models.ImageField(upload_to='teams/avatars', default='static/img/userpreload.png')
+	background = models.ImageField(upload_to='teams/backgrounds', default='static/img/userpreload.png')
 	description = models.TextField(blank=True)
 	people_needed = models.PositiveSmallIntegerField()
 	members = models.ManyToManyField(User, through='TeamMembership')
@@ -19,12 +19,7 @@ class Team(models.Model):
 	@property
 	def teamleaders_listable(self):
 		leaders = self.members.filter(teammembership__leader=True)
-		string = leaders[0].extendeduser.nickname
-
-		for leader in leaders[1:]:
-			string += ", " + leader.extendeduser.nickname
-
-		return string
+		return ", ".join(l.extendeduser.nickname for l in leaders)
 
 	@property
 	def multiple_teamleaders(self):
@@ -96,12 +91,13 @@ class ExtendedUser(models.Model):
 	postal_code = models.CharField(max_length=10)
 	phone_number_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+4570131415'. Up to 15 digits allowed.")
 	phone_number = models.CharField(max_length=16, validators=[phone_number_regex], blank=True)
+	phone_number_show = models.BooleanField(default=False)
 	emergency_number = models.CharField(max_length=16, validators=[phone_number_regex], blank=True)
 	drivers_licence = models.ManyToManyField(DriversLicenceCategories, blank=True)
-	avatar = models.ImageField(upload_to='users/avatars', default='/static/img/userpreload.png') # Defaults points to media folder /static/ and so on
-	background = models.ImageField(upload_to='users/backgrounds', default='/static/img/userpreload.png') # Defaults points to media folder /static/ and so on
+	avatar = models.ImageField(upload_to='users/avatars', default='static/img/userpreload.png') # Defaults points to media folder /static/ and so on
+	background = models.ImageField(upload_to='users/backgrounds', default='static/img/userpreload.png') # Defaults points to media folder /static/ and so on
 	team = models.ForeignKey(Team, null=True, blank=True) # Skal der være on_delete her?
-	languages = models.ManyToManyField(Language, blank=True, null=True)
+	languages = models.ManyToManyField(Language, blank=True)
 	tshirt = models.ForeignKey(TShirt, null=True, blank=True)
 	sock = models.ForeignKey(Sock, null=True, blank=True)
 	facebook_link = models.URLField(max_length=200, blank=True, null=True)
@@ -143,3 +139,10 @@ class UnauthenticatedSession(models.Model):
 
 	def __str__(self):
 		return self.user.username
+
+class TeamApplication(models.Model):
+	from_user = models.ForeignKey(User)
+	send = models.DateTimeField(auto_now=False, auto_now_add=True)
+	to_team = models.ManyToManyField(Team)
+	application_text = models.TextField()
+	accepted = models.BooleanField(default=False)

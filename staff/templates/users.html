@@ -33,7 +33,11 @@ Users
 							<div class="hover-wrapper">
 								<label class="title one-line-ellipsis">{{ user.extendeduser.nickname }}</label>
 								{% if user.extendeduser.phone_number %}
-								<label class="title one-line-ellipsis">Phone: {{ user.extendeduser.phone_number }}</label>
+									{% if user.extendeduser.phone_number_show %}
+									<label class="title one-line-ellipsis">Phone: {{ user.extendeduser.phone_number }}</label>
+									{% else %}
+									<label class="title one-line-ellipsis">Phone: Hidden</label>
+									{% endif %}
 								{% else %}
 								<label class="title one-line-ellipsis">Phone: None</label>
 								{% endif %}
@@ -68,9 +72,15 @@ Users
 							</td>
 							<td>
 								{% if user.extendeduser.phone_number %}
-								<a class="phoneid" href="tel:{{ user.extendeduser.phone_number }}">
-									<i class="fa fa-phone" aria-hidden="true"></i> {{ user.extendeduser.phone_number }}
-								</a>
+									{% if user.extendeduser.phone_number_show %}
+									<a class="phoneid" href="tel:{{ user.extendeduser.phone_number }}">
+										<i class="fa fa-phone" aria-hidden="true"></i> {{ user.extendeduser.phone_number }}
+									</a>
+									{% else %}
+									<a href="#">
+										Hidden
+									</a>
+									{% endif %}
 								{% else %}
 								<a href="#">
 									None

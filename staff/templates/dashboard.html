@@ -10,7 +10,15 @@ Victory
 <section role="content">
 	<div class="container">
 		<h1 class="line-top">Hello {{ user.extendeduser.nickname }}.</h1>
+		{% if messages %}
+		<div class="alert alert-success" role="alert">
+			{% for message in messages %}
+			<p>{{ message }}</p>
+			{% endfor %}
+		</div>
+		{% endif %}
 		<div class="custompanel">
+
 			{% if searchfunctionisimplemented %}
 			<div style="margin-bottom:10px;">
 				<form class="search-width" style="display: inline-flex;" action="search" method="post">

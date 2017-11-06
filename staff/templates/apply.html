@@ -18,32 +18,30 @@ Apply
 			<button onclick="location.href='{% url 'teams' %}';" class="vicbtn vicbtn-blue">Browse Teams</button>
 		</div>
 		<div class="custompanel">
-			<div id="formapply">
-				<div class="form-group ">
-					<label>Select teams you want to apply to.</label>
-					<select class="teams form-control" multiple="multiple">
-						{% for team in teams %}
-						<option {% if team.accepts_applications is False %}disabled="disabled"{% endif %} value="{{ team.pk }}">{{ team.name }}</option>
-						{% endfor %}
-					</select>
+			<h3>About applications for diffrent teams.</h3>
+			<p>We are working on a feature that lets you send out an diffrent application to each team you select on this page.<br>
+			All tho if you want to send an diffrent application to each team just after you have send one application just go back here and make a new one for the next team.</p>
+		</div>
+		<div class="custompanel">
+			<form action="" method="POST">
+				{% csrf_token %}
+				<input type="hidden" id="id_from_user" name="from_user" value="{{ logged_in_user.pk }}">
+				<div id="formapply">
+					<div class="form-group ">
+						<label>Select teams you want to apply to.</label>
+						<select class="teams form-control" name="to_team" required id="id_to_team" multiple="multiple">
+							{% for team in teams %}
+							<option {% if team.accepts_applications is False %}disabled="disabled"{% endif %} value="{{ team.pk }}">{{ team.name }}</option>
+							{% endfor %}
+						</select>
+					</div>
+					<div class="form-group">
+						<label style="margin-top:15px;" for="application">Wite your application here</label>
+						<textarea class="victext-input vic-block full-width" id="id_application_text" name="application_text" rows="6"></textarea>
+					</div>
+					<button class="vicbtn vicbtn-green" name="sendapplication">Send application</button>
 				</div>
-				<div class="form-group">
-					<label>Send Individual Applications? No/Yes</label>
-					<label class="switch">
-						<input type="checkbox">
-						<span class="slider round"></span>
-					</label>
-				</div>
-				<div class="form-group">
-					<label style="margin-top:15px;" for="application">Wite your application here</label>
-					<textarea class="victext-input vic-block full-width" name="application" rows="3"></textarea>
-				</div>
-				<button class="vicbtn vicbtn-green" name="sendapplication" onclick="submitapplication()">Send application</button>
-			</div>
-			<div id="formsend" style="display:none;">
-				<h3>Thank you for your application(s)</h3>
-				<p>You will get an email ASAP, when teamleader has gone though your application.</p>
-			</div>
+		</form>
 		</div>
 	</div>
 </section>
@@ -57,16 +55,5 @@ Apply
 	$(document).ready(function(){
 			$('[data-toggle="tooltip"]').tooltip({container:'body'});
 	});
-
-	function submitapplication() {
-			var x = document.getElementById('formapply');
-			var sended = document.getElementById('formsend');
-			if (x.style.display === 'none') {
-					x.style.display = 'block';
-			} else {
-					x.style.display = 'none';
-					sended.style.display = 'block';
-			}
-	}
 </script>
 {% endblock %}

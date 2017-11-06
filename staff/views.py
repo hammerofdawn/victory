@@ -7,14 +7,15 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, render, redirect
-from .models import Article, UnauthenticatedSession, Team, DriversLicenceCategories
-from .forms import SignUpForm, UpdateProfileForm
+from django.conf import settings
+from django.core.mail import send_mail, BadHeaderError
+from .models import Article, UnauthenticatedSession, Team, DriversLicenceCategories, TeamApplication
+from .forms import SignUpForm, UpdateProfileForm, SendApplication, FeedbackSupportForm
 from uuid import uuid4
 from random import randint
 import requests
 import os
 from requests_oauthlib import OAuth1Session
-
 
 # Create your views here.
 
@@ -22,10 +23,11 @@ def index(request):
 	if request.user.is_authenticated():
 		logged_in_user = get_object_or_404(User, pk=request.user.pk)
 		articles = Article.objects.all()
-
+		feedback = FeedbackSupportForm()
 		context = {
 			'logged_in_user': logged_in_user,
 			'articles': articles,
+			'feedback': feedback,
 		}
 
 		return render(request, 'dashboard.html', context)
@@ -33,16 +35,15 @@ def index(request):
 		return render(request, 'welcome.html')
 
 def teams(request):
-	teams = Team.objects.all()
-
+	teams = Team.objects.all().order_by('name')
+	feedback = FeedbackSupportForm()
 	context = {
 		'teams': teams,
+		'feedback': feedback,
 	}
-
 	if request.user.is_authenticated():
 		logged_in_user = get_object_or_404(User, pk=request.user.pk)
 		context['logged_in_user'] = logged_in_user
-
 	return render(request, 'teams.html', context)
 
 def login(request):
@@ -99,7 +100,7 @@ def login(request):
 				token = str(uuid4())
 				otp = str(randint(1111, 9999))
 
-				gwapi = OAuth1Session(os.environ['VICTORY_GATEWAYAPI_KEY'], client_secret=os.environ['VICTORY_GATEWAYAPI_SECRET'])
+				gwapi = OAuth1Session('OCBzbvY1b1FCQpTzEa4_131V', client_secret='g^oqsxSClJ(A@-Yttu-D6.C5lB6YdeBVz&LJ6E3W')
 
 				req = {
 					'message': 'Victory login code:\n{} {} {} {}'.format(otp[0:1], otp[1:2], otp[2:3], otp[3:4]),
@@ -116,14 +117,17 @@ def login(request):
 				us.otp = otp
 
 				us.save()
-
-				return render(request, "2ndfactor.html", {'token': token})
+				feedback = FeedbackSupportForm()
+				return render(request, "2ndfactor.html", {'token': token, 'feedback': feedback,})
 			else:
-				return render(request, "login.html", {'invalid': True })
+				feedback = FeedbackSupportForm()
+				return render(request, "login.html", {'invalid': True, 'feedback': feedback, })
 		else:
-			return render(request, "login.html")
+			feedback = FeedbackSupportForm()
+			return render(request, "login.html", {'feedback': feedback,})
 	else:
-		return render(request, 'login.html')
+		feedback = FeedbackSupportForm()
+		return render(request, 'login.html', {'feedback': feedback,})
 
 #def welcome(request):
 #	return render(request, 'welcome.html', {})
@@ -134,32 +138,55 @@ def logout(request):
 
 def register(request):
 	if request.method == 'POST':
-		form = SignUpForm(request.POST)
-		if form.is_valid():
-			user = form.save()
-			user.refresh_from_db()  # load the profile instance created by the signal
-			user.extendeduser.postal_code = form.cleaned_data.get('postal_code')
-			user.extendeduser.phone_number = form.cleaned_data.get('phone_number')
-			user.extendeduser.nickname = form.cleaned_data.get('username')
-			user.save()
-			raw_password = form.cleaned_data.get('password1')
-			user = auth_authenticate(username=user.username, password=raw_password)
-			auth_login(request, user)
-			return redirect('index')
+			form = SignUpForm(request.POST)
+			if form.is_valid():
+				user = form.save()
+				user.refresh_from_db()  # load the profile instance created by the signal
+				user.extendeduser.postal_code = form.cleaned_data.get('postal_code')
+				user.extendeduser.phone_number = form.cleaned_data.get('phone_number')
+				user.extendeduser.nickname = form.cleaned_data.get('username')
+				user.save()
+				raw_password = form.cleaned_data.get('password1')
+				user = auth_authenticate(username=user.username, password=raw_password)
+				auth_login(request, user)
+				return redirect('index')
 	else:
 		form = SignUpForm()
-	return render(request, 'register.html', {'form': form})
+		feedback = FeedbackSupportForm()
+	return render(request, 'register.html', {'form': form, 'feedback': feedback,})
 
 def registerimage(request):
-	return render(request, 'registerimage.html', {})
+	feedback = FeedbackSupportForm()
+	return render(request, 'registerimage.html', {'feedback': feedback,})
+
+def contact(request):
+	if request.method == 'POST':
+		form = FeedbackSupportForm(request.POST)
+		if form.is_valid():
+			user_mail = form.cleaned_data['email']
+			first_name = form.cleaned_data['first_name']
+			last_name = form.cleaned_data['last_name']
+			subject = "Message from contact form. Victory"
+			from_email = 'info@victory.genki.dk'
+			message = "New mail from: "+first_name+" "+last_name+" "+user_mail+" : "+form.cleaned_data['message']
+			try:
+				send_mail(subject, message, from_email, ['melonendk@gmail.com', 'deni@radera.net'], fail_silently=False,)
+			except BadHeaderError:
+				return HttpResponse('Invalid header found.')
+			messages.success(request, "Sweet! Your message has been send! Please allow up to 24 hours for response time.")
+			return redirect('index')
+	else:
+		return redirect('index')
 
 @login_required
 def users(request):
 	logged_in_user = get_object_or_404(User, pk=request.user.pk)
-	users = User.objects.all()
+	users = User.objects.all().order_by('username')
+	feedback = FeedbackSupportForm()
 	context = {
 		'logged_in_user': logged_in_user,
 		'users': users,
+		'feedback': feedback,
 	}
 
 	return render(request, 'users.html', context)
@@ -168,11 +195,13 @@ def users(request):
 def user(request, user_pk):
 	logged_in_user = get_object_or_404(User, pk=request.user.pk)
 	requested_user = get_object_or_404(User, pk=user_pk)
+	feedback = FeedbackSupportForm()
 
 	context = {
 		'logged_in_user': logged_in_user,
 		'requested_user': requested_user,
-		'editable': True # Has to do actual permission logic.
+		'editable': True, # Has to do actual permission logic.
+		'feedback': feedback,
 	}
 
 	return render(request, 'user/profile.html', context)
@@ -187,6 +216,7 @@ def usersettings(request, user_pk):
 			user.extendeduser.postal_code = form.cleaned_data.get('postal_code')
 			user.extendeduser.phone_number = form.cleaned_data.get('phone_number')
 			user.extendeduser.nickname = form.cleaned_data.get('username')
+			user.extendeduser.phone_number_show = form.cleaned_data.get('phone_number_show')
 			user.save()
 			messages.success(request, "Your profile has been updated!")
 			return redirect('usersettings', user_pk=request.user.pk)
@@ -195,19 +225,22 @@ def usersettings(request, user_pk):
 	requested_user = get_object_or_404(User, pk=user_pk)
 	driverslicence = DriversLicenceCategories.objects.all()
 	form = UpdateProfileForm(instance=request.user)
+	feedback = FeedbackSupportForm()
 	context = {
 		'logged_in_user': logged_in_user,
 		'requested_user': requested_user,
 		'driverslicence': driverslicence,
 		'form'			: form,
+		'feedback'		: feedback,
 	}
 	return render(request, 'user/settings.html', context)
 
 def team(request, team_pk):
 	requested_team = get_object_or_404(Team, pk=team_pk)
-
+	feedback = FeedbackSupportForm()
 	context = {
 		'requested_team': requested_team,
+		'feedback': feedback,
 	}
 
 	if requested_team.multiple_teamleaders:
@@ -216,8 +249,6 @@ def team(request, team_pk):
 	if request.user.is_authenticated():
 		logged_in_user = get_object_or_404(User, pk=request.user.pk)
 		context['logged_in_user'] = logged_in_user
-
-	return render(request, 'team/team.html', context)
 
 def teamsettings(request, team_pk):
 	requested_team = get_object_or_404(Team, pk=team_pk)
@@ -233,14 +264,25 @@ def teamsettings(request, team_pk):
 
 @login_required
 def apply(request):
-	teams = Team.objects.all()
 
-	context = {
-		'teams': teams,
-	}
+	if request.method == 'POST':
+			form = SendApplication(request.POST)
+			if form.is_valid():
+				form.save()
+				messages.success(request, "Your application has now been send! you will get an email once a teamleader has reviewed your application")
+				return redirect('index')
+	else:
+		teams = Team.objects.all().order_by('name')
+		form = SendApplication()
+		feedback = FeedbackSupportForm()
+		context = {
+			'teams': teams,
+			'form' : form,
+			'feedback': feedback,
+		}
 
-	if request.user.is_authenticated():
-		logged_in_user = get_object_or_404(User, pk=request.user.pk)
-		context['logged_in_user'] = logged_in_user
+		if request.user.is_authenticated():
+			logged_in_user = get_object_or_404(User, pk=request.user.pk)
+			context['logged_in_user'] = logged_in_user
 
-	return render(request, 'apply.html', context)
+		return render(request, 'apply.html', context)
