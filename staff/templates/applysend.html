@@ -13,11 +13,10 @@ Apply
 {% block content %}
 <section role="content">
 	<div class="container">
-		<h1 class="line-top">Your sented Applications</h1>
+		<h1 class="line-top">Your sent Applications</h1>
 		<div>
 			<a href="{% url 'apply' %}" class="vicbtn vicbtn-green">Apply</a>
 			<a href="{% url 'teams' %}" class="vicbtn vicbtn-blue">Browse Teams</a>
-
 		</div>
 		<div class="custompanel">
 			{% for apply in teamapplication %}
@@ -32,6 +31,10 @@ Apply
 				</div>
 				<div class="postcontent">
 					{{ apply.application_text|linebreaksbr }}
+				</div>
+				<div class="postinfo">
+					<a href="#" class="vicbtn vicbtn-yellow">Edit(Coming soon)</a>
+					<a href="#" class="float-right vicbtn vicbtn-red">Delete</a>
 				</div>
 			</div>
 			{% endfor %}
