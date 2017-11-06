@@ -15,6 +15,7 @@ urlpatterns = [
 	url(r'^teams/(?P<team_pk>[0-9]+)/$', views.team, name='team'),
 	url(r'^teams/(?P<team_pk>[0-9]+)/settings/$', views.teamsettings, name='teamsettings'),
 	url(r'^apply/$', views.apply, name='apply'),
-	url(r'^apply/sended$', views.applysend, name='applysend'),
+	url(r'^apply/sent$', views.applysent, name='applysent'),
+	url(r'^apply/delete$', views.applydelete, name='applydelete'),
 	url(r'^contact/$', views.contact, name='contact'),
 ]

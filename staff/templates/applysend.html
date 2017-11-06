@@ -13,17 +13,25 @@ Apply
 {% block content %}
 <section role="content">
 	<div class="container">
-		<h1 class="line-top">Your sent Applications</h1>
+		<h1 class="line-top">Your submitted applications</h1>
 		<div>
 			<a href="{% url 'apply' %}" class="vicbtn vicbtn-green">Apply</a>
 			<a href="{% url 'teams' %}" class="vicbtn vicbtn-blue">Browse Teams</a>
 		</div>
 		<div class="custompanel">
+			{% if messages %}
+			<div class="alert alert-info" role="alert">
+				{% for message in messages %}
+				<p>{{ message }}</p>
+				{% endfor %}
+			</div>
+			{% endif %}
+			{% if teamapplication %}
 			{% for apply in teamapplication %}
 			<div class="post">
 				<div class="postinfo">
 					<span class="float-right"><strong>{{ apply.send|date:"F j, Y, H:i"}}</strong></span>
-					<p class="posttitle line-topsmall">
+					<p class="posttitle">
 						{% for team in apply.to_team.all %}
 							{{ team.name }},
 						{% endfor %}
@@ -33,11 +41,17 @@ Apply
 					{{ apply.application_text|linebreaksbr }}
 				</div>
 				<div class="postinfo">
-					<a href="#" class="vicbtn vicbtn-yellow">Edit(Coming soon)</a>
-					<a href="#" class="float-right vicbtn vicbtn-red">Delete</a>
+					<form action="{% url 'applydelete' %}" method="post">
+						{% csrf_token %}
+						<input type="hidden" id="id_apply_pk" name="apply_pk" value="{{ apply.pk }}">
+						<button type="submit" class="vicbtn vicbtn-red">Delete</button>
+					</form>
 				</div>
 			</div>
 			{% endfor %}
+			{% else %}
+			<h4>You havnt sent a application yet.<br> If you want to apply you can do it here: <a href="{% url 'apply' %}" class="vicbtn vicbtn-green">Apply</a></h4>
+			{% endif %}
 		</div>
 	</div>
 </section>

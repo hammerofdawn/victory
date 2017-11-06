@@ -291,7 +291,7 @@ def apply(request):
 
 
 @login_required
-def applysend(request):
+def applysent(request):
 	teamapplication = TeamApplication.objects.all().filter(from_user=request.user.pk).order_by('send')
 	teams = Team.objects.all().order_by('name')
 	feedback = FeedbackSupportForm()
@@ -306,3 +306,14 @@ def applysend(request):
 		context['logged_in_user'] = logged_in_user
 
 	return render(request, 'applysend.html', context)
+
+@login_required
+def applydelete(request):
+	if request.method == 'POST':
+		teamapppk = request.POST['apply_pk']
+		TeamApplication.objects.filter(id=teamapppk).delete()
+		messages.success(request, "Application successful got deleted!")
+		return redirect('applysent')
+	else:
+		messages.error(request, "Couldn get the Application you wanted to delete.")
+		return redirect('applysent')
