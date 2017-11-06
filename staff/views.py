@@ -250,17 +250,7 @@ def team(request, team_pk):
 		logged_in_user = get_object_or_404(User, pk=request.user.pk)
 		context['logged_in_user'] = logged_in_user
 
-def teamsettings(request, team_pk):
-	requested_team = get_object_or_404(Team, pk=team_pk)
-
-	if request.user.is_authenticated():
-		logged_in_user = get_object_or_404(User, pk=request.user.pk)
-
-	context = {
-		'requested_team': requested_team,
-		'logged_in_user': logged_in_user,
-	}
-	return render(request, 'team/settings.html', context)
+	return render(request, 'team/team.html', context)
 
 @login_required
 def apply(request):
