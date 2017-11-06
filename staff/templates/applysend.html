@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}
+Apply
+{% endblock %}
+
+{% block header %}
+<link rel="stylesheet" href="{% static 'css/application.css' %}">
+{% endblock %}
+
+{% block content %}
+<section role="content">
+	<div class="container">
+		<h1 class="line-top">Your sented Applications</h1>
+		<div>
+			<a href="{% url 'apply' %}" class="vicbtn vicbtn-green">Apply</a>
+			<a href="{% url 'teams' %}" class="vicbtn vicbtn-blue">Browse Teams</a>
+
+		</div>
+		<div class="custompanel">
+			{% for apply in teamapplication %}
+			<div class="post">
+				<div class="postinfo">
+					<span class="float-right"><strong>{{ apply.send|date:"F j, Y, H:i"}}</strong></span>
+					<p class="posttitle line-topsmall">
+						{% for team in apply.to_team.all %}
+							{{ team.name }},
+						{% endfor %}
+					</p>
+				</div>
+				<div class="postcontent">
+					{{ apply.application_text|linebreaksbr }}
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+	$(document).ready(function(){
+			$('[data-toggle="tooltip"]').tooltip({container:'body'});
+	});
+</script>
+{% endblock %}
