@@ -13,9 +13,10 @@ Apply
 {% block content %}
 <section role="content">
 	<div class="container">
-		<h1 class="line-top">Application form.</h1>
+		<h1 class="line-top">Your submitted applications</h1>
 		<div>
 			<button onclick="location.href='{% url 'teams' %}';" class="vicbtn vicbtn-blue">Browse Teams</button>
+			<a href="{% url 'applysend' %}" class="vicbtn vicbtn-yellow">View submitted applications</a>
 		</div>
 		<div class="custompanel">
 			<h3>About applications for diffrent teams.</h3>
@@ -31,7 +32,10 @@ Apply
 						<label>Select teams you want to apply to.</label>
 						<select class="teams form-control" name="to_team" required id="id_to_team" multiple="multiple">
 							{% for team in teams %}
-							<option {% if team.accepts_applications is False %}disabled="disabled"{% endif %} value="{{ team.pk }}">{{ team.name }}</option>
+							<option {% if team.accepts_applications is False %}disabled="disabled"{% endif %}
+								{% for apply in teamapplication %}{% for teamsend in apply.to_team.all %}
+								{% if teamsend.id == team.pk %}disabled="disabled"{% endif %}{% endfor %}{% endfor %}
+								value="{{ team.pk }}">{{ team.name }}</option>
 							{% endfor %}
 						</select>
 					</div>

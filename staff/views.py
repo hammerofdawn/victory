@@ -272,10 +272,12 @@ def apply(request):
 				messages.success(request, "Your application has now been send! you will get an email once a teamleader has reviewed your application")
 				return redirect('index')
 	else:
+		teamapplication = TeamApplication.objects.all().filter(from_user=request.user.pk)
 		teams = Team.objects.all().order_by('name')
 		form = SendApplication()
 		feedback = FeedbackSupportForm()
 		context = {
+			'teamapplication': teamapplication,
 			'teams': teams,
 			'form' : form,
 			'feedback': feedback,
@@ -286,3 +288,21 @@ def apply(request):
 			context['logged_in_user'] = logged_in_user
 
 		return render(request, 'apply.html', context)
+
+
+@login_required
+def applysend(request):
+	teamapplication = TeamApplication.objects.all().filter(from_user=request.user.pk).order_by('send')
+	teams = Team.objects.all().order_by('name')
+	feedback = FeedbackSupportForm()
+	context = {
+		'teams': teams,
+		'teamapplication' : teamapplication,
+		'feedback': feedback,
+	}
+
+	if request.user.is_authenticated():
+		logged_in_user = get_object_or_404(User, pk=request.user.pk)
+		context['logged_in_user'] = logged_in_user
+
+	return render(request, 'applysend.html', context)
