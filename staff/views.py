@@ -3,8 +3,10 @@ from django.template import loader
 from django.contrib.auth import authenticate as auth_authenticate
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth import login as auth_login
+from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, render, redirect
 from django.conf import settings
@@ -226,14 +228,29 @@ def usersettings(request, user_pk):
 	driverslicence = DriversLicenceCategories.objects.all()
 	form = UpdateProfileForm(instance=request.user)
 	feedback = FeedbackSupportForm()
+	password = PasswordChangeForm(request.user)
 	context = {
 		'logged_in_user': logged_in_user,
 		'requested_user': requested_user,
 		'driverslicence': driverslicence,
 		'form'			: form,
 		'feedback'		: feedback,
+		'password'		: password,
 	}
 	return render(request, 'user/settings.html', context)
+
+def user_change_password(request, user_pk):
+	if request.method == 'POST':
+		form = PasswordChangeForm(request.user, request.POST)
+		if form.is_valid():
+			user = form.save()
+			update_session_auth_hash(request, user)  # Important!
+			messages.success(request, 'Your password was successfully updated!')
+			return redirect('usersettings', user_pk=request.user.pk)
+		else:
+			messages.error(request, 'Please correct the error below.')
+	else:
+		redirect('usersettings', user_pk=request.user.pk)
 
 def team(request, team_pk):
 	requested_team = get_object_or_404(Team, pk=team_pk)
