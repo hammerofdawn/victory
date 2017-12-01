@@ -24,7 +24,7 @@ from requests_oauthlib import OAuth1Session
 def index(request):
 	if request.user.is_authenticated():
 		logged_in_user = get_object_or_404(User, pk=request.user.pk)
-		articles = Article.objects.all()
+		articles = Article.objects.all().order_by('-created')
 		feedback = FeedbackSupportForm()
 		context = {
 			'logged_in_user': logged_in_user,

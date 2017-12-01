@@ -34,7 +34,7 @@ Victory
 					<p class="posttitle line-topsmall">{{ article.title }}</p>
 				</div>
 				<div class="postcontent">
-					{{ article.body|linebreaksbr }}
+					{{ article.body|safe|linebreaksbr }}
 				</div>
 			</div>
 			{% endfor %}
