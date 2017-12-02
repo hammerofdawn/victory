@@ -264,6 +264,8 @@ def team(request, team_pk):
 		context["multiple_teamleaders"] = True
 
 	if request.user.is_authenticated():
+		if requested_team.members.all().count() > 0:
+			context['teamhasmembers'] = True
 		logged_in_user = get_object_or_404(User, pk=request.user.pk)
 		context['logged_in_user'] = logged_in_user
 
