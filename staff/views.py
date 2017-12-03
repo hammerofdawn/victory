@@ -11,7 +11,7 @@ from django.contrib import messages
 from django.shortcuts import get_object_or_404, render, redirect
 from django.conf import settings
 from django.core.mail import send_mail, BadHeaderError
-from .models import Article, UnauthenticatedSession, Team, DriversLicenceCategories, TeamApplication
+from .models import Article, UnauthenticatedSession, Team, DriversLicenceCategories, TeamApplication, TeamMembership
 from .forms import SignUpForm, UpdateProfileForm, SendApplication, FeedbackSupportForm
 from uuid import uuid4
 from random import randint
@@ -272,8 +272,24 @@ def team(request, team_pk):
 	return render(request, 'team/team.html', context)
 
 @login_required
-def apply(request):
+def teamsettings_general(request, team_pk):
+	logged_in_user = get_object_or_404(User, pk=request.user.pk)
+	requested_team = get_object_or_404(Team, pk=team_pk)
+	for member in requested_team.teammembership_set.all():
+		if member.user.pk == request.user.pk:
+			feedback = FeedbackSupportForm()
+			context = {
+				'requested_team': requested_team,
+				'feedback': feedback,
+				'logged_in_user': logged_in_user,
+			}
+			return render(request, 'team/settings.html', context)
+			break
+		else: return redirect('team', team_pk)
 
+
+@login_required
+def apply(request):
 	if request.method == 'POST':
 			form = SendApplication(request.POST)
 			if form.is_valid():

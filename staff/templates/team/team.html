@@ -64,13 +64,15 @@
 							<div class="p-2 bg-secondary text-white">Normal</div>
 						</div>
 						<div id="userslist">
-							{% for member in requested_team.members.all %}
+							{% for member in requested_team.teammembership_set.all %}
 							<div class="listmember {% if member.leader %}memberlsleader{% endif %}">
 								<div class="memberinfo">
 									<div id="memberimg">
+										<img src="{% static 'img/userpreload.png' %}">
 										<img src="{{ member.user.extendeduser.background.url }}">
+
 									</div>
-									{{ member.leader }}{% if member.leader == true %}yes{% endif %}
+									<p>{{ member.user.first_name }}</p>
 								</div>
 							</div>
 							{% endfor %}

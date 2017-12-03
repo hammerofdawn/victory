@@ -28,7 +28,6 @@ class Team(models.Model):
 		else:
 			return False
 
-
 	def __str__(self):
 		return self.name
 

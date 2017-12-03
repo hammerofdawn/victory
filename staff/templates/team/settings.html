@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}
+Team Settings - Chaos, Genki
+{% endblock %}
+
+{% block content %}
+<section role="content">
+	<div class="container">
+		<h1 class="line-top">Team Settings for .</h1>
+		<div class="custompanel">
+			{% if messages %}
+			<div class="alert alert-success" role="alert">
+				{% for message in messages %}
+				<p>{{ message }}</p>
+				{% endfor %}
+			</div>
+			{% endif %}
+			<p>Everything with a * is required</p>
+			<hr style="border-color:rgba(255, 255, 255, 0.23);">
+			<form>
+				<hr style="border-color:rgba(255, 255, 255, 0.23);">
+				<button type="submit" class="vicbtn vicbtn-green">Save</button>
+			</form>
+		</div>
+	</div>
+</section>
+{% endblock %}
