@@ -726,6 +726,20 @@ a.silent {
 	text-decoration: none !important;
 }
 
+#teamstab > li > a {
+    text-align: center;
+    width: 100%;
+    border-right-width: 0px;
+}
+
+#teamstab > li:nth-child(even) > a {
+    border-right-width: 0px;
+}
+
+#teamstab > li:last-child > a {
+    border-right: 3px solid dodgerblue;
+}
+
 .switch {
 		position: absolute;
 		margin-left: 6px;
@@ -1002,7 +1016,7 @@ input:checked + .slider:before {
 }
 
 .listmember::after{
-    background: #046bc7;
+    background: #868e96;
     bottom: 0;
     content: '';
     display: block;
@@ -1010,6 +1024,10 @@ input:checked + .slider:before {
     position: absolute;
     top: 0;
     width: 6px;
+}
+
+.memberlsgrouplead::after {
+	background: #007bff;
 }
 
 .memberlsleader::after {
@@ -1042,6 +1060,7 @@ input:checked + .slider:before {
 
 .memberinfo #memberimg img {
 	width:60px;
+	margin-left: 6px;
 }
 #rankcolors {
 	margin-bottom: 17px;

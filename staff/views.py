@@ -276,7 +276,7 @@ def teamsettings_general(request, team_pk):
 	logged_in_user = get_object_or_404(User, pk=request.user.pk)
 	requested_team = get_object_or_404(Team, pk=team_pk)
 	for member in requested_team.teammembership_set.all():
-		if member.user.pk == request.user.pk:
+		if member.user.pk == request.user.pk and member.leader:
 			feedback = FeedbackSupportForm()
 			context = {
 				'requested_team': requested_team,

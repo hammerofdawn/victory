@@ -70,9 +70,8 @@
 									<div id="memberimg">
 										<img src="{% static 'img/userpreload.png' %}">
 										<img src="{{ member.user.extendeduser.background.url }}">
-
 									</div>
-									<p>{{ member.user.first_name }}</p>
+									<p>{{ member.user.first_name }} "{{ member.user.extendeduser.nickname }}" {{ member.user.last_name }}</p>
 								</div>
 							</div>
 							{% endfor %}
