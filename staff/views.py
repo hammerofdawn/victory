@@ -268,7 +268,10 @@ def team(request, team_pk):
 			context['teamhasmembers'] = True
 		logged_in_user = get_object_or_404(User, pk=request.user.pk)
 		context['logged_in_user'] = logged_in_user
-
+		for member in requested_team.teammembership_set.all():
+			if member.user.pk == request.user.pk and member.leader:
+				context['caneditteam'] = True
+				break
 	return render(request, 'team/team.html', context)
 
 @login_required

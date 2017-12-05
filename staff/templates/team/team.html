@@ -29,7 +29,10 @@
 					{% endif %}
 					<div>
 						{% if user.is_authenticated %}
-						<a href="{% url 'apply' %}" class="vicbtn vicbtn-green">Apply</a>
+							<a href="{% url 'apply' %}" class="vicbtn vicbtn-green">Apply</a>
+						{% endif %}
+						{% if caneditteam %}
+							<a href="{% url 'teamsettings_general' requested_team.pk %}" class="vicbtn vicbtn-blue">Edit</a>
 						{% endif %}
 					</div>
 				</div>
