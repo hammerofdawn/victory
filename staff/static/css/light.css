@@ -1069,3 +1069,8 @@ input:checked + .slider:before {
 #rankcolors > .p-2{
 	margin-right: 2px;
 }
+
+.nav-tabs .nav-item {
+	width: initial;
+  flex: 1;
+}
