@@ -278,7 +278,7 @@ def team(request, team_pk):
 def teamsettings_general(request, team_pk):
 	logged_in_user = get_object_or_404(User, pk=request.user.pk)
 	requested_team = get_object_or_404(Team, pk=team_pk)
-	for member in requested_team.teammembership_set.all():
+	for member in requested_team.teammembership_set.all().order_by('-leader'):
 		if member.user.pk == request.user.pk and member.leader:
 			feedback = FeedbackSupportForm()
 			context = {
@@ -294,7 +294,7 @@ def teamsettings_general(request, team_pk):
 def teamsettings_description(request, team_pk):
 	logged_in_user = get_object_or_404(User, pk=request.user.pk)
 	requested_team = get_object_or_404(Team, pk=team_pk)
-	for member in requested_team.teammembership_set.all():
+	for member in requested_team.teammembership_set.all().order_by('-leader'):
 		if member.user.pk == request.user.pk and member.leader:
 			feedback = FeedbackSupportForm()
 			context = {
@@ -303,6 +303,22 @@ def teamsettings_description(request, team_pk):
 				'logged_in_user': logged_in_user,
 			}
 			return render(request, 'team/description.html', context)
+			break
+		else: return redirect('team', team_pk)
+
+@login_required
+def teamsettings_members(request, team_pk):
+	logged_in_user = get_object_or_404(User, pk=request.user.pk)
+	requested_team = get_object_or_404(Team, pk=team_pk)
+	for member in requested_team.teammembership_set.all().order_by('-leader'):
+		if member.user.pk == request.user.pk and member.leader:
+			feedback = FeedbackSupportForm()
+			context = {
+				'requested_team': requested_team,
+				'feedback': feedback,
+				'logged_in_user': logged_in_user,
+			}
+			return render(request, 'team/members.html', context)
 			break
 		else: return redirect('team', team_pk)
 

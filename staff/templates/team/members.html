@@ -23,29 +23,29 @@ Team Settings - Chaos, Genki
 					<a class="vic-tablink" id="team-settings" href="{% url 'teamsettings_general' requested_team.pk %}">General</a>
 				</li>
 				<li class="nav-item">
-					<a class="vic-tablink active" id="team-description" href="{% url 'teamsettings_description' requested_team.pk %}">Description</a>
+					<a class="vic-tablink " id="team-description" href="{% url 'teamsettings_description' requested_team.pk %}">Description</a>
 				</li>
 				<li class="nav-item">
-					<a class="vic-tablink" id="team-members" href="{% url 'teamsettings_members' requested_team.pk %}">Members</a>
+					<a class="vic-tablink active" id="team-members" href="{% url 'teamsettings_members' requested_team.pk %}">Members</a>
 				</li>
 				<li class="nav-item">
 					<a class="vic-tablink" id="team-applications"  href="#">Applications</a>
 				</li>
 			</ul>
-
 			<hr style="border-color:rgba(0, 0, 0, 0.23);">
-			<p>Everything with a * is required</p>
-			<p>You can use basic html for headings and stuff more info will be coming up.</p>
-			<hr style="border-color:rgba(0, 0, 0, 0.23);">
-			<form action="" method="POST">
-				{% csrf_token %}
-				<div class="form-group">
-					<label style="margin-top:15px;" for="description">Write your Team description here</label>
-					<textarea class="victext-input vic-block full-width" id="id_description" name="description" rows="6"></textarea>
+			<div id="userslist">
+				{% for member in requested_team.teammembership_set.all %}
+				<div class="listmember {% if member.leader %}memberlsleader{% endif %}">
+					<div class="memberinfo">
+						<div id="memberimg">
+							<img src="{% static 'img/userpreload.png' %}">
+							<img src="{{ member.user.extendeduser.background.url }}">
+						</div>
+						<p>{{ member.user.first_name }} "{{ member.user.extendeduser.nickname }}" {{ member.user.last_name }}</p>
+					</div>
 				</div>
-				<hr style="border-color:rgba(0, 0, 0, 0.23);">
-				<button type="submit" class="vicbtn vicbtn-green">Save</button>
-			</form>
+				{% endfor %}
+			</div>
 		</div>
 	</div>
 </section>
