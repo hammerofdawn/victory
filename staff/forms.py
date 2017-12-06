@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
-from .models import TeamApplication
+from .models import TeamApplication, Team
 
 class SignUpForm(UserCreationForm):
 	postal_code = forms.CharField(max_length=10, required=True)
@@ -23,13 +23,11 @@ class UpdateProfileForm(forms.ModelForm):
 	postal_code = forms.CharField(max_length=10, required=True)
 	phone_number = forms.CharField(max_length=16, required=True)
 	phone_number_show = forms.BooleanField(required=False)
-
 	class Meta:
 		model = User
 		fields = ('username', 'first_name', 'last_name', 'email', 'postal_code', 'phone_number', 'phone_number_show',)
 
 class SendApplication(forms.ModelForm):
-
 	class Meta:
 		model = TeamApplication
 		fields = ('from_user', 'to_team', 'application_text',)
@@ -42,3 +40,13 @@ class FeedbackSupportForm(forms.Form):
 
 	class Meta:
 		fields = ('username', 'first_name', 'last_name', 'email', 'message',)
+
+class TeamSettings_GeneralForm(forms.ModelForm):
+	class Meta:
+		model = Team
+		fields = ('name', 'accepts_applications',)
+
+class TeamSettings_DescriptionForm(forms.ModelForm):
+	class Meta:
+		model = Team
+		fields = ('description',)

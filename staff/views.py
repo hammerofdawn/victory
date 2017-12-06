@@ -12,7 +12,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.conf import settings
 from django.core.mail import send_mail, BadHeaderError
 from .models import Article, UnauthenticatedSession, Team, DriversLicenceCategories, TeamApplication, TeamMembership
-from .forms import SignUpForm, UpdateProfileForm, SendApplication, FeedbackSupportForm
+from .forms import SignUpForm, UpdateProfileForm, SendApplication, FeedbackSupportForm, TeamSettings_GeneralForm, TeamSettings_DescriptionForm
 from uuid import uuid4
 from random import randint
 import requests
@@ -278,12 +278,22 @@ def team(request, team_pk):
 def teamsettings_general(request, team_pk):
 	logged_in_user = get_object_or_404(User, pk=request.user.pk)
 	requested_team = get_object_or_404(Team, pk=team_pk)
+	if request.method == 'POST':
+		for member in requested_team.teammembership_set.all().order_by('-leader'):
+			if member.user.pk == request.user.pk and member.leader:
+				form = TeamSettings_GeneralForm(request.POST, instance=requested_team)
+				if form.is_valid():
+					form.save()
+					messages.success(request, "The team has been updated!")
+					return redirect('teamsettings_general', team_pk=team_pk)
 	for member in requested_team.teammembership_set.all().order_by('-leader'):
 		if member.user.pk == request.user.pk and member.leader:
 			feedback = FeedbackSupportForm()
+			form = TeamSettings_GeneralForm(instance=requested_team)
 			context = {
 				'requested_team': requested_team,
 				'feedback': feedback,
+				'form' : form,
 				'logged_in_user': logged_in_user,
 			}
 			return render(request, 'team/settings.html', context)
@@ -294,12 +304,22 @@ def teamsettings_general(request, team_pk):
 def teamsettings_description(request, team_pk):
 	logged_in_user = get_object_or_404(User, pk=request.user.pk)
 	requested_team = get_object_or_404(Team, pk=team_pk)
+	if request.method == 'POST':
+		for member in requested_team.teammembership_set.all().order_by('-leader'):
+			if member.user.pk == request.user.pk and member.leader:
+				form = TeamSettings_DescriptionForm(request.POST, instance=requested_team)
+				if form.is_valid():
+					form.save()
+					messages.success(request, "The team has been updated!")
+					return redirect('teamsettings_description', team_pk=team_pk)
 	for member in requested_team.teammembership_set.all().order_by('-leader'):
 		if member.user.pk == request.user.pk and member.leader:
 			feedback = FeedbackSupportForm()
+			form = TeamSettings_DescriptionForm(request.POST, instance=requested_team)
 			context = {
 				'requested_team': requested_team,
 				'feedback': feedback,
+				'form' : form,
 				'logged_in_user': logged_in_user,
 			}
 			return render(request, 'team/description.html', context)
