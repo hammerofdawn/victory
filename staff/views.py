@@ -323,6 +323,24 @@ def teamsettings_members(request, team_pk):
 		else: return redirect('team', team_pk)
 
 @login_required
+def teamsettings_applications(request, team_pk):
+	logged_in_user = get_object_or_404(User, pk=request.user.pk)
+	requested_team = get_object_or_404(Team, pk=team_pk)
+	for member in requested_team.teammembership_set.all().order_by('-leader'):
+		if member.user.pk == request.user.pk and member.leader:
+			feedback = FeedbackSupportForm()
+			teamapplications = TeamApplication.objects.all().filter(to_team=requested_team.pk).order_by('send')
+			context = {
+				'requested_team': requested_team,
+				'feedback': feedback,
+				'logged_in_user': logged_in_user,
+				'applications': teamapplications,
+			}
+			return render(request, 'team/applications.html', context)
+			break
+		else: return redirect('team', team_pk)
+
+@login_required
 def apply(request):
 	if request.method == 'POST':
 			form = SendApplication(request.POST)

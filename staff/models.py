@@ -137,3 +137,5 @@ class TeamApplication(models.Model):
 	to_team = models.ManyToManyField(Team)
 	application_text = models.TextField()
 	accepted = models.BooleanField(default=False)
+	need_info = models.BooleanField(default=False)
+	refused = models.BooleanField(default=False)
