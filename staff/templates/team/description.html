@@ -35,11 +35,13 @@ Team Settings - Chaos, Genki
 
 			<hr style="border-color:rgba(0, 0, 0, 0.23);">
 			<p>Everything with a * is required</p>
+			<p>You can use basic html for headings and stuff more info will be coming up.</p>
 			<hr style="border-color:rgba(0, 0, 0, 0.23);">
 			<form action="" method="POST">
 				{% csrf_token %}
 				<div class="form-group">
-
+					<label style="margin-top:15px;" for="description">Write your Team description here</label>
+					<textarea class="victext-input vic-block full-width" id="id_description" name="description" rows="6"></textarea>
 				</div>
 				<hr style="border-color:rgba(0, 0, 0, 0.23);">
 				<button type="submit" class="vicbtn vicbtn-green">Save</button>
