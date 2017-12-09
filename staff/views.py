@@ -12,7 +12,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.conf import settings
 from django.core.mail import send_mail, BadHeaderError
 from .models import Article, UnauthenticatedSession, Team, DriversLicenceCategories, TeamApplication, TeamMembership
-from .forms import SignUpForm, UpdateProfileForm, SendApplication, FeedbackSupportForm, TeamSettings_GeneralForm, TeamSettings_DescriptionForm
+from .forms import SignUpForm, UpdateProfileForm, SendApplication, FeedbackSupportForm, TeamSettings_GeneralForm, TeamSettings_DescriptionForm, TeamSettings_acceptForm, TeamSettings_needinfo_andrefuseForm
 from uuid import uuid4
 from random import randint
 import requests
@@ -349,16 +349,74 @@ def teamsettings_applications(request, team_pk):
 	for member in requested_team.teammembership_set.all().order_by('-leader'):
 		if member.user.pk == request.user.pk and member.leader:
 			feedback = FeedbackSupportForm()
+			formaccept = TeamSettings_acceptForm()
+			formneedinfoandrefuse = TeamSettings_needinfo_andrefuseForm()
 			teamapplications = TeamApplication.objects.all().filter(to_team=requested_team.pk).order_by('send')
 			context = {
 				'requested_team': requested_team,
 				'feedback': feedback,
+				'formaccept': formaccept,
+				'formneedinfoandrefuse': formneedinfoandrefuse,
 				'logged_in_user': logged_in_user,
 				'applications': teamapplications,
 			}
 			return render(request, 'team/applications.html', context)
 			break
 		else: return redirect('team', team_pk)
+
+
+@login_required
+def teamsettings_accept_applications(request, team_pk):
+	if request.method == 'POST': #check if post
+		logged_in_user = get_object_or_404(User, pk=request.user.pk)
+		requested_team = get_object_or_404(Team, pk=team_pk)
+		for member in requested_team.teammembership_set.all().order_by('-leader'): #Foreach TeamMembership in this team check if current user is leader for the team.
+			if member.user.pk == request.user.pk and member.leader:
+				formaccept = TeamSettings_acceptForm(request.POST)
+				accepteduserid = formaccept.data['user']
+				teamapplications = TeamApplication.objects.all().filter(from_user=accepteduserid).count()
+				if teamapplications > 1: #if user has more than one application.
+					messages.success(request, "Error")
+					return redirect('teamsettings_applications', team_pk=team_pk)
+				else:
+					if formaccept.is_valid(): #user only has this application and form is valid then add him to the team.
+						teamapplications = TeamApplication.objects.all().filter(from_user=accepteduserid)
+						teamapplications.update(accepted=True)
+						new_team_membership = formaccept.save(commit=False)
+						new_team_membership.team = requested_team
+						new_team_membership.save()
+						messages.success(request, "User has now been added to your team! And an email and SMS has been send to the user.")
+						return redirect('teamsettings_members', team_pk=team_pk)
+
+@login_required
+def teamsettings_needinfo_applications(request, team_pk):
+	if request.method == 'POST': #check if post
+		logged_in_user = get_object_or_404(User, pk=request.user.pk)
+		requested_team = get_object_or_404(Team, pk=team_pk)
+		for member in requested_team.teammembership_set.all().order_by('-leader'): #Foreach TeamMembership in this team check if current user is leader for the team.
+			if member.user.pk == request.user.pk and member.leader:
+				formneedinfo = TeamSettings_needinfo_andrefuseForm(request.POST)
+				if formneedinfo.is_valid():
+					accepteduserid = formneedinfo.data['user']
+					teamapplications = TeamApplication.objects.all().filter(from_user=accepteduserid).filter(to_team=requested_team)
+					teamapplications.update(need_info=True)
+					messages.success(request, "We have notified the user (By email & sms.) that you want more info on him.")
+					return redirect('teamsettings_applications', team_pk=team_pk)
+
+@login_required
+def teamsettings_refuse_applications(request, team_pk):
+	if request.method == 'POST': #check if post
+		logged_in_user = get_object_or_404(User, pk=request.user.pk)
+		requested_team = get_object_or_404(Team, pk=team_pk)
+		for member in requested_team.teammembership_set.all().order_by('-leader'): #Foreach TeamMembership in this team check if current user is leader for the team.
+			if member.user.pk == request.user.pk and member.leader:
+				formrefuse = TeamSettings_needinfo_andrefuseForm(request.POST)
+				if formrefuse.is_valid():
+					accepteduserid = formrefuse.data['user']
+					teamapplications = TeamApplication.objects.all().filter(from_user=accepteduserid).filter(to_team=requested_team)
+					teamapplications.update(refused=True)
+					messages.success(request, "We have notified the user (By email & sms.) that the application is refused")
+					return redirect('teamsettings_applications', team_pk=team_pk)
 
 @login_required
 def apply(request):

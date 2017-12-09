@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
-from .models import TeamApplication, Team
+from .models import TeamApplication, Team, TeamMembership
 
 class SignUpForm(UserCreationForm):
 	postal_code = forms.CharField(max_length=10, required=True)
@@ -50,3 +50,13 @@ class TeamSettings_DescriptionForm(forms.ModelForm):
 	class Meta:
 		model = Team
 		fields = ('description',)
+
+class TeamSettings_acceptForm(forms.ModelForm):
+	class Meta:
+		model = TeamMembership
+		fields = ('user',)
+
+class TeamSettings_needinfo_andrefuseForm(forms.Form):
+	user = forms.IntegerField()
+	class Meta:
+		fields = ('user',)

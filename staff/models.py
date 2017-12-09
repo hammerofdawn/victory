@@ -34,7 +34,7 @@ class Team(models.Model):
 class TeamMembership(models.Model):
 	user = models.ForeignKey(User)
 	team = models.ForeignKey(Team)
-	leader = models.BooleanField()
+	leader = models.BooleanField(default=False)
 
 class Group(models.Model):
 	name = models.CharField(max_length=32)

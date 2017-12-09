@@ -55,19 +55,19 @@ Team Settings - Chaos, Genki
 					{{ apply.application_text|linebreaksbr }}
 				</div>
 				<div class="postinfo" style="display:flex;">
-					<form style="margin-right:2px;" action="" method="post">
+					<form style="margin-right:2px;" action="{% url 'teamsettings_accept_applications' requested_team.pk %}" method="post">
 						{% csrf_token %}
-						<input type="hidden" id="id_apply_pk" name="apply_pk" value="{{ apply.pk }}">
+						<input type="hidden" id="id-user" name="user" value="{{ apply.from_user.pk }}">
 						<button type="submit" class="vicbtn vicbtn-green"><i class="fa fa-check" aria-hidden="true"></i> Accept</button>
 					</form>
-					<form style="margin-right:2px;" action="" method="post">
+					<form style="margin-right:2px;" action="{% url 'teamsettings_needinfo_applications' requested_team.pk %}" method="post">
 						{% csrf_token %}
-						<input type="hidden" id="id_apply_pk" name="apply_pk" value="{{ apply.pk }}">
+						<input type="hidden" id="id-user" name="user" value="{{ apply.from_user.pk }}">
 						<button type="submit" class="vicbtn vicbtn-yellow" alt="Gives user away that u need more info."><i class="fa fa-question" aria-hidden="true"></i> Need info</button>
 					</form>
-					<form style="margin-right:2px;" action="" method="post">
+					<form style="margin-right:2px;" action="{% url 'teamsettings_refuse_applications' requested_team.pk %}" method="post">
 						{% csrf_token %}
-						<input type="hidden" id="id_apply_pk" name="apply_pk" value="{{ apply.pk }}">
+						<input type="hidden" id="id-user" name="user" value="{{ apply.from_user.pk }}">
 						<button type="submit" class="vicbtn vicbtn-red"><i class="fa fa-times" aria-hidden="true"></i> Refuse</button>
 					</form>
 					<button type="submit" disabled class="disabled vicbtn vicbtn-red"><i class="fa fa-flag" aria-hidden="true"></i> Flag(Coming soon.)</button>
