@@ -6,10 +6,14 @@
 Team Settings - Chaos, Genki
 {% endblock %}
 
+{% block header %}
+<link rel="stylesheet" href="{% static 'css/application.css' %}">
+{% endblock %}
+
 {% block content %}
 <section role="content">
 	<div class="container">
-		<h1 class="line-top">Team Description for {{ requested_team.name }}.</h1>
+		<h1 class="line-top">Add Member to {{ requested_team.name }}.</h1>
 		<div class="custompanel">
 			{% if messages %}
 			<div class="alert alert-success" role="alert">
@@ -36,22 +40,34 @@ Team Settings - Chaos, Genki
 				</li>
 			</ul>
 			<hr style="border-color:rgba(0, 0, 0, 0.23);">
-			<a href="" class="vicbtn vicbtn-green"><i class="fa fa-plus" aria-hidden="true"></i> add member</a>
-			<hr style="border-color:rgba(0, 0, 0, 0.23);">
-			<div id="userslist">
-				{% for member in requested_team.teammembership_set.all %}
-				<div class="listmember {% if member.leader %}memberlsleader{% endif %}">
-					<div class="memberinfo">
-						<div id="memberimg">
-							<img src="{% static 'img/userpreload.png' %}">
-							<img src="{{ member.user.extendeduser.background.url }}">
-						</div>
-						<p>{{ member.user.first_name }} "{{ member.user.extendeduser.nickname }}" {{ member.user.last_name }}</p>
-					</div>
+			<form action="{% url 'teamsettings_members' requested_team.pk %}" method="POST">
+				{% csrf_token %}
+				<div class="form-group">
+					<label>Select user to add.</label>
+					<select id="users" name="user" class="users form-control">
+						{% for usere in users %}
+						<option value="{{usere.id}}">{{usere.extendeduser.nickname}}</option>
+						{% endfor %}
+					</select>
 				</div>
-				{% endfor %}
-			</div>
+				<div class="form-check">
+					<label class="form-check-label">
+						<input id="id_leader" name="leader" type="checkbox" class="form-check-input">
+						Make Leader?
+					</label>
+				</div>
+				<input type="hidden" id="id-team" name="team" value="{{ requested_team.pk }}">
+				<hr style="border-color:rgba(0, 0, 0, 0.23);">
+				<button type="submit" class="vicbtn vicbtn-green">Add Member</button>
+			</form>
 		</div>
 	</div>
 </section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/application.js' %}"></script>
+<script type="text/javascript">
+  $('.users').select2();
+</script>
 {% endblock %}

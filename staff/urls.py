@@ -17,6 +17,7 @@ urlpatterns = [
 	url(r'^teams/(?P<team_pk>[0-9]+)/settings/$', views.teamsettings_general, name='teamsettings_general'),
 	url(r'^teams/(?P<team_pk>[0-9]+)/settings/description$', views.teamsettings_description, name='teamsettings_description'),
 	url(r'^teams/(?P<team_pk>[0-9]+)/settings/members$', views.teamsettings_members, name='teamsettings_members'),
+	url(r'^teams/(?P<team_pk>[0-9]+)/settings/members/add$', views.teamsettings_members_add, name='teamsettings_members_add'),
 	url(r'^teams/(?P<team_pk>[0-9]+)/settings/applications$', views.teamsettings_applications, name='teamsettings_applications'),
 	url(r'^teams/(?P<team_pk>[0-9]+)/settings/applications/accepted$', views.teamsettings_accept_applications, name='teamsettings_accept_applications'),
 	url(r'^teams/(?P<team_pk>[0-9]+)/settings/applications/needinfo$', views.teamsettings_needinfo_applications, name='teamsettings_needinfo_applications'),

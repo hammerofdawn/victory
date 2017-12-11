@@ -12,7 +12,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.conf import settings
 from django.core.mail import send_mail, BadHeaderError
 from .models import Article, UnauthenticatedSession, Team, DriversLicenceCategories, TeamApplication, TeamMembership
-from .forms import SignUpForm, UpdateProfileForm, SendApplication, FeedbackSupportForm, TeamSettings_GeneralForm, TeamSettings_DescriptionForm, TeamSettings_acceptForm, TeamSettings_needinfo_andrefuseForm
+from .forms import SignUpForm, UpdateProfileForm, SendApplication, FeedbackSupportForm, TeamSettings_GeneralForm, TeamSettings_DescriptionForm, TeamSettings_acceptForm, TeamSettings_needinfo_andrefuseForm, TeamSettings_AddForm
 from uuid import uuid4
 from random import randint
 import requests
@@ -340,6 +340,33 @@ def teamsettings_members(request, team_pk):
 			}
 			return render(request, 'team/members.html', context)
 			break
+		else: return redirect('team', team_pk)
+
+@login_required
+def teamsettings_members_add(request, team_pk):
+	logged_in_user = get_object_or_404(User, pk=request.user.pk)
+	requested_team = get_object_or_404(Team, pk=team_pk)
+	for member in requested_team.teammembership_set.all().order_by('-leader'):
+		if member.user.pk == request.user.pk and member.leader:
+			if request.method == 'POST':
+				formaddmember = TeamSettings_AddForm(request.POST)
+				if formaddmember.is_valid():
+					formaddmember.save()
+					messages.success(request, "User had been added to your team!")
+					return redirect('teamsettings_members')
+			else:
+				users = User.objects.all().order_by('username')
+				feedback = FeedbackSupportForm()
+				addmember = TeamSettings_AddForm()
+				context = {
+					'requested_team': requested_team,
+					'users': users,
+					'feedback': feedback,
+					'addmember': addmember,
+					'logged_in_user': logged_in_user,
+				}
+				return render(request, 'team/add_member.html', context)
+				break
 		else: return redirect('team', team_pk)
 
 @login_required

@@ -56,7 +56,13 @@ class TeamSettings_acceptForm(forms.ModelForm):
 		model = TeamMembership
 		fields = ('user',)
 
+
 class TeamSettings_needinfo_andrefuseForm(forms.Form):
 	user = forms.IntegerField()
 	class Meta:
 		fields = ('user',)
+
+class TeamSettings_AddForm(forms.ModelForm):
+	class Meta:
+		model = TeamMembership
+		fields = ('user','team', 'leader')
