@@ -33,7 +33,7 @@ Team Settings - Chaos, Genki
 				</li>
 			</ul>
 			<hr style="border-color:rgba(0, 0, 0, 0.23);">
-			<a href="" class="vicbtn vicbtn-green"><i class="fa fa-plus" aria-hidden="true"></i> add member</a>
+			<a href="{% url 'teamsettings_members_add' requested_team.pk %}" class="vicbtn vicbtn-green"><i class="fa fa-plus" aria-hidden="true"></i> add member</a>
 			<hr style="border-color:rgba(0, 0, 0, 0.23);">
 			<div id="userslist">
 				{% for member in requested_team.teammembership_set.all %}

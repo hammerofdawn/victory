@@ -37,7 +37,7 @@ Team Settings - Chaos, Genki
 				</li>
 			</ul>
 			<hr style="border-color:rgba(0, 0, 0, 0.23);">
-			<form action="{% url 'teamsettings_members' requested_team.pk %}" method="POST">
+			<form action="{% url 'teamsettings_members_add' requested_team.pk %}" method="POST">
 				{% csrf_token %}
 				<div class="form-group">
 					<label>Select user to add.</label>

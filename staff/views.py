@@ -349,11 +349,16 @@ def teamsettings_members_add(request, team_pk):
 	for member in requested_team.teammembership_set.all().order_by('-leader'):
 		if member.user.pk == request.user.pk and member.leader:
 			if request.method == 'POST':
+				teammemberships = TeamMembership.objects.all().filter(user=request.POST['user'])
+				for memberships in teammemberships:
+					if memberships.accepted:
+						messages.success(request, "Error - User is already on a team.")
+						return redirect('teamsettings_members', team_pk=team_pk)
 				formaddmember = TeamSettings_AddForm(request.POST)
 				if formaddmember.is_valid():
 					formaddmember.save()
 					messages.success(request, "User had been added to your team!")
-					return redirect('teamsettings_members')
+					return redirect('teamsettings_members', team_pk=team_pk)
 			else:
 				users = User.objects.all().order_by('username')
 				feedback = FeedbackSupportForm()
