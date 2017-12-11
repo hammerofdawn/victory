@@ -41,8 +41,11 @@ Team Settings - Chaos, Genki
 			With that said all applications that are accepted you can find <a href="#"><u>By clicking me.</u></a></p>
 			<hr style="border-color:rgba(0, 0, 0, 0.23);">
 		</div>
+
+		{% for apply in applications %}
+		{% if apply.accepted or apply.need_info or apply.refused %}
+		{% else %}
 		<div class="custompanel">
-			{% for apply in applications %}
 			<div class="post">
 				<div class="postinfo">
 					<span class="float-right"><strong>{{ apply.send|date:"F j, Y, H:i"}}</strong></span>
@@ -73,8 +76,9 @@ Team Settings - Chaos, Genki
 					<button type="submit" disabled class="disabled vicbtn vicbtn-red"><i class="fa fa-flag" aria-hidden="true"></i> Flag(Coming soon.)</button>
 				</div>
 			</div>
-			{% endfor %}
 		</div>
+		{% endif %}
+		{% endfor %}
 	</div>
 </section>
 {% endblock %}

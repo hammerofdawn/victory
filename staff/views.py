@@ -441,6 +441,8 @@ def apply(request):
 		if request.user.is_authenticated():
 			logged_in_user = get_object_or_404(User, pk=request.user.pk)
 			context['logged_in_user'] = logged_in_user
+			if TeamMembership.objects.all().filter(user=request.user.pk).count() > 1:
+				context['onateam'] = True
 
 		return render(request, 'apply.html', context)
 
@@ -459,6 +461,8 @@ def applysent(request):
 	if request.user.is_authenticated():
 		logged_in_user = get_object_or_404(User, pk=request.user.pk)
 		context['logged_in_user'] = logged_in_user
+		if TeamMembership.objects.all().filter(user=request.user.pk).count() > 1:
+			context['onateam'] = True
 
 	return render(request, 'applysend.html', context)
 

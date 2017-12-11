@@ -24,6 +24,9 @@ Apply
 			All tho if you want to send an diffrent application to each team just after you have send one application just go back here and make a new one for the next team.</p>
 		</div>
 		<div class="custompanel">
+			{% if onateam %}
+				<h3>You are already on a team.</h3>
+			{% else %}
 			<form action="" method="POST">
 				{% csrf_token %}
 				<input type="hidden" id="id_from_user" name="from_user" value="{{ logged_in_user.pk }}">
@@ -46,7 +49,8 @@ Apply
 					</div>
 					<button class="vicbtn vicbtn-green" name="sendapplication">Send application</button>
 				</div>
-		</form>
+			</form>
+			{% endif %}
 		</div>
 	</div>
 </section>
