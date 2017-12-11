@@ -370,6 +370,19 @@ def teamsettings_members_add(request, team_pk):
 		else: return redirect('team', team_pk)
 
 @login_required
+def teamsettings_members_delete(request, team_pk):
+	logged_in_user = get_object_or_404(User, pk=request.user.pk)
+	requested_team = get_object_or_404(Team, pk=team_pk)
+	for member in requested_team.teammembership_set.all().order_by('-leader'):
+		if member.user.pk == request.user.pk and member.leader:
+			if request.method == 'POST':
+				userpk = request.POST['user']
+				membershippk = request.POST['membership']
+				TeamMembership.objects.filter(user=userpk).filter(id=membershippk).delete()
+				messages.success(request, "User successful removed from the team.")
+				return redirect('teamsettings_members', team_pk=team_pk)
+
+@login_required
 def teamsettings_applications(request, team_pk):
 	logged_in_user = get_object_or_404(User, pk=request.user.pk)
 	requested_team = get_object_or_404(Team, pk=team_pk)
