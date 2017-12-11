@@ -31,9 +31,12 @@ Apply
 				{% csrf_token %}
 				<input type="hidden" id="id_from_user" name="from_user" value="{{ logged_in_user.pk }}">
 				<div id="formapply">
+					<div class="alert alert-danger" role="alert">
+						<p>Due to some issues you can only apply to one team at a time. Also sorry for the design to.</p>
+					</div>
 					<div class="form-group ">
 						<label>Select teams you want to apply to.</label>
-						<select class="teams form-control" name="to_team" required id="id_to_team" multiple="multiple">
+						<select class="teams form-control" name="to_team" required id="id_to_team">
 							{% for team in teams %}
 							<option {% if team.accepts_applications is False %}disabled="disabled"{% endif %}
 								{% for apply in teamapplication %}{% for teamsend in apply.to_team.all %}
