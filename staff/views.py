@@ -298,7 +298,7 @@ def teamsettings_general(request, team_pk):
 			}
 			return render(request, 'team/settings.html', context)
 			break
-		else: return redirect('team', team_pk)
+	return redirect('team', team_pk)
 
 @login_required
 def teamsettings_description(request, team_pk):
@@ -324,7 +324,7 @@ def teamsettings_description(request, team_pk):
 			}
 			return render(request, 'team/description.html', context)
 			break
-		else: return redirect('team', team_pk)
+	return redirect('team', team_pk)
 
 @login_required
 def teamsettings_members(request, team_pk):
@@ -340,7 +340,7 @@ def teamsettings_members(request, team_pk):
 			}
 			return render(request, 'team/members.html', context)
 			break
-		else: return redirect('team', team_pk)
+	return redirect('team', team_pk)
 
 @login_required
 def teamsettings_members_add(request, team_pk):
@@ -372,7 +372,7 @@ def teamsettings_members_add(request, team_pk):
 				}
 				return render(request, 'team/add_member.html', context)
 				break
-		else: return redirect('team', team_pk)
+	return redirect('team', team_pk)
 
 @login_required
 def teamsettings_members_delete(request, team_pk):
@@ -407,8 +407,7 @@ def teamsettings_applications(request, team_pk):
 			}
 			return render(request, 'team/applications.html', context)
 			break
-		else: return redirect('team', team_pk)
-
+	return redirect('team', team_pk)
 
 @login_required
 def teamsettings_accept_applications(request, team_pk):
