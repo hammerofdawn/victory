@@ -46,7 +46,7 @@ Team Settings - Chaos, Genki
 			<div class="post">
 				<div class="postinfo">
 					<span class="float-right"><strong>{{ apply.send|date:"F j, Y, H:i"}}</strong></span>
-					<p class="postowner"><a href="{% url 'user' apply.from_user.pk %}">{{ apply.from_user.extendeduser.nickname }}</a></p>
+					<p class="postowner"><a href="{% url 'user' apply.from_user.pk %}">{{ apply.from_user.first_name }} "{{ apply.from_user.extendeduser.nickname }}" {{ apply.from_user.last_name }}</a></p>
 					<p class="posttitle line-topsmall">
 						{{ requested_team.name }}
 					</p>
