@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}
+Team Settings - Chaos, Genki
+{% endblock %}
+
+{% block header %}
+<link rel="stylesheet" href="{% static 'css/application.css' %}">
+{% endblock %}
+
+{% block content %}
+<section role="content">
+	<div class="container">
+		<h1 class="line-top">Add Member to {{ requested_team.name }}.</h1>
+		<div class="custompanel">
+			{% if messages %}
+			<div class="alert alert-success" role="alert">
+				{% for message in messages %}
+				<p>{{ message }}</p>
+				{% endfor %}
+			</div>
+			{% endif %}
+			<ul class="nav nav-tabs" id="teamstab" role="tablist">
+				<li class="nav-item">
+					<a class="vic-tablink" id="team-settings" href="{% url 'teamsettings_general' requested_team.pk %}">General</a>
+				</li>
+				<li class="nav-item">
+					<a class="vic-tablink " id="team-description" href="{% url 'teamsettings_description' requested_team.pk %}">Description</a>
+				</li>
+				<li class="nav-item">
+					<a class="vic-tablink active" id="team-members" href="{% url 'teamsettings_members' requested_team.pk %}">Members</a>
+				</li>
+				<li class="nav-item">
+					<a class="vic-tablink" id="team-applications"  href="{% url 'teamsettings_applications' requested_team.pk %}">Applications</a>
+				</li>
+			</ul>
+			<hr style="border-color:rgba(0, 0, 0, 0.23);"><
+			<p>If you get an error 500 when adding an user, its most likely because the user is on a team already.<br>
+				Also we will implement an code generator for you to just give a code out to a person to enter it they will automaticly join your team.
+			</p>
+			<hr style="border-color:rgba(0, 0, 0, 0.23);">
+			<form action="{% url 'teamsettings_members_add' requested_team.pk %}" method="POST">
+				{% csrf_token %}
+				<div class="form-group">
+					<label>Select user to add.</label>
+					<select id="users" name="user" class="users form-control">
+						{% for usere in users %}
+						<option value="{{usere.id}}">{{usere.extendeduser.nickname}}</option>
+						{% endfor %}
+					</select>
+				</div>
+				<div class="form-check">
+					<label class="form-check-label">
+						<input id="id_leader" name="leader" type="checkbox" class="form-check-input">
+						Make Leader?
+					</label>
+				</div>
+				<input type="hidden" id="id-team" name="team" value="{{ requested_team.pk }}">
+				<hr style="border-color:rgba(0, 0, 0, 0.23);">
+				<button type="submit" class="vicbtn vicbtn-green">Add Member</button>
+			</form>
+		</div>
+	</div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/application.js' %}"></script>
+<script type="text/javascript">
+  $('.users').select2();
+</script>
+{% endblock %}

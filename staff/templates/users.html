@@ -11,8 +11,8 @@ Users
 	<div class="container">
 		<h1 class="line-top">Users.</h1>
 		<div>
-			<button id="listviewbtn" onclick="listview()" class="vicbtn vicbtn-blue vic-bb-3-blue">List Users</button>
-			<button id="browseviewbtn" onclick="browseviewbtn()" style="display:none;" class="vicbtn vicbtn-blue vic-bb-3-blue">Browse Users</button>
+			<button id="listviewbtn" onclick="listview()" class="vicbtn vicbtn-blue">List Users</button>
+			<button id="browseviewbtn" onclick="browseviewbtn()" style="display:none;" class="vicbtn vicbtn-blue">Browse Users</button>
 			{% if thisisnotsupporsedtoexist %}
 			<form class="search-width" style="display: inline-flex;" action="../search" method="post">
 				<input class="victext-input" type="text" placeholder="Search" name="search" value="">
@@ -33,7 +33,11 @@ Users
 							<div class="hover-wrapper">
 								<label class="title one-line-ellipsis">{{ user.extendeduser.nickname }}</label>
 								{% if user.extendeduser.phone_number %}
-								<label class="title one-line-ellipsis">Phone: {{ user.extendeduser.phone_number }}</label>
+									{% if user.extendeduser.phone_number_show %}
+									<label class="title one-line-ellipsis">Phone: {{ user.extendeduser.phone_number }}</label>
+									{% else %}
+									<label class="title one-line-ellipsis">Phone: Hidden</label>
+									{% endif %}
 								{% else %}
 								<label class="title one-line-ellipsis">Phone: None</label>
 								{% endif %}
@@ -68,9 +72,15 @@ Users
 							</td>
 							<td>
 								{% if user.extendeduser.phone_number %}
-								<a class="phoneid" href="tel:{{ user.extendeduser.phone_number }}">
-									<i class="fa fa-phone" aria-hidden="true"></i> {{ user.extendeduser.phone_number }}
-								</a>
+									{% if user.extendeduser.phone_number_show %}
+									<a class="phoneid" href="tel:{{ user.extendeduser.phone_number }}">
+										<i class="fa fa-phone" aria-hidden="true"></i> {{ user.extendeduser.phone_number }}
+									</a>
+									{% else %}
+									<a href="#">
+										Hidden
+									</a>
+									{% endif %}
 								{% else %}
 								<a href="#">
 									None

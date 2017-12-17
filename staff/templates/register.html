@@ -41,34 +41,32 @@ Register
 		<form action="" method="POST">
 			{% csrf_token %}
 			<div class="form-group">
-				<label class="viclabelline-bottom" for="id_username">Username</label>
+				<label class="viclabelline-bottom" for="id_username">User/nickname</label>
+				<input type="text" class="victext-input vic-block full-width" name="username" maxlength="150" autofocus required id="id_username" placeholder="Victory">
 				<small id="usernameHelpBlock" class="form-text text-muted">
-					What do you want to use to log in?
+					50 characters or fewer. Letters, digits and @/./+/-/_ only.
 				</small>
 				<input type="text" class="victext-input vic-block full-width" name="username" maxlength="150" autofocus required id="id_username" placeholder="LarsiBoi67">
 			</div>
-			<div class="form-group">
-				<label class="viclabelline-bottom" for="id_full_name">Full name</label>
-				<small id="fullnameHelpBlock" class="form-text text-muted">
-					As written in official documents.
-				</small>
-				<input type="text" class="victext-input vic-block full-width" name="full_name" maxlength="30" required id="id_full_name" placeholder="Lars Petersen">
-			</div>
-			<div class="form-group">
-				<label class="viclabelline-bottom" for="id_nickname">Nickname</label>
-				<small id="nicknameHelpBlock" class="form-text text-muted">
-					What would you like us to call you?
-				</small>
-				<input type="text" class="victext-input vic-block full-width" name="nickname" maxlength="30" required id="id_nickname" placeholder="Lars Petersen">
+			<div class="form-row">
+				<div class="form-group col-md-6">
+					<label class="viclabelline-bottom" for="id_first_name">First Name</label>
+					<input type="text" class="victext-input vic-block full-width" name="first_name" maxlength="30" required id="id_first_name" placeholder="Peter">
+				</div>
+				<div class="form-group col-md-6">
+					<label class="viclabelline-bottom" for="id_last_name">Last Name</label>
+					<input type="text" class="victext-input vic-block full-width" name="last_name" maxlength="30" required id="id_last_name" placeholder="Petersen">
+				</div>
 			</div>
 			<div class="form-group">
 				<label class="viclabelline-bottom" for="id_email">Email</label>
-				<input type="email" class="victext-input vic-block full-width" name="email" maxlength="254" required id="id_email" placeholder="lars@petersen.dk">
+				<input type="email" class="victext-input vic-block full-width" name="email" maxlength="254" required id="id_email" placeholder="Email@example.dk">
 			</div>
 			<div class="form-group">
-				<label class="viclabelline-bottom" for="id_phone_number">Mobile</label>
-				<small id="phonenumberHelpBlock" class="form-text text-muted">
-					Your phone number. Used to contact you during the event and to secure your account.
+				<label class="viclabelline-bottom" for="id_phone_number">Phone (Mobile with countrycode)</label>
+				<input type="tel" class="victext-input vic-block full-width" name="phone_number" maxlength="16" required id="id_phone_number" placeholder="+4512345678">
+				<small id="phone_numberHelpBlock" class="form-text text-muted">
+						Used to contact you and also for 2 factor authentication.
 				</small>
 				<input type="tel" class="victext-input vic-block full-width" name="phone_number" maxlength="16" required id="id_phone_number" placeholder="12345678">
 			</div>

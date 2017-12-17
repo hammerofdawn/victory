@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}
+Team Settings - Chaos, Genki
+{% endblock %}
+
+{% block content %}
+<section role="content">
+	<div class="container">
+		<h1 class="line-top">Members in {{ requested_team.name }}.</h1>
+		<div class="custompanel">
+			{% if messages %}
+			<div class="alert alert-success" role="alert">
+				{% for message in messages %}
+				<p>{{ message }}</p>
+				{% endfor %}
+			</div>
+			{% endif %}
+			<ul class="nav nav-tabs" id="teamstab" role="tablist">
+				<li class="nav-item">
+					<a class="vic-tablink" id="team-settings" href="{% url 'teamsettings_general' requested_team.pk %}">General</a>
+				</li>
+				<li class="nav-item">
+					<a class="vic-tablink " id="team-description" href="{% url 'teamsettings_description' requested_team.pk %}">Description</a>
+				</li>
+				<li class="nav-item">
+					<a class="vic-tablink active" id="team-members" href="{% url 'teamsettings_members' requested_team.pk %}">Members</a>
+				</li>
+				<li class="nav-item">
+					<a class="vic-tablink" id="team-applications"  href="{% url 'teamsettings_applications' requested_team.pk %}">Applications</a>
+				</li>
+			</ul>
+			<hr style="border-color:rgba(0, 0, 0, 0.23);">
+			<a href="{% url 'teamsettings_members_add' requested_team.pk %}" class="vicbtn vicbtn-green"><i class="fa fa-plus" aria-hidden="true"></i> add member</a>
+			<hr style="border-color:rgba(0, 0, 0, 0.23);">
+			<div id="userslist">
+				{% for member in requested_team.teammembership_set.all %}
+				<div class="listmember {% if member.leader %}memberlsleader{% endif %}">
+					<div class="memberinfo">
+						<div id="memberimg">
+							<img src="{{ member.user.extendeduser.background.url }}">
+						</div>
+						<p>{{ member.user.first_name }} "{{ member.user.extendeduser.nickname }}" {{ member.user.last_name }} </p>
+						<form action="{% url 'teamsettings_members_delete' requested_team.pk %}" method="post">
+							{% csrf_token %}
+							<input type="hidden" id="id-user" name="user" value="{{ member.user.pk }}">
+							<input type="hidden" id="id-user" name="membership" value="{{ member.pk }}">
+							<button style="border: unset;" type="submit" class="badge badge-danger"><i class="fa fa-times" aria-hidden="true"></i> Remove</button>
+						</form>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+</section>
+{% endblock %}

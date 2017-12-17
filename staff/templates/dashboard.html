@@ -10,7 +10,15 @@ Victory
 <section role="content">
 	<div class="container">
 		<h1 class="line-top">Hello {{ user.extendeduser.nickname }}.</h1>
+		{% if messages %}
+		<div class="alert alert-success" role="alert">
+			{% for message in messages %}
+			<p>{{ message }}</p>
+			{% endfor %}
+		</div>
+		{% endif %}
 		<div class="custompanel">
+			<h4>News.</h4>
 			{% if searchfunctionisimplemented %}
 			<div style="margin-bottom:10px;">
 				<form class="search-width" style="display: inline-flex;" action="search" method="post">
@@ -26,7 +34,7 @@ Victory
 					<p class="posttitle line-topsmall">{{ article.title }}</p>
 				</div>
 				<div class="postcontent">
-					{{ article.body|linebreaksbr }}
+					{{ article.body|safe|linebreaksbr }}
 				</div>
 			</div>
 			{% endfor %}

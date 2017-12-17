@@ -22,7 +22,12 @@
 					</div>
 					<h1>{{ requested_user.extendeduser.nickname }}</h1>
 					<h3 class="line-topwhite">{{ requested_user.get_full_name }}</h3>
+					{% if user.extendeduser.phone_number_show == True %}
 					<h3>Phone: <a href="tel:{{ user.extendeduser.phone_number }}"><u>{{ requested_user.extendeduser.phone_number }}</u></a></h3>
+					{% else %}
+					<h3>Phone: <a href="#"><u>Hidden</u></a></h3>
+					{% endif %}
+
 					<div class="options push-right">
 						{% if requested_user.extendeduser.facebook_link %}
 						<a href="{{requested_user.extendeduser.facebook_link}}" target="_blank"><i class="fa fa-facebook"></i></a>
@@ -41,7 +46,7 @@
 						{% if thisshouldnotexist %}
 						<button class="vicbtn vicbtn-blue">Message</button>
 						{% endif %}
-						{% if editable %}
+						{% if request.user.pk == requested_user.pk %}
 						<a href="{% url 'usersettings' requested_user.extendeduser.pk %}" class="vicbtn vicbtn-blue">Edit</a>
 						{% endif %}
 						{% if userhasrightsthatdonotexist %}

@@ -726,6 +726,20 @@ a.silent {
 	text-decoration: none !important;
 }
 
+#teamstab > li > a {
+    text-align: center;
+    width: 100%;
+    border-right-width: 0px;
+}
+
+#teamstab > li:nth-child(even) > a {
+    border-right-width: 0px;
+}
+
+#teamstab > li:last-child > a {
+    border-right: 3px solid dodgerblue;
+}
+
 .switch {
 		position: absolute;
 		margin-left: 6px;
@@ -980,4 +994,83 @@ input:checked + .slider:before {
   margin-top: 50%;
   -webkit-transform: translate(-50%,-50%);
   transform: translate(-50%,-50%);
+}
+
+#userslist .listmember	{
+  background: #fff;
+  line-height: 20px;
+  padding: 10px 0;
+  position: relative;
+}
+
+.listmember::before {
+		bottom: 0;
+    box-shadow: 0 -1px 0 #e0e0e0, 0 0 2px rgba(0,0,0,.12), 0 2px 4px rgba(0,0,0,.24);
+    content: '';
+    display: block;
+    left: 0;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.listmember::after{
+    background: #868e96;
+    bottom: 0;
+    content: '';
+    display: block;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 6px;
+}
+
+.memberlsgrouplead::after {
+	background: #007bff;
+}
+
+.memberlsleader::after {
+	background: #28a745;
+}
+
+.memberinfo {
+    margin: 10px 0;
+    position: relative;
+    display: -webkit-flex;
+    display: flex;
+}
+
+#memberimg {
+    height: 28px;
+    margin: -4px 0;
+    position: relative;
+    width: 72px;
+    align-items: center;
+    -webkit-align-items: center;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-drag: none;
+}
+
+.memberinfo #memberimg img {
+	width:60px;
+	margin-left: 6px;
+}
+#rankcolors {
+	margin-bottom: 17px;
+	display: inline-flex;
+}
+#rankcolors > .p-2{
+	margin-right: 2px;
+}
+
+.nav-tabs .nav-item {
+	width: initial;
+  flex: 1;
 }

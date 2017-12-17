@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}
+Apply
+{% endblock %}
+
+{% block header %}
+<link rel="stylesheet" href="{% static 'css/application.css' %}">
+{% endblock %}
+
+{% block content %}
+<section role="content">
+	<div class="container">
+		<h1 class="line-top">Your submitted applications</h1>
+		<div>
+			<a href="{% url 'apply' %}" class="vicbtn vicbtn-green">Apply</a>
+			<a href="{% url 'teams' %}" class="vicbtn vicbtn-blue">Browse Teams</a>
+		</div>
+		<div class="custompanel">
+			{% if messages %}
+			<div class="alert alert-info" role="alert">
+				{% for message in messages %}
+				<p>{{ message }}</p>
+				{% endfor %}
+			</div>
+			{% endif %}
+			{% if onateam %}
+				<hr style="border-color:rgba(0, 0, 0, 0.23);">
+				<h3>You are already on a team.</h3>
+				<hr style="border-color:rgba(0, 0, 0, 0.23);">
+			{% else %}
+			<hr style="border-color:rgba(0, 0, 0, 0.23);">
+			<div id="rankcolors">
+				<div class="p-2 text-white" style="background: #28a745">Accepted</div>
+				<div class="p-2 text-black" style="background: #ffc107">Need more info.</div>
+				<div class="p-2 text-white" style="background: #dc3545">Refused</div>
+			</div>
+			{% if teamapplication %}
+				{% for apply in teamapplication %}
+				<div class="post" {% if apply.accepted %} style="border: 3px solid #28a745" {% elif apply.need_info %} style="border: 3px solid #ffc107" {% elif apply.refused %} style="border: 3px solid #dc3545" {% endif %}>
+					<div class="postinfo">
+						<span class="float-right"><strong>{{ apply.send|date:"F j, Y, H:i"}}</strong></span>
+						<p class="posttitle">
+							{% for team in apply.to_team.all %}
+								{{ team.name }},
+							{% endfor %}
+						</p>
+					</div>
+					<div class="postcontent">
+						{{ apply.application_text|linebreaksbr }}
+					</div>
+					<div class="postinfo">
+						<form action="{% url 'applydelete' %}" method="post">
+							{% csrf_token %}
+							<input type="hidden" id="id_apply_pk" name="apply_pk" value="{{ apply.pk }}">
+							<button type="submit" class="vicbtn vicbtn-red">Delete</button>
+						</form>
+					</div>
+				</div>
+				{% endfor %}
+			{% else %}
+			<h4>You havnt sent a application yet.<br> If you want to apply you can do it here: <a href="{% url 'apply' %}" class="vicbtn vicbtn-green">Apply</a></h4>
+			{% endif %}
+			{% endif %}
+		</div>
+	</div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+	$(document).ready(function(){
+			$('[data-toggle="tooltip"]').tooltip({container:'body'});
+	});
+</script>
+{% endblock %}

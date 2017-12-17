@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}
+Team Settings - Chaos, Genki
+{% endblock %}
+
+{% block content %}
+<section role="content">
+	<div class="container">
+		<h1 class="line-top">Team Applications for {{ requested_team.name }}.</h1>
+		<div class="custompanel">
+			{% if messages %}
+			<div class="alert alert-success" role="alert">
+				{% for message in messages %}
+				<p>{{ message }}</p>
+				{% endfor %}
+			</div>
+			{% endif %}
+			<ul class="nav nav-tabs" id="teamstab" role="tablist">
+				<li class="nav-item">
+					<a class="vic-tablink" id="team-settings" href="{% url 'teamsettings_general' requested_team.pk %}">General</a>
+				</li>
+				<li class="nav-item">
+					<a class="vic-tablink" id="team-description" href="{% url 'teamsettings_description' requested_team.pk %}">Description</a>
+				</li>
+				<li class="nav-item">
+					<a class="vic-tablink" id="team-members" href="{% url 'teamsettings_members' requested_team.pk %}">Members</a>
+				</li>
+				<li class="nav-item">
+					<a class="vic-tablink active" id="team-applications"  href="{% url 'teamsettings_applications' requested_team.pk %}">Applications</a>
+				</li>
+			</ul>
+			<hr style="border-color:rgba(0, 0, 0, 0.23);">
+			<p>All non-accepted applications are here.<br>
+				If u accept an user to the team the user will recieve an email and an SMS with they has been accepted into the team! If a user tho has applied to more than one team, they'd have to logon to confirm the team they wanna join.<br>
+			With that said all applications that are accepted you can find <a href="#"><u>By clicking me.(Coming soon.)</u></a></p>
+			<hr style="border-color:rgba(0, 0, 0, 0.23);">
+		</div>
+
+		{% for apply in applications %}
+		{% if apply.accepted or apply.need_info or apply.refused %}
+		{% else %}
+		<div class="custompanel">
+			<div class="post">
+				<div class="postinfo">
+					<span class="float-right"><strong>{{ apply.send|date:"F j, Y, H:i"}}</strong></span>
+					<p class="postowner"><a href="{% url 'user' apply.from_user.pk %}">{{ apply.from_user.first_name }} "{{ apply.from_user.extendeduser.nickname }}" {{ apply.from_user.last_name }}</a></p>
+					<p class="posttitle line-topsmall">
+						{{ requested_team.name }}
+					</p>
+				</div>
+				<div class="postcontent">
+					{{ apply.application_text|linebreaksbr }}
+				</div>
+				<div class="postinfo" style="display:flex;">
+					<form style="margin-right:2px;" action="{% url 'teamsettings_accept_applications' requested_team.pk %}" method="post">
+						{% csrf_token %}
+						<input type="hidden" id="id-user" name="user" value="{{ apply.from_user.pk }}">
+						<button type="submit" class="vicbtn vicbtn-green"><i class="fa fa-check" aria-hidden="true"></i> Accept</button>
+					</form>
+					<form style="margin-right:2px;" action="{% url 'teamsettings_needinfo_applications' requested_team.pk %}" method="post">
+						{% csrf_token %}
+						<input type="hidden" id="id-user" name="user" value="{{ apply.from_user.pk }}">
+						<button type="submit" class="vicbtn vicbtn-yellow" alt="Gives user away that u need more info."><i class="fa fa-question" aria-hidden="true"></i> Need info</button>
+					</form>
+					<form style="margin-right:2px;" action="{% url 'teamsettings_refuse_applications' requested_team.pk %}" method="post">
+						{% csrf_token %}
+						<input type="hidden" id="id-user" name="user" value="{{ apply.from_user.pk }}">
+						<button type="submit" class="vicbtn vicbtn-red"><i class="fa fa-times" aria-hidden="true"></i> Refuse</button>
+					</form>
+					<button type="submit" disabled class="disabled vicbtn vicbtn-red"><i class="fa fa-flag" aria-hidden="true"></i> Flag(Coming soon.)</button>
+				</div>
+			</div>
+		</div>
+		{% endif %}
+		{% endfor %}
+	</div>
+</section>
+{% endblock %}

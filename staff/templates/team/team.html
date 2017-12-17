@@ -29,10 +29,10 @@
 					{% endif %}
 					<div>
 						{% if user.is_authenticated %}
-						<a href="{% url 'apply' %}" class="vicbtn vicbtn-green vic-bb-3-green">Apply</a>
+							<a href="{% url 'apply' %}" class="vicbtn vicbtn-green">Apply</a>
 						{% endif %}
-						{% if userhaspermissionthatdoesnotexistyet %}
-						<button class="vicbtn vicbtn-blue">Edit</button>
+						{% if caneditteam %}
+							<a href="{% url 'teamsettings_general' requested_team.pk %}" class="vicbtn vicbtn-blue">Edit</a>
 						{% endif %}
 					</div>
 				</div>
@@ -50,7 +50,7 @@
 					</li>
 					{% if teamhasmembers %}
 					<li class="nav-item">
-						<a class="vic-tablink" id="users-tab" data-toggle="tab" href="#users" role="tab" aria-controls="users">Users</a>
+						<a class="vic-tablink" id="users-tab" data-toggle="tab" href="#members" role="tab" aria-controls="members">Members</a>
 					</li>
 					{% endif %}
 				</ul>
@@ -59,9 +59,27 @@
 					<div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
 						{{ requested_team.description|safe|linebreaksbr }}
 					</div>
-					<div class="tab-pane fade" id="users" role="tabpanel" aria-labelledby="users-tab">
-						Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar helvetica VHS salvia yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit, sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park.
+					{% if teamhasmembers %}
+					<div class="tab-pane fade" id="members" role="tabpanel" aria-labelledby="members-tab">
+						<div id="rankcolors">
+							<div class="p-2 bg-success text-white">Leader</div>
+							<div class="p-2 bg-primary text-white">Group Leader</div>
+							<div class="p-2 bg-secondary text-white">Normal</div>
+						</div>
+						<div id="userslist">
+							{% for member in requested_team.teammembership_set.all %}
+							<div class="listmember {% if member.leader %}memberlsleader{% endif %}">
+								<div class="memberinfo">
+									<div id="memberimg">
+										<img src="{{ member.user.extendeduser.background.url }}">
+									</div>
+									<p>{{ member.user.first_name }} "{{ member.user.extendeduser.nickname }}" {{ member.user.last_name }}</p>
+								</div>
+							</div>
+							{% endfor %}
+						</div>
 					</div>
+					{% endif %}
 				</div>
 			</div>
 		</div>

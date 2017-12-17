@@ -62,13 +62,19 @@ User Settings - Chaos, Genki
 									Used to contact you and also for 2 factor authentication.
 							</small>
 						</div>
+						<div class="form-check">
+					    <label class="form-check-label">
+					      <input id="id_phone_number_show" {% if logged_in_user.extendeduser.phone_number_show %} checked {% endif %} name="phone_number_show" type="checkbox" class="form-check-input">
+					      Show phone number?
+					    </label>
+					  </div>
 						<div class="form-group">
 							<label class="viclabelline-bottom" for="id_postal_code">Postal code</label>
 							<input type="text" class="victext-input vic-block full-width" name="postal_code" maxlength="10" requ ired id="id_postal_code" placeholder="1577" value="{{ logged_in_user.extendeduser.postal_code }}">
 						</div>
 						<div class="form-group">
-							<label>Select The driver licenses you have.</label>
-							<select class="drivercategories form-control" multiple="multiple">
+							<label>Select The driver licenses you have. (Disabled)</label>
+							<select disabled class="drivercategories form-control disabled" multiple="multiple">
 								{% for category in driverslicence %}
 								<option value="{{category.id}}">{{category.category}}</option>
 								{% endfor %}
@@ -81,7 +87,7 @@ User Settings - Chaos, Genki
 								<img class="user-avatar" src="{{ logged_in_user.extendeduser.avatar.url }}">
 							</div>
 							<label for="id_avatar">Change profile image.</label>
-							<input id="id_avatar" style="color: #000;" class="victext-input vic-block full-width" type="file" name="avatar"></input>
+							<input disabled id="id_avatar" style="color: #000;" class="victext-input vic-block full-width disabled" type="file" name="avatar"></input>
 							<small id="id_avatarHelpBlock" class="form-text text-muted">
 								 Current: <a href="{{ logged_in_user.extendeduser.avatar.url }}">{{ logged_in_user.extendeduser.avatar.url }}</a>
 							</small>
@@ -91,7 +97,7 @@ User Settings - Chaos, Genki
 								<img class="user-avatar" src="{{ logged_in_user.extendeduser.background.url }}">
 							</div>
 							<label for="cover_file">Cover</label>
-							<input style="color: #000;" class="victext-input vic-block full-width" type="file" name="cover_file"></input>
+							<input disabled style="color: #000;" class="victext-input vic-block full-width disabled" type="file" name="cover_file"></input>
 							<small id="cover_fileHelpBlock" class="form-text text-muted">
 								 Current: <a href="{{ logged_in_user.extendeduser.background.url }}">{{ logged_in_user.extendeduser.background.url }}</a>
 							</small>
@@ -124,19 +130,28 @@ User Settings - Chaos, Genki
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<form>
+			<form action="{% url 'user_change_password' requested_user.extendeduser.pk %}" method="post">
+				{% csrf_token %}
 				<div class="modal-body">
 					<div class="form-group">
-						<label for="current_password">Current Password</label>
-						<input class="victext-input vic-block full-width" type="password" placeholder="password" name="current_password">
+						<label for="id_old_password">Old Password</label>
+						<input id="id_old_password" class="victext-input vic-block full-width" type="password" name="old_password">
 					</div>
 					<div class="form-group">
-						<label for="new_password">New Password</label>
-						<input class="victext-input vic-block full-width" type="password" placeholder="password" name="new_password">
+						<label for="id_new_password1">New Password</label>
+						<input id="id_new_password1" class="victext-input vic-block full-width" type="password" name="new_password1">
+						<small id="password1HelpBlock" class="form-text text-muted">
+							<ul>
+								<li>Your password can't be too similar to your other personal information.</li>
+								<li>Your password must contain at least 8 characters.</li>
+								<li>Your password can't be a commonly used password.</li>
+								<li>Your password can't be entirely numeric.</li>
+							</ul>
+						</small>
 					</div>
 					<div class="form-group">
-						<label for="new_password_again">Retype New Password</label>
-						<input class="victext-input vic-block full-width" type="password" placeholder="password" name="new_password_again">
+						<label for="id_new_password2">New Password Confirmation</label>
+						<input id="id_new_password2" class="victext-input vic-block full-width" type="password" name="new_password2">
 					</div>
 				</div>
 				<div class="modal-footer">
