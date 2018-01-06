@@ -36,7 +36,7 @@ Team Settings - Chaos, Genki
 					<a class="vic-tablink" id="team-applications"  href="{% url 'teamsettings_applications' requested_team.pk %}">Applications</a>
 				</li>
 			</ul>
-			<hr style="border-color:rgba(0, 0, 0, 0.23);"><
+			<hr style="border-color:rgba(0, 0, 0, 0.23);">
 			<p>If you get an error 500 when adding an user, its most likely because the user is on a team already.<br>
 				Also we will implement an code generator for you to just give a code out to a person to enter it they will automaticly join your team.
 			</p>
@@ -47,7 +47,7 @@ Team Settings - Chaos, Genki
 					<label>Select user to add.</label>
 					<select id="users" name="user" class="users form-control">
 						{% for usere in users %}
-						<option value="{{usere.id}}">{{usere.extendeduser.nickname}}</option>
+						<option value="{{usere.id}}">{{usere.first_name}} "{{usere.extendeduser.nickname}}" {{usere.last_name}}</option>
 						{% endfor %}
 					</select>
 				</div>

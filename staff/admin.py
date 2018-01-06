@@ -46,9 +46,19 @@ class GroupAdmin(admin.ModelAdmin):
 class TeamAdmin(admin.ModelAdmin):
 	filter_horizontal = ['members']
 	inlines = (TeamMembershipInline, )
+	list_display = ('name', 'people_needed', 'accepts_applications')
+	ordering = ('name',)
 
 class UnauthenticatedSessionAdmin(admin.ModelAdmin):
 	list_display = ('user', 'token', 'successful')
+
+class TeamApplicationAdmin(admin.ModelAdmin):
+	list_display = ('from_user', 'to_team', 'accepted', 'need_info', 'refused')
+	ordering = ('-from_user',)
+
+class TeamMembershipAdmin(admin.ModelAdmin):
+	list_display = ('team', 'user', 'leader')
+	ordering = ('team',)
 
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
@@ -62,5 +72,5 @@ admin.site.register(Review)
 admin.site.register(Alert)
 admin.site.register(UnauthenticatedSession, UnauthenticatedSessionAdmin)
 admin.site.register(Group, GroupAdmin)
-admin.site.register(TeamMembership)
-admin.site.register(TeamApplication)
+admin.site.register(TeamMembership, TeamMembershipAdmin)
+admin.site.register(TeamApplication, TeamApplicationAdmin)

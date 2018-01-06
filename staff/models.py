@@ -8,7 +8,7 @@ from django.dispatch import receiver
 # Create your models here.
 
 class Team(models.Model):
-	name = models.CharField(max_length=16)
+	name = models.CharField(max_length=50)
 	logo = models.ImageField(upload_to='teams/avatars', default='static/img/userpreload.png')
 	background = models.ImageField(upload_to='teams/backgrounds', default='static/img/userpreload.png')
 	description = models.TextField(blank=True)
