@@ -1,26 +1,28 @@
 # Victory
 
-Chaos is past. Victory is present.
+Chaos is over. Victory is now.
 
-Victory makes volunteer management awesome. It keeps track of applications, teams and contact information. Its interface is responsive and a pleasure to use, making a once complicated task the easiest thing in the world.
+Victory makes volunteer management awesome. It keeps track of applications, teams, and contact information. Its interface is responsive and a pleasure to use, making a once complicated task the easiest thing in the world.
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+Get a copy of Victory up and running on your local machine for development and testing.
 
-### Installing
+### Installation
 
-Start by setting up your virtualenv:
+Start by setting up your virtual environment:
 
 ```
 $ virtualenv venv
 ```
+
 
 Then activate it:
 
 ```
 $ source venv/bin/activate
 ```
+
 
 Now you're ready to install the requirements:
 
@@ -40,7 +42,7 @@ Then do regular Django stuff. This will be elaborated later.
 
 ## Contributing
 
-We love pull requests! We're still in the early stages and development is happening rapidly. You're always welcome to send a pull request which we'll review and (most probably) merge. Victory is a commercial system, but we're simply not able to compensate your work, which is why all contributions must be considered a donation. And then there's only one thing left to say: tabs.
+We love pull requests! We're still in the early stages and development is happening rapidly. You're always welcome to send a pull request which we'll review and (most probably) merge. Victory is a commercial system, but we're simply not able to compensate your work, which is why all contributions must be considered a donation. Other than that, there's only one thing left to say: tabs.
 
 ## Authors
 
