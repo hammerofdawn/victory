@@ -11,3 +11,5 @@ db.sqlite3
 # Apple OS X/macOS
 .DS_Store
 Icon
+
+__init__.py
