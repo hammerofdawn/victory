@@ -16,8 +16,6 @@ User Settings - Chaos, Genki
 		<h1 class="line-top">Settings for {{ logged_in_user.extendeduser.nickname }}.</h1>
 		<div>
 			<a href="{% url 'user' requested_user.extendeduser.pk %}" class="vicbtn vicbtn-red vicbtn-bottom"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
-		</div>
-		<div>
 			<button type="button" class="vicbtn vicbtn-blue vicbtn-bottom" data-toggle="modal" data-target="#changepassword">Change Password</button>
 		</div>
 		<div class="custompanel">
@@ -28,95 +26,24 @@ User Settings - Chaos, Genki
 				{% endfor %}
 			</div>
 			{% endif %}
+			<ul class="nav nav-tabs" id="teamstab" role="tablist">
+				<li class="nav-item">
+					<a class="vic-tablink active" id="team-settings" href="{% url 'usersettings' logged_in_user.pk %}">General</a>
+				</li>
+				<li class="nav-item">
+					<a class="vic-tablink" id="team-description"  href="#">Avatar</a>
+				</li>
+			</ul>
+			<hr style="border-color:rgba(0, 0, 0, 0.23);">
 			<p>Everything with a * is required</p>
-			<hr style="border-color:rgba(255, 255, 255, 0.23);">
-			<form action="" method="POST">
-				{% csrf_token %}
-				<div class="row">
-					<div class="col">
-						<div class="form-group">
-							<label class="viclabelline-bottom" for="id_username">User/Nickname</label>
-							<input type="text" class="victext-input vic-block full-width" name="username" maxlength="150" autofocus required id="id_username" placeholder="Victory" value="{{ logged_in_user.username }}">
-							<small id="usernameHelpBlock" class="form-text text-muted">
-								50 characters or fewer. Letters, digits and @/./+/-/_ only.
-							</small>
-						</div>
-						<div class="form-row">
-							<div class="form-group col-md-6">
-								<label class="viclabelline-bottom" for="id_first_name">First Name</label>
-								<input type="text" class="victext-input vic-block full-width" name="first_name" maxlength="30" required id="id_first_name" placeholder="Peter" value="{{ logged_in_user.first_name }}">
-							</div>
-							<div class="form-group col-md-6">
-								<label class="viclabelline-bottom" for="id_last_name">Last Name</label>
-								<input type="text" class="victext-input vic-block full-width" name="last_name" maxlength="30" required id="id_last_name" placeholder="Petersen" value="{{ logged_in_user.last_name }}">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="viclabelline-bottom" for="id_email">Email</label>
-							<input type="email" class="victext-input vic-block full-width" name="email" maxlength="254" required id="id_email" placeholder="Email@example.dk" value="{{ logged_in_user.email }}">
-						</div>
-						<div class="form-group">
-							<label class="viclabelline-bottom" for="id_phone_number">Phone (Mobile with countrycode)</label>
-							<input type="tel" class="victext-input vic-block full-width" name="phone_number" maxlength="16" required id="id_phone_number" placeholder="+4512345678" value="{{ logged_in_user.extendeduser.phone_number }}">
-							<small id="phone_numberHelpBlock" class="form-text text-muted">
-									Used to contact you and also for 2 factor authentication.
-							</small>
-						</div>
-						<div class="form-check">
-					    <label class="form-check-label">
-					      <input id="id_phone_number_show" {% if logged_in_user.extendeduser.phone_number_show %} checked {% endif %} name="phone_number_show" type="checkbox" class="form-check-input">
-					      Show phone number?
-					    </label>
-					  </div>
-						<div class="form-group">
-							<label class="viclabelline-bottom" for="id_postal_code">Postal code</label>
-							<input type="text" class="victext-input vic-block full-width" name="postal_code" maxlength="10" requ ired id="id_postal_code" placeholder="1577" value="{{ logged_in_user.extendeduser.postal_code }}">
-						</div>
-						<div class="form-group">
-							<label>Select The driver licenses you have. (Disabled)</label>
-							<select disabled class="drivercategories form-control disabled" multiple="multiple">
-								{% for category in driverslicence %}
-								<option value="{{category.id}}">{{category.category}}</option>
-								{% endfor %}
-							</select>
-						</div>
-					</div>
-					<div class="col">
-						<div class="form-group">
-							<div class="setting-user-avatar">
-								<img class="user-avatar" src="{{ logged_in_user.extendeduser.avatar.url }}">
-							</div>
-							<label for="id_avatar">Change profile image.</label>
-							<input disabled id="id_avatar" style="color: #000;" class="victext-input vic-block full-width disabled" type="file" name="avatar"></input>
-							<small id="id_avatarHelpBlock" class="form-text text-muted">
-								 Current: <a href="{{ logged_in_user.extendeduser.avatar.url }}">{{ logged_in_user.extendeduser.avatar.url }}</a>
-							</small>
-						</div>
-						<div class="form-group">
-							<div class="setting-user-avatar">
-								<img class="user-avatar" src="{{ logged_in_user.extendeduser.background.url }}">
-							</div>
-							<label for="cover_file">Cover</label>
-							<input disabled style="color: #000;" class="victext-input vic-block full-width disabled" type="file" name="cover_file"></input>
-							<small id="cover_fileHelpBlock" class="form-text text-muted">
-								 Current: <a href="{{ logged_in_user.extendeduser.background.url }}">{{ logged_in_user.extendeduser.background.url }}</a>
-							</small>
-						</div>
-					</div>
-				</div>
-				<hr style="border-color:rgba(255, 255, 255, 0.23);">
+			<hr style="border-color:rgba(0, 0, 0, 0.23);">
+			<form action="" method="post">
+				<hr style="border-color:rgba(0, 0, 0, 0.23);">
 				<button type="submit" class="vicbtn vicbtn-green">Save</button>
 			</form>
 		</div>
 	</div>
 </section>
-{% endblock %}
-
-{% block scripts %}
-<script src="{% static 'js/application.js' %}"></script>
-<script type="text/javascript">
-	$('.drivercategories').select2();
-</script>
 {% endblock %}
 
 {% block modals %}

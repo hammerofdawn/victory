@@ -1067,5 +1067,6 @@ input:checked + .slider:before {
 
 .nav-tabs .nav-item {
 	width: initial;
+	text-align: center;
   flex: 1;
 }
