@@ -239,6 +239,21 @@ def usersettings(request, user_pk):
 	}
 	return render(request, 'user/settings.html', context)
 
+@login_required
+def useravatar(request, user_pk):
+	logged_in_user = get_object_or_404(User, pk=request.user.pk)
+	requested_user = get_object_or_404(User, pk=user_pk)
+	driverslicence = DriversLicenceCategories.objects.all()
+	feedback = FeedbackSupportForm()
+	password = PasswordChangeForm(request.user)
+	context = {
+		'logged_in_user': logged_in_user,
+		'requested_user': requested_user,
+		'feedback'		: feedback,
+		'password'		: password,
+	}
+	return render(request, 'user/avatar.html', context)
+
 def user_change_password(request, user_pk):
 	if request.method == 'POST':
 		form = PasswordChangeForm(request.user, request.POST)

@@ -678,6 +678,7 @@ a.silent {
 
 .nav-tabs {
 		border-bottom: 0px !important;
+		box-shadow: 0 0 35px rgba(0, 0, 0, 0.1)
 }
 
 .vic-tablink {
