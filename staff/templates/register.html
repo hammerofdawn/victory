@@ -29,15 +29,6 @@ Register
 		  </ul>
 		</div>
 		{% endif %}
-		{% if form.errors %}
-		<div class="alert alert-danger" role="alert">
-		  <ul>
-		    {% for key,value in form.errors.items %}
-		      <li>{{ key|escape }} : {{ value|escape }}</li>
-		    {% endfor %}
-		  </ul>
-		</div>
-		{% endif %}
 		<form action="" method="POST">
 			{% csrf_token %}
 			<div class="form-group">
@@ -46,7 +37,6 @@ Register
 				<small id="usernameHelpBlock" class="form-text text-muted">
 					50 characters or fewer. Letters, digits and @/./+/-/_ only.
 				</small>
-				<input type="text" class="victext-input vic-block full-width" name="username" maxlength="150" autofocus required id="id_username" placeholder="LarsiBoi67">
 			</div>
 			<div class="form-row">
 				<div class="form-group col-md-6">
