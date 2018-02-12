@@ -13,3 +13,5 @@ db.sqlite3
 Icon
 
 __init__.py
+
+staff/migrations/*
