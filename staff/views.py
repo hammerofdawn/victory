@@ -11,7 +11,7 @@ from django.contrib import messages
 from django.shortcuts import get_object_or_404, render, redirect
 from django.conf import settings
 from django.core.mail import send_mail, BadHeaderError
-from .models import Article, UnauthenticatedSession, Team, DriversLicenceCategories, TeamApplication, TeamMembership
+from .models import Article, UnauthenticatedSession, Team, DriversLicenceCategories, TeamApplication, TeamMembership, Language, TShirt
 from .forms import SignUpForm, UpdateProfileForm, SendApplication, FeedbackSupportForm, TeamSettings_GeneralForm, TeamSettings_DescriptionForm, TeamSettings_acceptForm, TeamSettings_needinfo_andrefuseForm, TeamSettings_AddForm
 from uuid import uuid4
 from random import randint
@@ -20,7 +20,7 @@ import os
 from requests_oauthlib import OAuth1Session
 
 # Create your views here.
-#test
+
 def index(request):
 	if request.user.is_authenticated():
 		logged_in_user = get_object_or_404(User, pk=request.user.pk)
@@ -101,18 +101,19 @@ def login(request):
 			if user is not None:
 				token = str(uuid4())
 				otp = str(randint(1111, 9999))
-
-				gwapi = OAuth1Session('OCBzbvY1b1FCQpTzEa4_131V', client_secret='g^oqsxSClJ(A@-Yttu-D6.C5lB6YdeBVz&LJ6E3W')
-
+				
+				key = 'OCBzbvY1b1FCQpTzEa4_131V'
+				secret = 'g^oqsxSClJ(A@-Yttu-D6.C5lB6YdeBVz&LJ6E3W'
+				gwapi = OAuth1Session(key, client_secret=secret)
 				req = {
+					'sender': 'VICTORY',
 					'message': 'Victory login code:\n{} {} {} {}'.format(otp[0:1], otp[1:2], otp[2:3], otp[3:4]),
 					'recipients': [{'msisdn': user.extendeduser.phone_number[1:]}],
 					'destaddr': 'DISPLAY',
-					'sender': 'VICTORY',
 				}
 				res = gwapi.post('https://gatewayapi.com/rest/mtsms', json=req)
 				res.raise_for_status()
-
+				
 				us = UnauthenticatedSession()
 				us.user = user
 				us.token = token
@@ -226,6 +227,8 @@ def usersettings(request, user_pk):
 	logged_in_user = get_object_or_404(User, pk=request.user.pk)
 	requested_user = get_object_or_404(User, pk=user_pk)
 	driverslicence = DriversLicenceCategories.objects.all()
+	language = Language.objects.all()
+	tshirt = TShirt.objects.all()
 	form = UpdateProfileForm(instance=request.user)
 	feedback = FeedbackSupportForm()
 	password = PasswordChangeForm(request.user)
@@ -233,6 +236,8 @@ def usersettings(request, user_pk):
 		'logged_in_user': logged_in_user,
 		'requested_user': requested_user,
 		'driverslicence': driverslicence,
+		'language'		: language,
+		'tshirt'		: tshirt,
 		'form'			: form,
 		'feedback'		: feedback,
 		'password'		: password,

@@ -26,21 +26,43 @@ User Settings - Chaos, Genki
 				<a class="vic-tablink active" id="user-avatar" href="{% url 'useravatar' logged_in_user.pk %}">Avatar</a>
 			</li>
 		</ul>
-		<div class="custompanel">
-			{% if messages %}
-			<div class="alert alert-success" role="alert">
-				{% for message in messages %}
-				<p>{{ message }}</p>
-				{% endfor %}
+		<div class="row">
+			<div class="col">
+				<div class="custompanel">
+					{% if messages %}
+					<div class="alert alert-success" role="alert">
+						{% for message in messages %}
+						<p>{{ message }}</p>
+						{% endfor %}
+					</div>
+					{% endif %}
+					<p>Everything with a * is required</p>
+					<hr style="border-color:rgba(0, 0, 0, 0.23);">
+					<form action="" method="post">
+						<hr style="border-color:rgba(0, 0, 0, 0.23);">
+						<button type="submit" class="vicbtn vicbtn-green">Save</button>
+					</form>
+				</div>
 			</div>
-			{% endif %}
-			<p>Everything with a * is required</p>
-			<hr style="border-color:rgba(0, 0, 0, 0.23);">
-			<form action="" method="post">
-				<hr style="border-color:rgba(0, 0, 0, 0.23);">
-				<button type="submit" class="vicbtn vicbtn-green">Save</button>
-			</form>
+			<div class="col">
+				<div class="custompanel">
+					{% if messages %}
+					<div class="alert alert-success" role="alert">
+						{% for message in messages %}
+						<p>{{ message }}</p>
+						{% endfor %}
+					</div>
+					{% endif %}
+					<p>Everything with a * is required</p>
+					<hr style="border-color:rgba(0, 0, 0, 0.23);">
+					<form action="" method="post">
+						<hr style="border-color:rgba(0, 0, 0, 0.23);">
+						<button type="submit" class="vicbtn vicbtn-green">Save</button>
+					</form>
+				</div>
+			</div>
 		</div>
+
 	</div>
 </section>
 {% endblock %}

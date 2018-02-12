@@ -23,7 +23,7 @@
         // whether or not to allow the dropdown
         allowDropdown: true,
         // if there is just a dial code in the input: remove it on blur, and re-add it on focus
-        autoHideDialCode: true,
+        autoHideDialCode: false,
         // add a placeholder in the input with an example number for the selected country
         autoPlaceholder: "polite",
         // modify the auto placeholder
@@ -47,11 +47,11 @@
         // number type to use for placeholders
         placeholderNumberType: "MOBILE",
         // the countries at the top of the list. defaults to united states and united kingdom
-        preferredCountries: [ "us", "gb" ],
+        preferredCountries: [ "dk" ],
         // display the country dial code next to the selected flag so it's not part of the typed number
         separateDialCode: false,
         // specify the path to the libphonenumber script to enable validation/formatting
-        utilsScript: ""
+        utilsScript: "utils.js"
     }, keys = {
         UP: 38,
         DOWN: 40,

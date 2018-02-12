@@ -1,5 +1,11 @@
 .select2 {
-		width: 100%!important;
+		width: 50%;
+}
+
+@media screen and (max-width: 992px) {
+	.select2 {
+			width: 100%;
+	}
 }
 
 .select2-container {
