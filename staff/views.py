@@ -20,7 +20,7 @@ import os
 from requests_oauthlib import OAuth1Session
 
 # Create your views here.
-
+#test
 def index(request):
 	if request.user.is_authenticated():
 		logged_in_user = get_object_or_404(User, pk=request.user.pk)
