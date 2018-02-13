@@ -1045,17 +1045,21 @@ input:checked + .slider:before {
 }
 
 .memberinfo {
-    margin: 10px 0;
+    margin: 9px 0;
     position: relative;
     display: -webkit-flex;
     display: flex;
 }
 
+.memberinfo p, .memberinfo form {
+	margin-left: 1rem
+}
+
 #memberimg {
     height: 28px;
-    margin: -4px 0;
+		margin: -3px 0;
     position: relative;
-    width: 72px;
+    width: 67px;
     align-items: center;
     -webkit-align-items: center;
     display: -webkit-flex;

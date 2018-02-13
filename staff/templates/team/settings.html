@@ -31,25 +31,33 @@ Team Settings - Chaos, Genki
 				<a class="vic-tablink" id="team-applications"  href="{% url 'teamsettings_applications' requested_team.pk %}">Applications</a>
 			</li>
 		</ul>
-		<div class="custompanel">
-			<p>Everything with a * is required</p>
-			<hr style="border-color:rgba(0, 0, 0, 0.23);">
-			<form action="" method="POST">
-				{% csrf_token %}
-				<div class="row">
-					<div class="col">
+		<div class="row">
+			<div class="col">
+				<form action="" method="POST">
+					{% csrf_token %}
+					<div class="custompanel no-m-bottom">
+						<h3>Settings</h3>
+						<hr style="border-color:rgba(0, 0, 0, 1);">
 						<div class="form-group">
 							<label class="viclabelline-bottom" for="id_name">Team Name</label>
 							<input type="text" class="victext-input vic-block full-width" name="name" maxlength="40" required id="id_name" value="{{ requested_team.name }}">
 						</div>
 						<div class="form-check">
-					    <label class="form-check-label">
-					      <input id="id_accepts_applications" {% if requested_team.accepts_applications %} checked {% endif %} name="accepts_applications" type="checkbox" class="form-check-input">
-					      Is the team accepting applications?
-					    </label>
-					  </div>
+							<label class="form-check-label">
+								<input id="id_accepts_applications" {% if requested_team.accepts_applications %} checked {% endif %} name="accepts_applications" type="checkbox" class="form-check-input">
+								Is the team accepting applications?
+							</label>
+						</div>
 					</div>
-					<div class="col">
+					<button type="submit" class="vicbtn vicbtn-green w-100">Save</button>
+				</form>
+			</div>
+			<div class="col">
+				<form action="" method="POST">
+					{% csrf_token %}
+					<div class="custompanel no-m-bottom">
+						<h3>Avatar</h3>
+						<hr style="border-color:rgba(0, 0, 0, 1);">
 						<div class="form-group">
 							<div class="setting-user-avatar">
 								<img class="user-avatar" src="{{ requested_team.logo.url }}">
@@ -60,6 +68,14 @@ Team Settings - Chaos, Genki
 								 Current: <a href="{{ requested_team.logo.url }}">{{ requested_team.avatar.url }}</a>
 							</small>
 						</div>
+					</div>
+					<button type="submit" class="vicbtn vicbtn-green w-100">Save</button>
+				</form>
+				<form action="" method="POST">
+					{% csrf_token %}
+					<div class="custompanel no-m-bottom">
+						<h3>Background</h3>
+						<hr style="border-color:rgba(0, 0, 0, 1);">
 						<div class="form-group">
 							<div class="setting-user-avatar">
 								<img class="user-avatar" src="{{ requested_team.background.url }}">
@@ -71,10 +87,9 @@ Team Settings - Chaos, Genki
 							</small>
 						</div>
 					</div>
-				</div>
-				<hr style="border-color:rgba(0, 0, 0, 0.23);">
-				<button type="submit" class="vicbtn vicbtn-green">Save</button>
-			</form>
+					<button type="submit" class="vicbtn vicbtn-green w-100">Save</button>
+				</form>
+			</div>
 		</div>
 	</div>
 </section>

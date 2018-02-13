@@ -31,19 +31,22 @@ Team Settings - Chaos, Genki
 				<a class="vic-tablink" id="team-applications"  href="{% url 'teamsettings_applications' requested_team.pk %}">Applications</a>
 			</li>
 		</ul>
-		<div class="custompanel">
-			<p>Everything with a * is required</p>
-			<p>You can use basic html for headings and stuff more info will be coming up.</p>
-			<hr style="border-color:rgba(0, 0, 0, 0.23);">
-			<form action="" method="POST">
-				{% csrf_token %}
-				<div class="form-group">
-					<label style="margin-top:15px;" for="description">Write your Team description here</label>
-					<textarea class="victext-input vic-block full-width" id="id_description" name="description" rows="6">{{ requested_team.description }}</textarea>
-				</div>
-				<hr style="border-color:rgba(0, 0, 0, 0.23);">
-				<button type="submit" class="vicbtn vicbtn-green">Save</button>
-			</form>
+		<div class="row">
+			<div class="col">
+				<form action="" method="POST">
+					{% csrf_token %}
+					<div class="custompanel no-m-bottom">
+						<p>Everything with a * is required</p>
+						<p>You can use basic html for headings and stuff more info will be coming up.</p>
+						<hr style="border-color:rgba(0, 0, 0, 0.23);">
+						<div class="form-group">
+							<label style="margin-top:15px;" for="description">Write your Team description here</label>
+							<textarea class="victext-input vic-block full-width" id="id_description" name="description" rows="6">{{ requested_team.description }}</textarea>
+						</div>
+					</div>
+					<button type="submit" class="vicbtn vicbtn-green w-100">Save</button>
+				</form>
+			</div>
 		</div>
 	</div>
 </section>
