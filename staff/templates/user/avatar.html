@@ -26,40 +26,47 @@ User Settings - Chaos, Genki
 				<a class="vic-tablink active" id="user-avatar" href="{% url 'useravatar' logged_in_user.pk %}">Avatar</a>
 			</li>
 		</ul>
+		{% if messages %}
+		<div class="alert alert-success" role="alert">
+			{% for message in messages %}
+			<p>{{ message }}</p>
+			{% endfor %}
+		</div>
+		{% endif %}
 		<div class="row">
 			<div class="col">
-				<div class="custompanel">
-					{% if messages %}
-					<div class="alert alert-success" role="alert">
-						{% for message in messages %}
-						<p>{{ message }}</p>
-						{% endfor %}
+				<form action="" method="post">
+					<div class="custompanel no-m-bottom">
+						<div class="form-group">
+							<div class="setting-user-avatar">
+								<img class="user-avatar" src="{{ logged_in_user.extendeduser.avatar.url }}">
+							</div>
+							<label for="id_avatar">Change profile image.</label>
+							<input disabled id="id_avatar" style="color: #000;" class="victext-input vic-block full-width disabled" type="file" name="avatar"></input>
+							<small id="id_avatarHelpBlock" class="form-text text-muted">
+								 Current: <a href="{{ logged_in_user.extendeduser.avatar.url }}">{{ logged_in_user.extendeduser.avatar.url }}</a>
+							</small>
+						</div>
 					</div>
-					{% endif %}
-					<p>Everything with a * is required</p>
-					<hr style="border-color:rgba(0, 0, 0, 0.23);">
-					<form action="" method="post">
-						<hr style="border-color:rgba(0, 0, 0, 0.23);">
-						<button type="submit" class="vicbtn vicbtn-green">Save</button>
-					</form>
-				</div>
+					<button type="submit" class="vicbtn vicbtn-green w-100">Save</button>
+				</form>
 			</div>
 			<div class="col">
-				<div class="custompanel">
-					{% if messages %}
-					<div class="alert alert-success" role="alert">
-						{% for message in messages %}
-						<p>{{ message }}</p>
-						{% endfor %}
+				<form action="" method="post">
+					<div class="custompanel no-m-bottom">
+						<div class="form-group">
+							<div class="setting-user-avatar">
+								<img class="user-avatar" src="{{ logged_in_user.extendeduser.background.url }}">
+							</div>
+							<label for="cover_file">Cover</label>
+							<input disabled style="color: #000;" class="victext-input vic-block full-width disabled" type="file" name="cover_file"></input>
+							<small id="cover_fileHelpBlock" class="form-text text-muted">
+								 Current: <a href="{{ logged_in_user.extendeduser.background.url }}">{{ logged_in_user.extendeduser.background.url }}</a>
+							</small>
+						</div>
 					</div>
-					{% endif %}
-					<p>Everything with a * is required</p>
-					<hr style="border-color:rgba(0, 0, 0, 0.23);">
-					<form action="" method="post">
-						<hr style="border-color:rgba(0, 0, 0, 0.23);">
-						<button type="submit" class="vicbtn vicbtn-green">Save</button>
-					</form>
-				</div>
+					<button type="submit" class="vicbtn vicbtn-green w-100">Save</button>
+				</form>
 			</div>
 		</div>
 

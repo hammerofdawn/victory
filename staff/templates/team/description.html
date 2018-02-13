@@ -10,30 +10,28 @@ Team Settings - Chaos, Genki
 <section role="content">
 	<div class="container">
 		<h1 class="line-top">Team Description for {{ requested_team.name }}.</h1>
+		{% if messages %}
+		<div class="alert alert-success" role="alert">
+			{% for message in messages %}
+			<p>{{ message }}</p>
+			{% endfor %}
+		</div>
+		{% endif %}
+		<ul class="nav nav-tabs" id="teamstab" role="tablist">
+			<li class="nav-item">
+				<a class="vic-tablink" id="team-settings" href="{% url 'teamsettings_general' requested_team.pk %}">General</a>
+			</li>
+			<li class="nav-item">
+				<a class="vic-tablink active" id="team-description" href="{% url 'teamsettings_description' requested_team.pk %}">Description</a>
+			</li>
+			<li class="nav-item">
+				<a class="vic-tablink" id="team-members" href="{% url 'teamsettings_members' requested_team.pk %}">Members</a>
+			</li>
+			<li class="nav-item">
+				<a class="vic-tablink" id="team-applications"  href="{% url 'teamsettings_applications' requested_team.pk %}">Applications</a>
+			</li>
+		</ul>
 		<div class="custompanel">
-			{% if messages %}
-			<div class="alert alert-success" role="alert">
-				{% for message in messages %}
-				<p>{{ message }}</p>
-				{% endfor %}
-			</div>
-			{% endif %}
-			<ul class="nav nav-tabs" id="teamstab" role="tablist">
-				<li class="nav-item">
-					<a class="vic-tablink" id="team-settings" href="{% url 'teamsettings_general' requested_team.pk %}">General</a>
-				</li>
-				<li class="nav-item">
-					<a class="vic-tablink active" id="team-description" href="{% url 'teamsettings_description' requested_team.pk %}">Description</a>
-				</li>
-				<li class="nav-item">
-					<a class="vic-tablink" id="team-members" href="{% url 'teamsettings_members' requested_team.pk %}">Members</a>
-				</li>
-				<li class="nav-item">
-					<a class="vic-tablink" id="team-applications"  href="{% url 'teamsettings_applications' requested_team.pk %}">Applications</a>
-				</li>
-			</ul>
-
-			<hr style="border-color:rgba(0, 0, 0, 0.23);">
 			<p>Everything with a * is required</p>
 			<p>You can use basic html for headings and stuff more info will be coming up.</p>
 			<hr style="border-color:rgba(0, 0, 0, 0.23);">

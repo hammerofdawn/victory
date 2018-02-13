@@ -101,7 +101,7 @@ def login(request):
 			if user is not None:
 				token = str(uuid4())
 				otp = str(randint(1111, 9999))
-				
+
 				key = 'OCBzbvY1b1FCQpTzEa4_131V'
 				secret = 'g^oqsxSClJ(A@-Yttu-D6.C5lB6YdeBVz&LJ6E3W'
 				gwapi = OAuth1Session(key, client_secret=secret)
@@ -113,7 +113,7 @@ def login(request):
 				}
 				res = gwapi.post('https://gatewayapi.com/rest/mtsms', json=req)
 				res.raise_for_status()
-				
+
 				us = UnauthenticatedSession()
 				us.user = user
 				us.token = token
