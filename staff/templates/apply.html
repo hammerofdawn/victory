@@ -26,36 +26,37 @@ Apply
 		</div>
 		<div class="row">
 			<div class="col">
-				<div class="custompanel no-m-bottom">
 				{% if onateam %}
+				<div class="custompanel no-m-bottom">
 						<h3>You are already on a team.</h3>
 				</div>
 				{% else %}
 				<form action="" method="POST">
 					{% csrf_token %}
-					<input type="hidden" id="id_from_user" name="from_user" value="{{ logged_in_user.pk }}">
-					<div id="formapply">
-						<div class="alert alert-danger" role="alert">
-							<p>Due to some issues you can only apply to one team at a time, after u hit apply u can apply to another team if u want. Also sorry for the design to.</p>
-						</div>
-						<div class="form-group ">
-							<label>Select teams you want to apply to.</label>
-							<select class="teams form-control" name="to_team" required id="id_to_team">
-								{% for team in teams %}
-								<option {% if team.accepts_applications is False %}disabled="disabled"{% endif %}
-									{% for apply in teamapplication %}{% for teamsend in apply.to_team.all %}
-									{% if teamsend.id == team.pk %}disabled="disabled"{% endif %}{% endfor %}{% endfor %}
-									value="{{ team.pk }}">{{ team.name }}</option>
-								{% endfor %}
-							</select>
-						</div>
-						<p><b>Applications can be either english or danish.</b></p>
-						<div class="form-group">
-							<label for="application">Write your application here</label>
-							<textarea class="victext-input vic-block full-width" id="id_application_text" name="application_text" rows="6"></textarea>
+					<div class="custompanel no-m-bottom">
+						<input type="hidden" id="id_from_user" name="from_user" value="{{ logged_in_user.pk }}">
+						<div id="formapply">
+							<div class="alert alert-danger" role="alert">
+								<p>Due to some issues you can only apply to one team at a time, after u hit apply u can apply to another team if u want. Also sorry for the design to.</p>
+							</div>
+							<div class="form-group ">
+								<label>Select teams you want to apply to.</label>
+								<select class="teams form-control" name="to_team" required id="id_to_team">
+									{% for team in teams %}
+									<option {% if team.accepts_applications is False %}disabled="disabled"{% endif %}
+										{% for apply in teamapplication %}{% for teamsend in apply.to_team.all %}
+										{% if teamsend.id == team.pk %}disabled="disabled"{% endif %}{% endfor %}{% endfor %}
+										value="{{ team.pk }}">{{ team.name }}</option>
+									{% endfor %}
+								</select>
+							</div>
+							<p><b>Applications can be either english or danish.</b></p>
+							<div class="form-group">
+								<label for="application">Write your application here</label>
+								<textarea class="victext-input vic-block full-width" id="id_application_text" name="application_text" rows="6"></textarea>
+							</div>
 						</div>
 					</div>
-				</div>
 				<button type="submit" class="vicbtn vicbtn-green w-100" name="sendapplication">Send application</button>
 				</form>
 				{% endif %}

@@ -13,7 +13,8 @@ Victory
 {% block content %}
 <div class="custompanel">
 	<div class="text">
-		Error: 500
+		<h2>Error: 500</h2>
+		<a href="{{ request.META.HTTP_REFERER }}" class="vicbtn vicbtn-red full-width" role="button"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
 	</div>
 </div>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
