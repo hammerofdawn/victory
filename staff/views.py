@@ -52,84 +52,83 @@ def login(request):
 	if request.user.is_authenticated():
 		return redirect('index')
 
-	if request.method == 'POST':
-		token = request.POST.get('token', None)
-		username = request.POST.get('username', None)
-		password = request.POST.get('password', None)
-
-		if token is not None:
-			otpdigit1 = request.POST.get('otpdigit1', '')
-			otpdigit2 = request.POST.get('otpdigit2', '')
-			otpdigit3 = request.POST.get('otpdigit3', '')
-			otpdigit4 = request.POST.get('otpdigit4', '')
-
-			otp = otpdigit1 + otpdigit2 + otpdigit3 + otpdigit4
-
-			if len(otp) == 4:
-				ua = UnauthenticatedSession.objects.get(token=str(token))
-
-				if ua.guesses_left > 0:
-					if ua.successful == False:
-						if otp == ua.otp:
-							ua.successful = True
-							ua.save()
-
-							auth_login(request, ua.user)
-							return redirect('index')
-						else:
-							ua.guesses_left -= 1
-							ua.save()
-
-							return render(request, "2ndfactor.html", {
-								'error': "The entered code was incorrect.",
-								'token': token
-							})
-					else:
-						return render(request, "2ndfactor.html", {
-							'error': "Token has already been used.",
-						})
-				else:
-					return render(request, "2ndfactor.html", {
-						'error': "Code has been entered incorrectly too many times.",
-					})
-			else:
-				return render(request, "2ndfactor.html", {'error': True})
-
-		elif username and password:
-			user = auth_authenticate(request, username=username, password=password)
-
-			if user is not None:
-				token = str(uuid4())
-				otp = str(randint(1111, 9999))
-
-				gwapi = OAuth1Session('OCBzbvY1b1FCQpTzEa4_131V', client_secret='g^oqsxSClJ(A@-Yttu-D6.C5lB6YdeBVz&LJ6E3W')
-
-				req = {
-					'message': 'Victory login code:\n{} {} {} {}'.format(otp[0:1], otp[1:2], otp[2:3], otp[3:4]),
-					'recipients': [{'msisdn': user.extendeduser.phone_number[1:]}],
-					'destaddr': 'DISPLAY',
-					'sender': 'VICTORY',
-				}
-				res = gwapi.post('https://gatewayapi.com/rest/mtsms', json=req)
-				res.raise_for_status()
-
-				us = UnauthenticatedSession()
-				us.user = user
-				us.token = token
-				us.otp = otp
-
-				us.save()
-				feedback = FeedbackSupportForm()
-				return render(request, "2ndfactor.html", {'token': token, 'feedback': feedback,})
-			else:
-				feedback = FeedbackSupportForm()
-				return render(request, "login.html", {'invalid': True, 'feedback': feedback, })
-		else:
-			feedback = FeedbackSupportForm()
-			return render(request, "login.html", {'feedback': feedback,})
-	else:
+	if request.method != 'POST': # We only support login via POST
 		feedback = FeedbackSupportForm()
 		return render(request, 'login.html', {'feedback': feedback,})
+
+	token = request.POST.get('token', None)
+	username = request.POST.get('username', None)
+	password = request.POST.get('password', None)
+
+	if token is not None:
+		otpdigit1 = request.POST.get('otpdigit1', '')
+		otpdigit2 = request.POST.get('otpdigit2', '')
+		otpdigit3 = request.POST.get('otpdigit3', '')
+		otpdigit4 = request.POST.get('otpdigit4', '')
+
+		otp = otpdigit1 + otpdigit2 + otpdigit3 + otpdigit4
+		if len(otp) != 4:
+			return render(request, "2ndfactor.html", {'error': True}) # Return because of invalid otp
+		try:
+			ua = UnauthenticatedSession.objects.get(token=str(token))
+		except Exception as e:
+			return render(request, '2ndfactor.html', {
+				'error': "Your token wasn't found. Please authenticate using an alternate method"
+			})
+
+		if ua.guesses_left <= 0: # less to be sure no bugs or funny business
+			return render(request, "2ndfactor.html", {
+				'error': "Code has been entered incorrectly too many times.",
+			})
+		if ua.guesses_left > 0:
+			if ua.successful:
+				return render(request, "2ndfactor.html", {
+					'error': "Token has already been used.",
+				})
+
+			if otp != ua.otp:
+				ua.guesses_left -= 1
+				ua.save()
+				return render(request, "2ndfactor.html", {
+
+			ua.successful = True
+			ua.save()
+
+			auth_login(request, ua.user)
+			return redirect('index')
+
+	elif username and password:
+		user = auth_authenticate(request, username=username, password=password)
+
+		if user == None: # Who you tryna login as
+			feedback = FeedbackSupportForm()
+			return render(request, "login.html", {'invalid': True, 'feedback': feedback, })
+
+		token = str(uuid4())
+		otp = str(randint(1111, 9999))
+
+		gwapi = OAuth1Session('OCBzbvY1b1FCQpTzEa4_131V', client_secret='g^oqsxSClJ(A@-Yttu-D6.C5lB6YdeBVz&LJ6E3W')
+
+		req = {
+			'message': 'Victory login code:\n{} {} {} {}'.format(otp[0:1], otp[1:2], otp[2:3], otp[3:4]),
+			'recipients': [{'msisdn': user.extendeduser.phone_number[1:]}],
+			'destaddr': 'DISPLAY',
+			'sender': 'VICTORY',
+		}
+		res = gwapi.post('https://gatewayapi.com/rest/mtsms', json=req)
+		res.raise_for_status()
+
+		us = UnauthenticatedSession()
+		us.user = user
+		us.token = token
+		us.otp = otp
+
+		us.save()
+		feedback = FeedbackSupportForm()
+		return render(request, "2ndfactor.html", {'token': token, 'feedback': feedback,})
+	else:
+		feedback = FeedbackSupportForm()
+		return render(request, "login.html", {'feedback': feedback,})
 
 #def welcome(request):
 #	return render(request, 'welcome.html', {})
@@ -139,23 +138,27 @@ def logout(request):
 	return redirect('index')
 
 def register(request):
-	if request.method == 'POST':
-			form = SignUpForm(request.POST)
-			if form.is_valid():
-				user = form.save()
-				user.refresh_from_db()  # load the profile instance created by the signal
-				user.extendeduser.postal_code = form.cleaned_data.get('postal_code')
-				user.extendeduser.phone_number = form.cleaned_data.get('phone_number')
-				user.extendeduser.nickname = form.cleaned_data.get('username')
-				user.save()
-				raw_password = form.cleaned_data.get('password1')
-				user = auth_authenticate(username=user.username, password=raw_password)
-				auth_login(request, user)
-				return redirect('index')
-	else:
+	if request.method != 'POST':
 		form = SignUpForm()
 		feedback = FeedbackSupportForm()
-	return render(request, 'register.html', {'form': form, 'feedback': feedback,})
+		return render(request, 'register.html', {'form': form, 'feedback': feedback,})
+
+	form = SignUpForm(request.POST)
+	if not form.is_valid():
+		feedback = FeedbackSupportForm()
+		return render(request, 'register.html', {'form': form, 'feedback': feedback})
+
+	user = form.save()
+	user.refresh_from_db()  # load the profile instance created by the signal
+	user.extendeduser.postal_code = form.cleaned_data.get('postal_code')
+	user.extendeduser.phone_number = form.cleaned_data.get('phone_number')
+	user.extendeduser.nickname = form.cleaned_data.get('username')
+	user.save()
+	raw_password = form.cleaned_data.get('password1')
+	user = auth_authenticate(username=user.username, password=raw_password)
+	auth_login(request, user)
+	return redirect('index')
+
 
 def registerimage(request):
 	feedback = FeedbackSupportForm()
@@ -174,11 +177,10 @@ def contact(request):
 			try:
 				send_mail(subject, message, from_email, ['melonendk@gmail.com', 'deni@radera.net'], fail_silently=False,)
 			except BadHeaderError:
-				return HttpResponse('Invalid header found.')
+				return HttpResponse('Something went wrong on our side. Try again in a few minutes or contact us on twitter @TODO', status=500)
 			messages.success(request, "Sweet! Your message has been send! Please allow up to 24 hours for response time.")
-			return redirect('index')
-	else:
-		return redirect('index')
+
+	return redirect('index')
 
 @login_required
 def users(request):
@@ -240,17 +242,17 @@ def usersettings(request, user_pk):
 	return render(request, 'user/settings.html', context)
 
 def user_change_password(request, user_pk):
-	if request.method == 'POST':
-		form = PasswordChangeForm(request.user, request.POST)
-		if form.is_valid():
-			user = form.save()
-			update_session_auth_hash(request, user)  # Important!
-			messages.success(request, 'Your password was successfully updated!')
-			return redirect('usersettings', user_pk=request.user.pk)
-		else:
-			messages.error(request, 'Please correct the error below.')
-	else:
+	if request.method != 'POST':
 		redirect('usersettings', user_pk=request.user.pk)
+	form = PasswordChangeForm(request.user, request.POST)
+	
+	if form.is_valid():
+		user = form.save()
+		update_session_auth_hash(request, user)  # Important!
+		messages.success(request, 'Your password was successfully updated!')
+		return redirect('usersettings', user_pk=request.user.pk)
+	else:
+		messages.error(request, 'Please correct the error below.')
 
 def team(request, team_pk):
 	requested_team = get_object_or_404(Team, pk=team_pk)
