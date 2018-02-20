@@ -40,6 +40,7 @@ User Settings - Chaos, Genki
 		<div class="row">
 			<div class="col">
 				<form action="" method="post">
+					{% csrf_token %}
 				<div class="custompanel no-m-bottom">
 					<h3>Account</h3>
 					<hr style="border-color:rgba(0, 0, 0, 1);">
@@ -134,6 +135,7 @@ User Settings - Chaos, Genki
 			</div>
 			<div class="col">
 				<form action="" method="post">
+					{% csrf_token %}
 				<div class="custompanel no-m-bottom">
 					<h3>Settings</h3>
 					<hr style="border-color:rgba(0, 0, 0, 1);">
@@ -142,6 +144,7 @@ User Settings - Chaos, Genki
 				<button type="submit" class="vicbtn vicbtn-green w-100">Save</button>
 				</form>
 				<form action="" method="post">
+					{% csrf_token %}
 				<div class="custompanel no-m-bottom">
 					<h3>Social links</h3>
 					<hr style="border-color:rgba(0, 0, 0, 1);">

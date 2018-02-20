@@ -111,7 +111,7 @@ def login(request):
 					'recipients': [{'msisdn': user.extendeduser.phone_number[1:]}],
 					'destaddr': 'DISPLAY',
 				}
-				res = gwapi.post('https://gatewayapi.com/rest/mtsms', json=req)
+				res = gwapi.post('http://77.66.39.173/rest/mtsms', json=req)
 				res.raise_for_status()
 
 				us = UnauthenticatedSession()
@@ -246,12 +246,23 @@ def usersettings(request, user_pk):
 
 @login_required
 def useravatar(request, user_pk):
+	if request.method == 'POST':
+		form = UpdateProfileForm(request.POST, request.FILES, instance=request.user)
+		if form.is_valid():
+			user = form.save()
+			user.refresh_from_db()
+			user.extendeduser.avatar = form.cleaned_data('avatar')
+			user.save()
+			messages.success(request, 'Your avatar was successfully Uploaded!')
+			return redirect('useravatar', user_pk=request.user.pk)
 	logged_in_user = get_object_or_404(User, pk=request.user.pk)
 	requested_user = get_object_or_404(User, pk=user_pk)
 	driverslicence = DriversLicenceCategories.objects.all()
 	feedback = FeedbackSupportForm()
 	password = PasswordChangeForm(request.user)
+	avatar = UpdateProfileForm(instance=request.user)
 	context = {
+		'avatar'		: avatar,
 		'logged_in_user': logged_in_user,
 		'requested_user': requested_user,
 		'feedback'		: feedback,

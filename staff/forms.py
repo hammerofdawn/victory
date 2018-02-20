@@ -10,7 +10,7 @@ class SignUpForm(UserCreationForm):
 	class Meta:
 		model = User
 		fields = ('username', 'first_name', 'last_name', 'email', 'postal_code', 'phone_number', 'password1', 'password2', )
-    
+
 	def clean(self):
 		cleaned_data = super(SignUpForm, self).clean()
 		username = cleaned_data.get('username')
@@ -22,9 +22,10 @@ class UpdateProfileForm(forms.ModelForm):
 	postal_code = forms.CharField(max_length=10, required=True)
 	phone_number = forms.CharField(max_length=16, required=True)
 	phone_number_show = forms.BooleanField(required=False)
+	avatar = forms.ImageField()
 	class Meta:
 		model = User
-		fields = ('username', 'first_name', 'last_name', 'email', 'postal_code', 'phone_number', 'phone_number_show',)
+		fields = ('username', 'first_name', 'last_name', 'email', 'postal_code', 'phone_number', 'phone_number_show', 'avatar')
 
 class SendApplication(forms.ModelForm):
 	class Meta:
@@ -54,7 +55,6 @@ class TeamSettings_acceptForm(forms.ModelForm):
 	class Meta:
 		model = TeamMembership
 		fields = ('user',)
-
 
 class TeamSettings_needinfo_andrefuseForm(forms.Form):
 	user = forms.IntegerField()
