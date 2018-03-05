@@ -111,7 +111,7 @@ def login(request):
 					'recipients': [{'msisdn': user.extendeduser.phone_number[1:]}],
 					'destaddr': 'DISPLAY',
 				}
-				res = gwapi.post('http://77.66.39.173/rest/mtsms', json=req)
+				res = gwapi.post('https://gatewayapi.com/rest/mtsms', json=req)
 				res.raise_for_status()
 
 				us = UnauthenticatedSession()
