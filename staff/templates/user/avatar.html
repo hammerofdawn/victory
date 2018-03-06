@@ -36,23 +36,23 @@ User Settings - Chaos, Genki
 		<div class="row">
 			<div class="col">
 				<form action="" method="post" enctype="multipart/form-data">
-					{% csrf_token %}
-					<div class="custompanel no-m-bottom">
-						<h3>Avatar</h3>
-						<hr style="border-color:rgba(0, 0, 0, 1);">
-						<div class="form-group">
-							<div class="setting-user-avatar">
-								<img class="user-avatar" src="{{ logged_in_user.extendeduser.avatar.url }}">
-							</div>
-							<label for="id_avatar">Change profile image.</label>
-							<input id="id_avatar" style="color: #000;" class="victext-input vic-block full-width" type="file" name="avatar"></input>
-							<small id="id_avatarHelpBlock" class="form-text text-muted">
-								 Current: <a href="{{ logged_in_user.extendeduser.avatar.url }}">{{ logged_in_user.extendeduser.avatar.url }}</a>
-							</small>
-						</div>
-					</div>
-					<button type="submit" class="vicbtn vicbtn-green w-100">Save</button>
-				</form>
+          {% csrf_token %}
+          <div class="custompanel no-m-bottom">
+            <h3>Avatar</h3>
+            <hr style="border-color:rgba(0, 0, 0, 1);">
+            <div class="form-group">
+              <div class="setting-user-avatar">
+                <img class="user-avatar" src="{{ logged_in_user.extendeduser.avatar.url }}">
+              </div>
+              <label for="id_avata">Change profile image.</label>
+              {{ avatar.as_p }}
+              <small id="id_avatarHelpBlock" class="form-text text-muted">
+                 Current: <a href="{{ logged_in_user.extendeduser.avatar.url }}">{{ logged_in_user.extendeduser.avatar.url }}</a>
+              </small>
+          	</div>
+          </div>
+          <button type="submit" class="vicbtn vicbtn-green w-100">Save</button>
+  			</form>
 			</div>
 			<div class="col">
 				<form action="" method="post">

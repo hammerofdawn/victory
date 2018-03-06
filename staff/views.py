@@ -11,7 +11,7 @@ from django.contrib import messages
 from django.shortcuts import get_object_or_404, render, redirect
 from django.conf import settings
 from django.core.mail import send_mail, BadHeaderError
-from .models import Article, UnauthenticatedSession, Team, DriversLicenceCategories, TeamApplication, TeamMembership, Language, TShirt
+from .models import ExtendedUser, Article, UnauthenticatedSession, Team, DriversLicenceCategories, TeamApplication, TeamMembership, Language, TShirt
 from .forms import SignUpForm, UpdateProfileForm, SendApplication, FeedbackSupportForm, TeamSettings_GeneralForm, TeamSettings_DescriptionForm, TeamSettings_acceptForm, TeamSettings_needinfo_andrefuseForm, TeamSettings_AddForm
 from uuid import uuid4
 from random import randint
@@ -249,9 +249,9 @@ def useravatar(request, user_pk):
 	if request.method == 'POST':
 		form = UpdateProfileForm(request.POST, request.FILES, instance=request.user)
 		if form.is_valid():
-			user = form.save()
-			user.refresh_from_db()
-			user.extendeduser.avatar = form.cleaned_data('avatar')
+			print(request.POST)
+			user = form.save(commit=False)
+			user.extendeduser.avatar = request.FILES['avatar']
 			user.save()
 			messages.success(request, 'Your avatar was successfully Uploaded!')
 			return redirect('useravatar', user_pk=request.user.pk)
