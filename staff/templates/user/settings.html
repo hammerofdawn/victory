@@ -39,98 +39,12 @@ User Settings - Chaos, Genki
 		{% endif %}
 		<div class="row">
 			<div class="col">
-				<form action="" method="post">
+				<form action="{% url 'userprofileupdate' logged_in_user.pk %}" method="POST">
 					{% csrf_token %}
-				<div class="custompanel no-m-bottom">
-					<h3>Account</h3>
-					<hr style="border-color:rgba(0, 0, 0, 1);">
-					<div class="form-group">
-						<label class="viclabelline-bottom" for="id_username">User/Nickname</label>
-						<input type="text" class="victext-input vic-block full-width" name="username" maxlength="150" autofocus required id="id_username" placeholder="Victory" value="{{ logged_in_user.username }}">
-						<small id="usernameHelpBlock" class="form-text text-muted">
-							50 characters or fewer. Letters, digits and @/./+/-/_ only.
-						</small>
+					<div class="custompanel no-m-bottom">
+						{{form.as_p}}
 					</div>
-					<div class="form-row">
-						<div class="form-group col-md-6">
-							<label class="viclabelline-bottom" for="id_first_name">First Name</label>
-							<input type="text" class="victext-input vic-block full-width" name="first_name" maxlength="50" required id="id_first_name" placeholder="Peter" value="{{ logged_in_user.first_name }}">
-						</div>
-						<div class="form-group col-md-6">
-							<label class="viclabelline-bottom" for="id_last_name">Last Name</label>
-							<input type="text" class="victext-input vic-block full-width" name="last_name" maxlength="50" required id="id_last_name" placeholder="Petersen" value="{{ logged_in_user.last_name }}">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="viclabelline-bottom vic-block" for="id_email">Email</label>
-						<input type="email" class="victext-input settings-width" name="email" maxlength="254" required id="id_email" placeholder="Email@example.dk" value="{{ logged_in_user.email }}">
-						<p class="settings-always-hidden">Always hidden</p>
-					</div>
-					<div class="form-group">
-						<label class="viclabelline-bottom vic-block" for="id_birthdate">Birthdate</label>
-						<input type="date" class="victext-input settings-width" name="birthdate" required id="id_birthdate" value="{{ logged_in_user.birthdate }}">
-						<p class="settings-always-hidden">Always hidden</p>
-					</div>
-					<div class="form-group">
-						<label class="viclabelline-bottom vic-block" for="id_phone_number">Phone number</label>
-						<input type="tel" class="victext-input settings-width" name="phone_number" required id="id_phone_number" value="{{ logged_in_user.extendeduser.phone_number }}">
-						<p class="settings-always-hidden settings-width">Always hidden</p>
-					</div>
-					<div class="form-group">
-						<label class="viclabelline-bottom vic-block" for="id_emc_phone_number">EMC(emergency) Phone number</label>
-						<input type="tel" class="victext-input settings-width" name="emc_phone_number" required id="id_emc_phone_number" value="{{ logged_in_user.extendeduser.phone_number }}">
-						<p class="settings-always-hidden settings-width">Always hidden</p>
-					</div>
-					<div class="form-group">
-						<label class="viclabelline-bottom vic-block" for="id_postal_code">Postal code</label>
-						<input type="number" class="victext-input settings-width" name="postal_code" maxlength="10" required id="id_postal_code" placeholder="1577" value="{{ logged_in_user.extendeduser.postal_code }}">
-						<p class="settings-always-hidden">Always hidden</p>
-					</div>
-					<div class="form-group">
-						<label class="viclabelline-bottom vic-block">Language(s)</label>
-						<select class="languages settings-width" multiple="multiple">
-							{% for lang in language %}
-							<option value="{{lang.id}}">{{lang.name}}</option>
-							{% endfor %}
-						</select>
-						<p class="settings-always-hidden">Always hidden</p>
-					</div>
-					<div class="form-group">
-						<label class="viclabelline-bottom vic-block">Driver License(s)</label>
-						<select class="drivercategories settings-width" multiple="multiple">
-							{% for category in driverslicence %}
-							<option value="{{category.id}}">{{category.category}}</option>
-							{% endfor %}
-						</select>
-						<p class="settings-always-hidden">Always hidden</p>
-					</div>
-					<div class="form-group">
-						<label class="viclabelline-bottom vic-block">T-Shirt size (Size chart)</label>
-						<select class="victext-input settings-width">
-							{% for tshi in tshirt %}
-							<option value="{{tshi.id}}">{{tshi.description}}</option>
-							{% endfor %}
-						</select>
-						<div class="cntr settings-other">
-					    <label for="cbx" class="label-cbx">
-					      <input id="cbx" type="checkbox" class="invisible">
-					      <div class="checkbox">
-					        <svg width="20px" height="20px" viewBox="0 0 20 20">
-					          <path d="M3,1 L17,1 L17,1 C18.1045695,1 19,1.8954305 19,3 L19,17 L19,17 C19,18.1045695 18.1045695,19 17,19 L3,19 L3,19 C1.8954305,19 1,18.1045695 1,17 L1,3 L1,3 C1,1.8954305 1.8954305,1 3,1 Z"></path>
-					          <polyline points="4 11 8 15 16 6"></polyline>
-					        </svg>
-					      </div>
-					      <span>Show</span>
-					    </label>
-					  </div>
-					</div>
-					<div class="form-group">
-						<label class="viclabelline-bottom vic-block" for="id_specialcons">Special Considerations(Alergies...)</label>
-						<textarea class="victext-input w-100" id="id_specialcons" name="specialcons" rows="3"></textarea>
-						<p class="settings-always-hidden w-100">Always hidden</p>
-					</div>
-				</div>
-				<button type="submit" class="vicbtn vicbtn-green w-100">Save</button>
+					<button type="submit" class="vicbtn vicbtn-green w-100">Save</button>
 				</form>
 			</div>
 			<div class="col">
@@ -151,22 +65,18 @@ User Settings - Chaos, Genki
 					<div class="form-group">
 						<label class="viclabelline-bottom vic-block" for="id_facebook-link">Facebook (URL)</label>
 						<input type="text" class="victext-input settings-width" name="facebook-link" maxlength="250" id="id_facebook-link" placeholder="www.facebook.com/yournamehere">
-						<p class="settings-always-hidden">Always hidden</p>
 					</div>
 					<div class="form-group">
 						<label class="viclabelline-bottom vic-block" for="id_twitter-link">Twitter (URL)</label>
 						<input type="text" class="victext-input settings-width" name="twitter-link" maxlength="250" id="id_twitter-link" placeholder="">
-						<p class="settings-always-hidden">Always hidden</p>
 					</div>
 					<div class="form-group">
 						<label class="viclabelline-bottom vic-block" for="id_soundcloud-link">Soundcloud (URL)</label>
 						<input type="text" class="victext-input settings-width" name="soundcloud-link" maxlength="250" id="id_soundcloud-link" placeholder="">
-						<p class="settings-always-hidden">Always hidden</p>
 					</div>
 					<div class="form-group">
 						<label class="viclabelline-bottom vic-block" for="id_youtube-link">Youtube (URL)</label>
 						<input type="text" class="victext-input settings-width" name="youtube-link" maxlength="250" id="id_toutube-link" placeholder="">
-						<p class="settings-always-hidden">Always hidden</p>
 					</div>
 				</div>
 				<button type="submit" class="vicbtn vicbtn-green w-100">Save</button>
@@ -174,7 +84,9 @@ User Settings - Chaos, Genki
 			</div>
 		</div>
 	</div>
+
 </section>
+
 {% endblock %}
 
 {% block scripts %}
@@ -182,8 +94,6 @@ User Settings - Chaos, Genki
 <script src="{% static 'intl-tel-input/js/utils' %}"></script>
 <script src="{% static 'js/application.js' %}"></script>
 <script>
-  $("#id_phone_number").intlTelInput();
-	$("#id_emc_phone_number").intlTelInput();
 	$('.languages').select2();
 	$('.drivercategories').select2();
 </script>

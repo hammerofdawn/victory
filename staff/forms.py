@@ -1,7 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import TeamApplication, Team, TeamMembership
+from .models import TeamApplication, Team, TeamMembership, TShirt, DriversLicenceCategories, Language
+from django.forms import ModelChoiceField, ModelMultipleChoiceField
 
 class SignUpForm(UserCreationForm):
 	postal_code = forms.CharField(max_length=10, required=True)
@@ -18,14 +19,43 @@ class SignUpForm(UserCreationForm):
 			self.add_error('username', 'A user with that username already exists.')
 		return cleaned_data
 
+class TshirtChoiceField(ModelChoiceField):
+    def label_from_instance(self, obj):
+        return obj.description
+
+class DriversLicenceCategoriesMultipleChoiceField(ModelMultipleChoiceField):
+    def label_from_instance(self, obj):
+        return obj.category
+
+class LanguageMultipleChoiceField(ModelMultipleChoiceField):
+    def label_from_instance(self, obj):
+        return obj.name
+
 class UpdateProfileForm(forms.ModelForm):
-	postal_code = forms.CharField(max_length=10, required=True)
+	birthdate = forms.DateField(input_formats=['%d-%m-%Y'],required=False)
 	phone_number = forms.CharField(max_length=16, required=True)
-	phone_number_show = forms.BooleanField(required=False)
+	emergency_number = forms.CharField(max_length=16, required=False)
+	postal_code = forms.CharField(max_length=10, required=True)
+	languages = LanguageMultipleChoiceField(queryset=Language.objects.all(),required=False)
+	drivers_licence = DriversLicenceCategoriesMultipleChoiceField(queryset=DriversLicenceCategories.objects.all(),required=False)
+	tshirt = TshirtChoiceField(queryset=TShirt.objects.all(),required=False)
+	special_considerations = forms.CharField(required=False)
+	class Meta:
+		model = User
+		fields = ('username', 'first_name', 'last_name', 'email', 'birthdate', 'phone_number', 'emergency_number', 'postal_code', 'languages', 'drivers_licence', 'tshirt', 'special_considerations',)
+
+
+class UpdateProfileAvatar(forms.ModelForm):
 	avatar = forms.ImageField()
 	class Meta:
 		model = User
-		fields = ('username', 'first_name', 'last_name', 'email', 'postal_code', 'phone_number', 'phone_number_show', 'avatar')
+		fields = ('avatar',)
+
+class UpdateProfileBackground(forms.ModelForm):
+	background = forms.ImageField()
+	class Meta:
+		model = User
+		fields = ('background',)
 
 class SendApplication(forms.ModelForm):
 	class Meta:

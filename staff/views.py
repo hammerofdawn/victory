@@ -12,7 +12,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.conf import settings
 from django.core.mail import send_mail, BadHeaderError
 from .models import ExtendedUser, Article, UnauthenticatedSession, Team, DriversLicenceCategories, TeamApplication, TeamMembership, Language, TShirt
-from .forms import SignUpForm, UpdateProfileForm, SendApplication, FeedbackSupportForm, TeamSettings_GeneralForm, TeamSettings_DescriptionForm, TeamSettings_acceptForm, TeamSettings_needinfo_andrefuseForm, TeamSettings_AddForm
+from .forms import UpdateProfileBackground, SignUpForm, UpdateProfileForm, SendApplication, FeedbackSupportForm, TeamSettings_GeneralForm, TeamSettings_DescriptionForm, TeamSettings_acceptForm, TeamSettings_needinfo_andrefuseForm, TeamSettings_AddForm, UpdateProfileAvatar
 from uuid import uuid4
 from random import randint
 import requests
@@ -211,19 +211,6 @@ def user(request, user_pk):
 
 @login_required
 def usersettings(request, user_pk):
-	if request.method == 'POST':
-		form = UpdateProfileForm(request.POST, instance=request.user)
-		if form.is_valid():
-			user = form.save()
-			user.refresh_from_db()  # load the profile instance created by the signal
-			user.extendeduser.postal_code = form.cleaned_data.get('postal_code')
-			user.extendeduser.phone_number = form.cleaned_data.get('phone_number')
-			user.extendeduser.nickname = form.cleaned_data.get('username')
-			user.extendeduser.phone_number_show = form.cleaned_data.get('phone_number_show')
-			user.save()
-			messages.success(request, "Your profile has been updated!")
-			return redirect('usersettings', user_pk=request.user.pk)
-
 	logged_in_user = get_object_or_404(User, pk=request.user.pk)
 	requested_user = get_object_or_404(User, pk=user_pk)
 	driverslicence = DriversLicenceCategories.objects.all()
@@ -245,9 +232,31 @@ def usersettings(request, user_pk):
 	return render(request, 'user/settings.html', context)
 
 @login_required
+def userprofileupdate(request, user_pk):
+	if request.method == 'POST':
+		form = UpdateProfileForm(request.POST, instance=request.user)
+		if form.is_valid():
+			user = form.save()
+			user.refresh_from_db()  # load the profile instance created by the signal
+			user.extendeduser.nickname = form.cleaned_data.get('username')
+			user.extendeduser.postal_code = form.cleaned_data.get('postal_code')
+			user.extendeduser.phone_number = form.cleaned_data.get('phone_number')
+			user.extendeduser.emergency_number = form.cleaned_data.get('emergency_number')
+			user.extendeduser.birthdate = form.cleaned_data.get('birthdate')
+			user.extendeduser.languages = form.cleaned_data.get('languages')
+			user.extendeduser.drivers_licence = form.cleaned_data.get('drivers_licence')
+			user.extendeduser.tshirt = form.cleaned_data.get('tshirt')
+			user.extendeduser.special_considerations = form.cleaned_data.get('special_considerations')
+			user.save()
+			user.extendeduser.save()
+			messages.success(request, "Your profile has been updated!")
+			return redirect('usersettings', user_pk=request.user.pk)
+
+
+@login_required
 def useravatar(request, user_pk):
 	if request.method == 'POST':
-		form = UpdateProfileForm(request.POST, request.FILES, instance=request.user)
+		form = UpdateProfileAvatar(request.POST, request.FILES, instance=request.user)
 		if form.is_valid():
 			print(request.POST)
 			user = form.save(commit=False)
@@ -260,15 +269,31 @@ def useravatar(request, user_pk):
 	driverslicence = DriversLicenceCategories.objects.all()
 	feedback = FeedbackSupportForm()
 	password = PasswordChangeForm(request.user)
-	avatar = UpdateProfileForm(instance=request.user)
+	avatar = UpdateProfileAvatar(instance=request.user)
+	background = UpdateProfileBackground(instance=request.user)
 	context = {
 		'avatar'		: avatar,
+		'background'	: background,
 		'logged_in_user': logged_in_user,
 		'requested_user': requested_user,
 		'feedback'		: feedback,
 		'password'		: password,
 	}
 	return render(request, 'user/avatar.html', context)
+
+@login_required
+def userbackground(request, user_pk):
+	if request.method == 'POST':
+		form = UpdateProfileBackground(request.POST, request.FILES, instance=request.user)
+		if form.is_valid():
+			user = form.save(commit=False)
+			user.extendeduser.background = request.FILES['background']
+			user.save()
+			messages.success(request, 'Your background was successfully Uploaded!')
+			return redirect('useravatar', user_pk=request.user.pk)
+
+	messages.error(request, 'Error please select the image u want to upload.')
+	return redirect('useravatar', user_pk=request.user.pk)
 
 def user_change_password(request, user_pk):
 	if request.method == 'POST':

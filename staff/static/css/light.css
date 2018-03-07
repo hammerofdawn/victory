@@ -113,6 +113,7 @@ label {
 		vertical-align: sub;
 		height: 35px;
 		margin: 0 auto;
+		object-fit: cover;
 }
 .wc {
 		border-radius: 50%;
@@ -389,10 +390,12 @@ p {
 				margin-right: 2em;
 		}
 		.details-box img.artwork {
-				float: right;
-				height: 256px;
-				padding: 0;
-				cursor: pointer;
+			float: right;
+			height: 256px;
+			width: 256px;
+			object-fit: cover;
+			padding: 0;
+			cursor: pointer;
 		}
 }
 .bgbox--browse .details-box img.artwork {
@@ -591,6 +594,9 @@ a.silent {
 		position: relative;
 }
 .usr-list li .image-wrapper img {
+	height: 257px;
+	width: 257px;
+	object-fit: cover;
 		position: absolute;
 		top: 0;
 		left: 0;
@@ -962,10 +968,12 @@ input:checked + .slider:before {
 }
 
 .user-avatar {
-	height: 200px;
 	border: 5px dashed black;
-	padding: 0.6em;
+	padding: 0.5rem;
 	border-radius: 50%;
+	height: 200px;
+	width: 200px;
+	object-fit: cover;
 }
 
 .error {

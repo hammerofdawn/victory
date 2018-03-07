@@ -30,6 +30,7 @@ ALLOWED_HOSTS = [
 	'127.0.0.1',
 ]
 
+MAX_UPLOAD_SIZE = "5242880"
 
 # Application definition
 

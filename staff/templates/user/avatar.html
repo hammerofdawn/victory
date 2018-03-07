@@ -44,8 +44,8 @@ User Settings - Chaos, Genki
               <div class="setting-user-avatar">
                 <img class="user-avatar" src="{{ logged_in_user.extendeduser.avatar.url }}">
               </div>
-              <label for="id_avata">Change profile image.</label>
-              {{ avatar.as_p }}
+              <label class="viclabelline-bottom" for="id_avatar">Change Avatar (Max size 5MB - PNG,JPG)</label>
+              <input accept="image/png,image/jpeg,image/jpg" class="victext-input vic-block full-width" type="file" name="avatar" required="" id="id_avatar">
               <small id="id_avatarHelpBlock" class="form-text text-muted">
                  Current: <a href="{{ logged_in_user.extendeduser.avatar.url }}">{{ logged_in_user.extendeduser.avatar.url }}</a>
               </small>
@@ -55,7 +55,8 @@ User Settings - Chaos, Genki
   			</form>
 			</div>
 			<div class="col">
-				<form action="" method="post">
+				<form action="{% url 'userbackground' logged_in_user.pk %}" method="post" enctype="multipart/form-data">
+					{% csrf_token %}
 					<div class="custompanel no-m-bottom">
 						<h3>Background</h3>
 						<hr style="border-color:rgba(0, 0, 0, 1);">
@@ -63,8 +64,8 @@ User Settings - Chaos, Genki
 							<div class="setting-user-avatar">
 								<img class="user-avatar" src="{{ logged_in_user.extendeduser.background.url }}">
 							</div>
-							<label for="cover_file">Cover</label>
-							<input disabled style="color: #000;" class="victext-input vic-block full-width disabled" type="file" name="cover_file"></input>
+							<label class="viclabelline-bottom" for="id_background">Change Background (Max size 5MB - PNG,JPG)</label>
+							<input accept="image/png,image/jpeg,image/jpg" id="id_background" style="color: #000;" class="victext-input vic-block full-width" type="file" name="background"></input>
 							<small id="cover_fileHelpBlock" class="form-text text-muted">
 								 Current: <a href="{{ logged_in_user.extendeduser.background.url }}">{{ logged_in_user.extendeduser.background.url }}</a>
 							</small>
