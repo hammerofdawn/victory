@@ -408,6 +408,9 @@ p {
 		display: block;
 		margin: 1rem auto;
 		padding: 0 1rem;
+		height: 256px;
+		width: 256px;
+		object-fit: cover;
 }
 .details-box img.profile-artwork {
 		border-radius: 50%;
