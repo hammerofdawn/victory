@@ -12,7 +12,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.conf import settings
 from django.core.mail import send_mail, BadHeaderError
 from .models import ExtendedUser, Article, UnauthenticatedSession, Team, DriversLicenceCategories, TeamApplication, TeamMembership, Language, TShirt
-from .forms import UpdateTeambackground, UpdateTeamlogo, UpdateProfileBackground, SignUpForm, UpdateProfileForm, SendApplication, FeedbackSupportForm, TeamSettings_GeneralForm, TeamSettings_DescriptionForm, TeamSettings_acceptForm, TeamSettings_needinfo_andrefuseForm, TeamSettings_AddForm, UpdateProfileAvatar
+from .forms import UpdateSociallinksForm, UpdateTeambackground, UpdateTeamlogo, UpdateProfileBackground, SignUpForm, UpdateProfileForm, SendApplication, FeedbackSupportForm, TeamSettings_GeneralForm, TeamSettings_DescriptionForm, TeamSettings_acceptForm, TeamSettings_needinfo_andrefuseForm, TeamSettings_AddForm, UpdateProfileAvatar
 from uuid import uuid4
 from random import randint
 import requests
@@ -217,6 +217,7 @@ def usersettings(request, user_pk):
 	language = Language.objects.all()
 	tshirt = TShirt.objects.all()
 	form = UpdateProfileForm(instance=request.user)
+	social = UpdateSociallinksForm(instance=request.user)
 	feedback = FeedbackSupportForm()
 	password = PasswordChangeForm(request.user)
 	context = {
@@ -226,6 +227,7 @@ def usersettings(request, user_pk):
 		'language'		: language,
 		'tshirt'		: tshirt,
 		'form'			: form,
+		'social'		: social,
 		'feedback'		: feedback,
 		'password'		: password,
 	}
@@ -249,6 +251,7 @@ def userprofileupdate(request, user_pk):
 			user.extendeduser.nickname = form.cleaned_data.get('username')
 			user.extendeduser.postal_code = form.cleaned_data.get('postal_code')
 			user.extendeduser.phone_number = form.cleaned_data.get('phone_number')
+			user.extendeduser.phone_number_show = form.cleaned_data.get('phone_number_show')
 			user.extendeduser.emergency_number = form.cleaned_data.get('emergency_number')
 			user.extendeduser.birthdate = form.cleaned_data.get('birthdate')
 			user.extendeduser.languages = form.cleaned_data.get('languages')
@@ -262,6 +265,26 @@ def userprofileupdate(request, user_pk):
 	messages.success(request, "Please update your profile before going here.")
 	return redirect('usersettings', user_pk=request.user.pk)
 
+@login_required
+def usersociallinks(request, user_pk):
+	if request.method == 'POST':
+		form = UpdateSociallinksForm(request.POST, instance=request.user)
+		if form.is_valid():
+			user = form.save()
+			user.refresh_from_db()  # load the profile instance created by the signal
+			user.extendeduser.facebook_link = form.cleaned_data.get('facebook_link')
+			user.extendeduser.twitter_link = form.cleaned_data.get('twitter_link')
+			user.extendeduser.soundcloud_link = form.cleaned_data.get('soundcloud_link')
+			user.extendeduser.youtube_link = form.cleaned_data.get('youtube_link')
+			user.save()
+			user.extendeduser.save()
+			messages.success(request, "Your Social links has been updated!")
+			return redirect('usersettings', user_pk=request.user.pk)
+		else:
+			messages.success(request, "Need's to be a URL")
+			return redirect('usersettings', user_pk=request.user.pk)
+	messages.success(request, "Please update your profile before going here.")
+	return redirect('usersettings', user_pk=request.user.pk)
 
 @login_required
 def useravatar(request, user_pk):

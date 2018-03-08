@@ -400,6 +400,7 @@ p {
 }
 .bgbox--browse .details-box img.artwork {
 		height: 159px;
+		width: 159px;
 }
 .details-box img.artwork {
 		text-align: center;
@@ -1082,7 +1083,9 @@ input:checked + .slider:before {
 
 .memberinfo #memberimg img {
 	width:60px;
+	height: 60px;
 	margin-left: 6px;
+	object-fit: cover;
 }
 #rankcolors {
 	margin-bottom: 17px;

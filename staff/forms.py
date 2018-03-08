@@ -34,6 +34,7 @@ class LanguageMultipleChoiceField(ModelMultipleChoiceField):
 class UpdateProfileForm(forms.ModelForm):
 	birthdate = forms.DateField(input_formats=['%d-%m-%Y'],required=False)
 	phone_number = forms.CharField(max_length=16, required=True)
+	phone_number_show = forms.BooleanField(required=False)
 	emergency_number = forms.CharField(max_length=16, required=False)
 	postal_code = forms.CharField(max_length=10, required=True)
 	languages = LanguageMultipleChoiceField(queryset=Language.objects.all(),required=False)
@@ -42,8 +43,16 @@ class UpdateProfileForm(forms.ModelForm):
 	special_considerations = forms.CharField(required=False)
 	class Meta:
 		model = User
-		fields = ('username', 'first_name', 'last_name', 'email', 'birthdate', 'phone_number', 'emergency_number', 'postal_code', 'languages', 'drivers_licence', 'tshirt', 'special_considerations',)
+		fields = ('username', 'first_name', 'last_name', 'email', 'birthdate', 'phone_number', 'phone_number_show', 'emergency_number', 'postal_code', 'languages', 'drivers_licence', 'tshirt', 'special_considerations',)
 
+class UpdateSociallinksForm(forms.ModelForm):
+	facebook_link = forms.URLField(max_length=200, required=False)
+	twitter_link = forms.URLField(max_length=200, required=False)
+	soundcloud_link = forms.URLField(max_length=200, required=False)
+	youtube_link = forms.URLField(max_length=200, required=False)
+	class Meta:
+		model = User
+		fields = ('facebook_link','twitter_link','soundcloud_link','youtube_link', )
 
 class UpdateProfileAvatar(forms.ModelForm):
 	avatar = forms.ImageField()

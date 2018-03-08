@@ -18,6 +18,13 @@ User Settings - Chaos, Genki
 <section role="content">
 	<div class="container">
 		<h1 class="line-top">Settings for {{ logged_in_user.extendeduser.nickname }}.</h1>
+		{% if messages %}
+		<div class="alert alert-success" role="alert">
+			{% for message in messages %}
+			<p>{{ message }}</p>
+			{% endfor %}
+		</div>
+		{% endif %}
 		<div>
 			<a href="{% url 'user' requested_user.extendeduser.pk %}" class="vicbtn vicbtn-red vicbtn-bottom"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
 			<button type="button" class="vicbtn vicbtn-blue vicbtn-bottom" data-toggle="modal" data-target="#changepassword">Change Password</button>
@@ -30,13 +37,6 @@ User Settings - Chaos, Genki
 				<a class="vic-tablink" id="user-avatar"  href="{% url 'useravatar' logged_in_user.pk %}">Avatar</a>
 			</li>
 		</ul>
-		{% if messages %}
-		<div class="alert alert-success" role="alert">
-			{% for message in messages %}
-			<p>{{ message }}</p>
-			{% endfor %}
-		</div>
-		{% endif %}
 		<div class="row">
 			<div class="col">
 				<form action="{% url 'userprofileupdate' logged_in_user.pk %}" method="POST">
@@ -73,6 +73,12 @@ User Settings - Chaos, Genki
 							<label class="viclabelline-bottom vic-block" for="id_phone_number">Phone number</label>
 							<input type="tel" class="victext-input settings-width" name="phone_number" required id="id_phone_number" value="{{ logged_in_user.extendeduser.phone_number }}">
 						</div>
+						<div class="form-check">
+					    <label class="form-check-label">
+					      <input id="id_phone_number_show" {% if logged_in_user.extendeduser.phone_number_show == 1 %} checked {% endif %} name="phone_number_show" type="checkbox" class="form-check-input">
+					      Show phone number?
+					    </label>
+					  </div>
 						<div class="form-group">
 							<label class="viclabelline-bottom vic-block" for="id_emergency_number">EMC(emergency) Phone number</label>
 							<input type="tel" class="victext-input settings-width" name="emergency_number" id="id_emergency_number" value="{{ logged_in_user.extendeduser.emergency_number }}">
@@ -119,27 +125,28 @@ User Settings - Chaos, Genki
 					<hr style="border-color:rgba(0, 0, 0, 1);">
 					<p>Coming Soon.</p>
 				</div>
-				<form action="" method="post">
+				<form action="{% url 'usersociallinks' logged_in_user.pk %}" method="post">
 					{% csrf_token %}
 				<div class="custompanel no-m-bottom">
 					<h3>Social links</h3>
 					<hr style="border-color:rgba(0, 0, 0, 1);">
 					<div class="form-group">
 						<label class="viclabelline-bottom vic-block" for="id_facebook-link">Facebook (URL)</label>
-						<input type="text" class="victext-input settings-width" name="facebook-link" maxlength="250" id="id_facebook-link" placeholder="www.facebook.com/yournamehere">
+						<input type="text" class="victext-input settings-width" name="facebook_link" maxlength="250" id="id_facebook-link" placeholder="www.facebook.com/yournamehere" value='{{logged_in_user.extendeduser.facebook_link|safe}}'>
 					</div>
 					<div class="form-group">
 						<label class="viclabelline-bottom vic-block" for="id_twitter-link">Twitter (URL)</label>
-						<input type="text" class="victext-input settings-width" name="twitter-link" maxlength="250" id="id_twitter-link" placeholder="">
+						<input type="text" class="victext-input settings-width" name="twitter_link" maxlength="250" id="id_twitter-link" placeholder="" value='{{logged_in_user.extendeduser.twitter_link|safe}}'>
 					</div>
 					<div class="form-group">
 						<label class="viclabelline-bottom vic-block" for="id_soundcloud-link">Soundcloud (URL)</label>
-						<input type="text" class="victext-input settings-width" name="soundcloud-link" maxlength="250" id="id_soundcloud-link" placeholder="">
+						<input type="text" class="victext-input settings-width" name="soundcloud_link" maxlength="250" id="id_soundcloud-link" placeholder="" value='{{logged_in_user.extendeduser.soundcloud_link|safe}}'>
 					</div>
 					<div class="form-group">
 						<label class="viclabelline-bottom vic-block" for="id_youtube-link">Youtube (URL)</label>
-						<input type="text" class="victext-input settings-width" name="youtube-link" maxlength="250" id="id_toutube-link" placeholder="">
+						<input type="text" class="victext-input settings-width" name="youtube_link" maxlength="250" id="id_youtube-link" placeholder="" value='{{logged_in_user.extendeduser.youtube_link|safe}}'>
 					</div>
+					<p>More to come.</p>
 				</div>
 				<button type="submit" class="vicbtn vicbtn-green w-100">Save</button>
 				</form>
