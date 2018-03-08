@@ -12,7 +12,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.conf import settings
 from django.core.mail import send_mail, BadHeaderError
 from .models import ExtendedUser, Article, UnauthenticatedSession, Team, DriversLicenceCategories, TeamApplication, TeamMembership, Language, TShirt
-from .forms import UpdateProfileBackground, SignUpForm, UpdateProfileForm, SendApplication, FeedbackSupportForm, TeamSettings_GeneralForm, TeamSettings_DescriptionForm, TeamSettings_acceptForm, TeamSettings_needinfo_andrefuseForm, TeamSettings_AddForm, UpdateProfileAvatar
+from .forms import UpdateTeambackground, UpdateTeamlogo, UpdateProfileBackground, SignUpForm, UpdateProfileForm, SendApplication, FeedbackSupportForm, TeamSettings_GeneralForm, TeamSettings_DescriptionForm, TeamSettings_acceptForm, TeamSettings_needinfo_andrefuseForm, TeamSettings_AddForm, UpdateProfileAvatar
 from uuid import uuid4
 from random import randint
 import requests
@@ -235,6 +235,14 @@ def usersettings(request, user_pk):
 def userprofileupdate(request, user_pk):
 	if request.method == 'POST':
 		form = UpdateProfileForm(request.POST, instance=request.user)
+		logged_in_user = get_object_or_404(User, pk=request.user.pk)
+
+		if logged_in_user.username != request.POST['username']:
+			users = User.objects.filter(username=request.POST['username']).count()
+			if users > 0:
+				messages.info(request, "Username already taken.")
+				return redirect('usersettings', user_pk=request.user.pk)
+
 		if form.is_valid():
 			user = form.save()
 			user.refresh_from_db()  # load the profile instance created by the signal
@@ -251,6 +259,8 @@ def userprofileupdate(request, user_pk):
 			user.extendeduser.save()
 			messages.success(request, "Your profile has been updated!")
 			return redirect('usersettings', user_pk=request.user.pk)
+	messages.success(request, "Please update your profile before going here.")
+	return redirect('usersettings', user_pk=request.user.pk)
 
 
 @login_required
@@ -346,14 +356,46 @@ def teamsettings_general(request, team_pk):
 		if member.user.pk == request.user.pk and member.leader:
 			feedback = FeedbackSupportForm()
 			form = TeamSettings_GeneralForm(instance=requested_team)
+			logo = UpdateTeamlogo(request.POST, request.FILES, instance=requested_team)
+			background = UpdateTeambackground(request.POST, request.FILES, instance=requested_team)
 			context = {
 				'requested_team': requested_team,
 				'feedback': feedback,
 				'form' : form,
+				'logo' : logo,
+				'background': background,
 				'logged_in_user': logged_in_user,
 			}
 			return render(request, 'team/settings.html', context)
 			break
+	return redirect('team', team_pk)
+
+@login_required
+def teamsettings_logo(request, team_pk):
+	logged_in_user = get_object_or_404(User, pk=request.user.pk)
+	requested_team = get_object_or_404(Team, pk=team_pk)
+	if request.method == 'POST':
+		for member in requested_team.teammembership_set.all().order_by('-leader'):
+			if member.user.pk == request.user.pk and member.leader:
+				form = UpdateTeamlogo(request.POST, request.FILES, instance=requested_team)
+				if form.is_valid():
+					form.save()
+					messages.success(request, "You avatar have been uploaded!")
+					return redirect('teamsettings_general', team_pk=team_pk)
+	return redirect('team', team_pk)
+
+@login_required
+def teamsettings_background(request, team_pk):
+	logged_in_user = get_object_or_404(User, pk=request.user.pk)
+	requested_team = get_object_or_404(Team, pk=team_pk)
+	if request.method == 'POST':
+		for member in requested_team.teammembership_set.all().order_by('-leader'):
+			if member.user.pk == request.user.pk and member.leader:
+				form = UpdateTeambackground(request.POST, request.FILES, instance=requested_team)
+				if form.is_valid():
+					form.save()
+					messages.success(request, "You avatar have been uploaded!")
+					return redirect('teamsettings_general', team_pk=team_pk)
 	return redirect('team', team_pk)
 
 @login_required

@@ -76,6 +76,18 @@ class TeamSettings_GeneralForm(forms.ModelForm):
 		model = Team
 		fields = ('name', 'accepts_applications',)
 
+class UpdateTeamlogo(forms.ModelForm):
+	logo = forms.ImageField()
+	class Meta:
+		model = Team
+		fields = ('logo',)
+
+class UpdateTeambackground(forms.ModelForm):
+	background = forms.ImageField()
+	class Meta:
+		model = Team
+		fields = ('background',)
+
 class TeamSettings_DescriptionForm(forms.ModelForm):
 	class Meta:
 		model = Team

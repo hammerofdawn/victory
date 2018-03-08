@@ -53,25 +53,25 @@ Team Settings - Chaos, Genki
 				</form>
 			</div>
 			<div class="col">
-				<form action="" method="POST">
+				<form action="{% url 'teamsettings_logo' requested_team.pk %}" method="POST" enctype="multipart/form-data">
 					{% csrf_token %}
 					<div class="custompanel no-m-bottom">
-						<h3>Avatar</h3>
+						<h3>Logo</h3>
 						<hr style="border-color:rgba(0, 0, 0, 1);">
 						<div class="form-group">
 							<div class="setting-user-avatar">
 								<img class="user-avatar" src="{{ requested_team.logo.url }}">
 							</div>
 							<label for="id_logo">Change Team logo image.</label>
-							<input disabled id="id_logo" style="color: #000;" class="victext-input vic-block full-width disabled" type="file" name="logo"></input>
+							<input id="id_logo" style="color: #000;" class="victext-input vic-block full-width" type="file" name="logo"></input>
 							<small id="id_logoHelpBlock" class="form-text text-muted">
-								 Current: <a href="{{ requested_team.logo.url }}">{{ requested_team.avatar.url }}</a>
+								 Current: <a href="{{ requested_team.logo.url }}">{{ requested_team.logo.url }}</a>
 							</small>
 						</div>
 					</div>
 					<button type="submit" class="vicbtn vicbtn-green w-100">Save</button>
 				</form>
-				<form action="" method="POST">
+				<form action="{% url 'teamsettings_background' requested_team.pk %}" method="POST" enctype="multipart/form-data">
 					{% csrf_token %}
 					<div class="custompanel no-m-bottom">
 						<h3>Background</h3>
@@ -81,7 +81,7 @@ Team Settings - Chaos, Genki
 								<img class="user-avatar" src="{{ requested_team.background.url }}">
 							</div>
 							<label for="id_background">Cover</label>
-							<input disabled id="id_background" style="color: #000;" class="victext-input vic-block full-width disabled" type="file" name="background"></input>
+							<input id="id_background" style="color: #000;" class="victext-input vic-block full-width" type="file" name="background"></input>
 							<small id="id_backgroundHelpblock" class="form-text text-muted">
 								 Current: <a href="{{ requested_team.background.url }}">{{ requested_team.background.url }}</a>
 							</small>

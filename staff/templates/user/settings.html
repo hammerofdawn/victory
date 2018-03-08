@@ -42,21 +42,83 @@ User Settings - Chaos, Genki
 				<form action="{% url 'userprofileupdate' logged_in_user.pk %}" method="POST">
 					{% csrf_token %}
 					<div class="custompanel no-m-bottom">
-						{{form.as_p}}
+						<h3>Account</h3>
+						<hr style="border-color:rgba(0, 0, 0, 1);">
+						<div class="form-group">
+							<label class="viclabelline-bottom" for="id_username">User/Nickname</label>
+							<input type="text" class="victext-input vic-block full-width" name="username" maxlength="150" required id="id_username" placeholder="Victory" value="{{ logged_in_user.username }}">
+							<small id="usernameHelpBlock" class="form-text text-muted">
+								150 characters or fewer. Letters, digits and @/./+/-/_ only.
+							</small>
+						</div>
+						<div class="form-row">
+							<div class="form-group col-md-6">
+								<label class="viclabelline-bottom" for="id_first_name">First Name</label>
+								<input type="text" class="victext-input vic-block full-width" name="first_name" maxlength="30" required id="id_first_name" placeholder="Peter" value="{{ logged_in_user.first_name }}">
+							</div>
+							<div class="form-group col-md-6">
+								<label class="viclabelline-bottom" for="id_last_name">Last Name</label>
+								<input type="text" class="victext-input vic-block full-width" name="last_name" maxlength="30" required id="id_last_name" placeholder="Petersen" value="{{ logged_in_user.last_name }}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="viclabelline-bottom vic-block" for="id_email">Email</label>
+							<input type="email" class="victext-input settings-width" name="email" maxlength="254" required id="id_email" placeholder="Email@example.dk" value="{{ logged_in_user.email }}">
+						</div>
+						<div class="form-group">
+							<label class="viclabelline-bottom vic-block" for="id_birthdate">Birthdate</label>
+							<input type="text" class="victext-input settings-width" placeholder="dd-mm-yyyy" name="birthdate" id="id_birthdate" value="{{ logged_in_user.extendeduser.birthdate|date:'d-m-Y' }}">
+						</div>
+						<div class="form-group">
+							<label class="viclabelline-bottom vic-block" for="id_phone_number">Phone number</label>
+							<input type="tel" class="victext-input settings-width" name="phone_number" required id="id_phone_number" value="{{ logged_in_user.extendeduser.phone_number }}">
+						</div>
+						<div class="form-group">
+							<label class="viclabelline-bottom vic-block" for="id_emergency_number">EMC(emergency) Phone number</label>
+							<input type="tel" class="victext-input settings-width" name="emergency_number" id="id_emergency_number" value="{{ logged_in_user.extendeduser.emergency_number }}">
+						</div>
+						<div class="form-group">
+							<label class="viclabelline-bottom vic-block" for="id_postal_code">Postal code</label>
+							<input type="number" class="victext-input settings-width" name="postal_code" maxlength="10" id="id_postal_code" placeholder="1577" value="{{ logged_in_user.extendeduser.postal_code }}">
+						</div>
+						<div class="form-group">
+							<label class="viclabelline-bottom vic-block">Language(s)</label>
+							<select id="id_languages" name="languages" class="languages settings-width" multiple="multiple">
+								{% for lang in language %}
+									<option {%for userlang in logged_in_user.extendeduser.languages.all %}{%if userlang.id == lang.id %}selected{%endif%}{%endfor%} value="{{lang.id}}">{{lang.name}}</option>
+								{% endfor %}
+							</select>
+						</div>
+						<div class="form-group">
+							<label class="viclabelline-bottom vic-block">Driver License(s)</label>
+							<select id="id_drivers_licence" name="drivers_licence" class="drivercategories settings-width" multiple="multiple">
+								{% for category in driverslicence %}
+								<option {%for drilic in logged_in_user.extendeduser.drivers_licence.all %}{%if drilic.id == category.id %}selected{%endif%}{%endfor%} value="{{category.id}}">{{category.category}}</option>
+								{% endfor %}
+							</select>
+						</div>
+						<div class="form-group">
+							<label class="viclabelline-bottom vic-block">T-Shirt size (Size chart)</label>
+							<select id="id_tshirt" name="tshirt" class="victext-input settings-width">
+								{% for tshi in tshirt %}
+								<option {%if logged_in_user.extendeduser.tshirt.id == tshi.id %}selected{%endif%} value="{{tshi.id}}">{{tshi.description}}</option>
+								{% endfor %}
+							</select>
+						</div>
+						<div class="form-group">
+							<label class="viclabelline-bottom vic-block" for="id_specialcons">Special Considerations(Allergies and so...)</label>
+							<textarea class="victext-input w-100" id="id_special_considerations" name="special_considerations" rows="3">{% autoescape on %}{{ logged_in_user.extendeduser.special_considerations}}{% endautoescape off %}</textarea>
+						</div>
 					</div>
 					<button type="submit" class="vicbtn vicbtn-green w-100">Save</button>
 				</form>
 			</div>
 			<div class="col">
-				<form action="" method="post">
-					{% csrf_token %}
 				<div class="custompanel no-m-bottom">
 					<h3>Settings</h3>
 					<hr style="border-color:rgba(0, 0, 0, 1);">
 					<p>Coming Soon.</p>
 				</div>
-				<button type="submit" class="vicbtn vicbtn-green w-100">Save</button>
-				</form>
 				<form action="" method="post">
 					{% csrf_token %}
 				<div class="custompanel no-m-bottom">
