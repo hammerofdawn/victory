@@ -53,7 +53,7 @@ class UnauthenticatedSessionAdmin(admin.ModelAdmin):
 	list_display = ('user', 'token', 'successful')
 
 class TeamApplicationAdmin(admin.ModelAdmin):
-	list_display = ('from_user', 'to_team', 'accepted', 'need_info', 'refused')
+	list_display = ('from_user', 'accepted', 'need_info', 'refused')
 	ordering = ('-from_user',)
 
 class TeamMembershipAdmin(admin.ModelAdmin):

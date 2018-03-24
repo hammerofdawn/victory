@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}
+User Settings - Chaos, Genki
+{% endblock %}
+
+{% block header %}
+<link rel="stylesheet" href="{% static 'css/application.css' %}">
+{% endblock %}
+
+{% block content %}
+<section role="content">
+	<div class="container">
+		<h1 class="line-top">Settings for {{ logged_in_user.extendeduser.nickname }}.</h1>
+		<div>
+			<a href="{% url 'user' requested_user.extendeduser.pk %}" class="vicbtn vicbtn-red vicbtn-bottom"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+			<button type="button" class="vicbtn vicbtn-blue vicbtn-bottom" data-toggle="modal" data-target="#changepassword">Change Password</button>
+		</div>
+		<ul class="nav nav-tabs" id="usersettingsstab" role="tablist">
+			<li class="nav-item">
+				<a class="vic-tablink" id="user-settings" href="{% url 'usersettings' logged_in_user.pk %}">General</a>
+			</li>
+			<li class="nav-item">
+				<a class="vic-tablink active" id="user-avatar" href="{% url 'useravatar' logged_in_user.pk %}">Avatar</a>
+			</li>
+		</ul>
+		{% if messages %}
+		<div class="alert alert-success" role="alert">
+			{% for message in messages %}
+			<p>{{ message }}</p>
+			{% endfor %}
+		</div>
+		{% endif %}
+		<div class="custompanel no-m-bottom">
+			<h3>RULES For the images</h3>
+			<hr style="border-color:rgba(0, 0, 0, 1);">
+			<p>The rules for uploading your beautiful face to the site is simple.<br>You MUST! show your face clear to the image, <b>NO MASKS, NO HATS, NO COSPLAY, just simply YOU!</b></p>
+			<p>Background images can anything but 18+ stuff - you know what i mean.</p>
+		</div>
+		<div class="row">
+			<div class="col">
+				<form action="" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="custompanel no-m-bottom">
+            <h3>Avatar</h3>
+            <hr style="border-color:rgba(0, 0, 0, 1);">
+            <div class="form-group">
+              <div class="setting-user-avatar">
+                <img class="user-avatar" src="{{ logged_in_user.extendeduser.avatar.url }}">
+              </div>
+              <label class="viclabelline-bottom" for="id_avatar">Change Avatar (Max size 5MB - PNG,JPG)</label>
+              <input accept="image/png,image/jpeg,image/jpg" class="victext-input vic-block full-width" type="file" name="avatar" required="" id="id_avatar">
+              <small id="id_avatarHelpBlock" class="form-text text-muted">
+                 Current: <a href="{{ logged_in_user.extendeduser.avatar.url }}">{{ logged_in_user.extendeduser.avatar.url }}</a>
+              </small>
+          	</div>
+          </div>
+          <button type="submit" class="vicbtn vicbtn-green w-100">Save</button>
+  			</form>
+			</div>
+			<div class="col">
+				<form action="{% url 'userbackground' logged_in_user.pk %}" method="post" enctype="multipart/form-data">
+					{% csrf_token %}
+					<div class="custompanel no-m-bottom">
+						<h3>Background</h3>
+						<hr style="border-color:rgba(0, 0, 0, 1);">
+						<div class="form-group">
+							<div class="setting-user-avatar">
+								<img class="user-avatar" src="{{ logged_in_user.extendeduser.background.url }}">
+							</div>
+							<label class="viclabelline-bottom" for="id_background">Change Background (Max size 5MB - PNG,JPG)</label>
+							<input accept="image/png,image/jpeg,image/jpg" id="id_background" style="color: #000;" class="victext-input vic-block full-width" type="file" name="background"></input>
+							<small id="cover_fileHelpBlock" class="form-text text-muted">
+								 Current: <a href="{{ logged_in_user.extendeduser.background.url }}">{{ logged_in_user.extendeduser.background.url }}</a>
+							</small>
+						</div>
+					</div>
+					<button type="submit" class="vicbtn vicbtn-green w-100">Save</button>
+				</form>
+			</div>
+		</div>
+
+	</div>
+</section>
+{% endblock %}
+
+{% block modals %}
+<!-- Modal -->
+<div class="modal fade" id="changepassword" tabindex="-1" role="dialog" aria-labelledby="changepassword" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="custompanel">
+			<div class="modal-header">
+				<h5 class="modal-title" id="ChangePasswordModalLabel">Change password</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form action="{% url 'user_change_password' requested_user.extendeduser.pk %}" method="post">
+				{% csrf_token %}
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="id_old_password">Old Password</label>
+						<input id="id_old_password" class="victext-input vic-block full-width" type="password" name="old_password">
+					</div>
+					<div class="form-group">
+						<label for="id_new_password1">New Password</label>
+						<input id="id_new_password1" class="victext-input vic-block full-width" type="password" name="new_password1">
+						<small id="password1HelpBlock" class="form-text text-muted">
+							<ul>
+								<li>Your password can't be too similar to your other personal information.</li>
+								<li>Your password must contain at least 8 characters.</li>
+								<li>Your password can't be a commonly used password.</li>
+								<li>Your password can't be entirely numeric.</li>
+							</ul>
+						</small>
+					</div>
+					<div class="form-group">
+						<label for="id_new_password2">New Password Confirmation</label>
+						<input id="id_new_password2" class="victext-input vic-block full-width" type="password" name="new_password2">
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="vicbtn vicbtn-blue" data-dismiss="modal">Close</button>
+					<button type="submit" class="vicbtn vicbtn-green">Change</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}
