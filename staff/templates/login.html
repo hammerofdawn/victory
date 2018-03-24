@@ -19,7 +19,14 @@ Login
 		<h3>Login</h3>
 	</div>
 	<hr>
-	
+	{% if messages %}
+	<div class="alert alert-info" role="alert">
+		{% for message in messages %}
+		<p>{{ message }}</p>
+		{% endfor %}
+	</div>
+	<hr>
+	{% endif %}
 	<div>
 		<form action="" method="POST">
 			{% csrf_token %}
