@@ -1212,3 +1212,15 @@ input:checked + .slider:before {
   height: 0;
   opacity: 0;
 }
+
+.usergroup {
+	margin-bottom: 2rem;
+	border: 3px solid dodgerblue;
+	background-color: dodgerblue;
+	box-shadow: 0 0 35px rgba(0, 0, 0, 0.1);
+}
+
+.usergroup h4 {
+	color: #FFF;
+	margin: .5rem 1rem .8rem 1rem;
+}

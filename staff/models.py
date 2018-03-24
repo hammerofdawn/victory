@@ -31,23 +31,20 @@ class Team(models.Model):
 	def __str__(self):
 		return self.name
 
-class TeamMembership(models.Model):
-	user = models.ForeignKey(User)
-	team = models.ForeignKey(Team)
-	leader = models.BooleanField(default=False)
-
-class Group(models.Model):
+class TeamGroup(models.Model):
 	name = models.CharField(max_length=32)
-	members = models.ManyToManyField(User, through='GroupMembership')
 	team = models.ForeignKey(Team)
 
 	def __str__(self):
 		return self.name
 
-class GroupMembership(models.Model):
+class TeamMembership(models.Model):
 	user = models.ForeignKey(User)
-	group = models.ForeignKey(Group)
-	leader = models.BooleanField()
+	team = models.ForeignKey(Team)
+	ingroup = models.ForeignKey(TeamGroup)
+	leader = models.BooleanField(default=False)
+	groupleader = models.BooleanField(default=False)
+
 
 class DriversLicenceCategories(models.Model): # No plural
 	category = models.CharField(max_length=3)
@@ -66,15 +63,6 @@ class TShirt(models.Model):
 
 class Sock(models.Model):
 	description = models.CharField(max_length=32)
-
-class Review(models.Model):
-	user = models.ForeignKey(User, on_delete=models.CASCADE)
-	overall_rating = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
-	on_time = models.NullBooleanField()
-	comment = models.TextField(blank=True)
-
-	def __str__(self):
-		return str(self.overall_rating) + '/5, ' + self.user.extendeduser.nickname + '(' + self.user.username + ', ' + self.user.get_full_name() + ')'
 
 class ExtendedUser(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)

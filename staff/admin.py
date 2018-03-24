@@ -14,13 +14,11 @@ from .models import (
 	Article,
 	TShirt,
 	Sock,
-	Review,
 	Alert,
 	UnauthenticatedSession,
-	Group,
-	GroupMembership,
 	TeamMembership,
 	TeamApplication,
+	TeamGroup,
 )
 
 class UserInline(admin.StackedInline):
@@ -34,14 +32,6 @@ class UserAdmin(BaseUserAdmin):
 class TeamMembershipInline(admin.TabularInline):
 	model = TeamMembership
 	extra = 1
-
-class GroupMembershipInline(admin.TabularInline):
-	model = GroupMembership
-	extra = 1
-
-class GroupAdmin(admin.ModelAdmin):
-	filter_horizontal = ['members']
-	inlines = (GroupMembershipInline, )
 
 class TeamAdmin(admin.ModelAdmin):
 	filter_horizontal = ['members']
@@ -60,6 +50,7 @@ class TeamMembershipAdmin(admin.ModelAdmin):
 	list_display = ('team', 'user', 'leader')
 	ordering = ('team',)
 
+admin.site.register(TeamGroup)
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
 admin.site.register(Team, TeamAdmin)
@@ -68,9 +59,7 @@ admin.site.register(Language)
 admin.site.register(Article)
 admin.site.register(TShirt)
 admin.site.register(Sock)
-admin.site.register(Review)
 admin.site.register(Alert)
 admin.site.register(UnauthenticatedSession, UnauthenticatedSessionAdmin)
-admin.site.register(Group, GroupAdmin)
 admin.site.register(TeamMembership, TeamMembershipAdmin)
 admin.site.register(TeamApplication, TeamApplicationAdmin)

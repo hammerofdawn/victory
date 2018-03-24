@@ -66,6 +66,26 @@
 							<div class="p-2 bg-secondary text-white">Normal</div>
 						</div>
 						<div id="userslist">
+							<div class="usergroup">
+								<h4>SOMEGROUP</h4>
+								<div class="listmember memberlsleader">
+									<div class="memberinfo">
+										<div id="memberimg">
+											<img src="https://victory.jeldal.art/media/users/avatars/a4sfx_4.jpg">
+										</div>
+										<p>Meicki "monstercat" Jeldal</p>
+									</div>
+								</div>
+								<div class="listmember memberlsleader">
+									<div class="memberinfo">
+										<div id="memberimg">
+											<img src="https://victory.jeldal.art/media/users/avatars/a4sfx_4.jpg">
+										</div>
+										<p>Meicki "monstercat" Jeldal</p>
+									</div>
+								</div>
+							</div>
+							
 							{% for member in requested_team.teammembership_set.all %}
 							<div class="listmember {% if member.leader %}memberlsleader{% endif %}">
 								<div class="memberinfo">
