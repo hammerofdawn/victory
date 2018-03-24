@@ -18,42 +18,49 @@ Apply
 			<button onclick="location.href='{% url 'teams' %}';" class="vicbtn vicbtn-blue">Browse Teams</button>
 			<a href="{% url 'applysent' %}" class="vicbtn vicbtn-yellow">View submitted applications</a>
 		</div>
-		<div class="custompanel">
+		<div class="custompanel no-m-bottom">
 			<h3>About applications for diffrent teams.</h3>
+			<hr style="border-color:rgba(0, 0, 0, 1);">
 			<p>We are working on a feature that lets you send out an diffrent application to each team you select on this page.<br>
 			All tho if you want to send an diffrent application to each team just after you have send one application just go back here and make a new one for the next team.</p>
 		</div>
-		<div class="custompanel">
-			{% if onateam %}
-				<h3>You are already on a team.</h3>
-			{% else %}
-			<form action="" method="POST">
-				{% csrf_token %}
-				<input type="hidden" id="id_from_user" name="from_user" value="{{ logged_in_user.pk }}">
-				<div id="formapply">
-					<div class="alert alert-danger" role="alert">
-						<p>Due to some issues you can only apply to one team at a time, after u hit apply u can apply to another team if u want. Also sorry for the design to.</p>
-					</div>
-					<div class="form-group ">
-						<label>Select teams you want to apply to.</label>
-						<select class="teams form-control" name="to_team" required id="id_to_team">
-							{% for team in teams %}
-							<option {% if team.accepts_applications is False %}disabled="disabled"{% endif %}
-								{% for apply in teamapplication %}{% for teamsend in apply.to_team.all %}
-								{% if teamsend.id == team.pk %}disabled="disabled"{% endif %}{% endfor %}{% endfor %}
-								value="{{ team.pk }}">{{ team.name }}</option>
-							{% endfor %}
-						</select>
-					</div>
-					<p><b>Applications can be either english or danish.</b></p>
-					<div class="form-group">
-						<label for="application">Write your application here</label>
-						<textarea class="victext-input vic-block full-width" id="id_application_text" name="application_text" rows="6"></textarea>
-					</div>
-					<button class="vicbtn vicbtn-green" name="sendapplication">Send application</button>
+		<div class="row">
+			<div class="col">
+				{% if onateam %}
+				<div class="custompanel no-m-bottom">
+						<h3>You are already on a team.</h3>
 				</div>
-			</form>
-			{% endif %}
+				{% else %}
+				<form action="" method="POST">
+					{% csrf_token %}
+					<div class="custompanel no-m-bottom">
+						<input type="hidden" id="id_from_user" name="from_user" value="{{ logged_in_user.pk }}">
+						<div id="formapply">
+							<div class="alert alert-danger" role="alert">
+								<p>Due to some issues you can only apply to one team at a time, after u hit apply u can apply to another team if u want. Also sorry for the design to.</p>
+							</div>
+							<div class="form-group ">
+								<label>Select teams you want to apply to.</label>
+								<select class="teams form-control" name="to_team" required id="id_to_team">
+									{% for team in teams %}
+									<option {% if team.accepts_applications is False %}disabled="disabled"{% endif %}
+										{% for apply in teamapplication %}{% for teamsend in apply.to_team.all %}
+										{% if teamsend.id == team.pk %}disabled="disabled"{% endif %}{% endfor %}{% endfor %}
+										value="{{ team.pk }}">{{ team.name }}</option>
+									{% endfor %}
+								</select>
+							</div>
+							<p><b>Applications can be either english or danish.</b></p>
+							<div class="form-group">
+								<label for="application">Write your application here</label>
+								<textarea class="victext-input vic-block full-width" id="id_application_text" name="application_text" rows="6"></textarea>
+							</div>
+						</div>
+					</div>
+				<button type="submit" class="vicbtn vicbtn-green w-100" name="sendapplication">Send application</button>
+				</form>
+				{% endif %}
+			</div>
 		</div>
 	</div>
 </section>

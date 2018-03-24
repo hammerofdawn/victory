@@ -86,9 +86,9 @@ class ExtendedUser(models.Model):
 	phone_number_show = models.BooleanField(default=False)
 	emergency_number = models.CharField(max_length=16, validators=[phone_number_regex], blank=True)
 	drivers_licence = models.ManyToManyField(DriversLicenceCategories, blank=True)
-	avatar = models.ImageField(upload_to='users/avatars', default='static/img/userpreload.png') # Defaults points to media folder /static/ and so on
-	background = models.ImageField(upload_to='users/backgrounds', default='static/img/userpreload.png') # Defaults points to media folder /static/ and so on
-	team = models.ForeignKey(Team, null=True, blank=True) # Skal der være on_delete her?
+	avatar = models.ImageField(upload_to='users/avatars', default='static/img/userpreload.png')
+	background = models.ImageField(upload_to='users/backgrounds', default='static/img/userpreload.png')
+	team = models.ForeignKey(Team, null=True, blank=True)
 	languages = models.ManyToManyField(Language, blank=True)
 	tshirt = models.ForeignKey(TShirt, null=True, blank=True)
 	sock = models.ForeignKey(Sock, null=True, blank=True)

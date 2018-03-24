@@ -10,29 +10,28 @@ Team Settings - Chaos, Genki
 <section role="content">
 	<div class="container">
 		<h1 class="line-top">Team Applications for {{ requested_team.name }}.</h1>
+		{% if messages %}
+		<div class="alert alert-success" role="alert">
+			{% for message in messages %}
+			<p>{{ message }}</p>
+			{% endfor %}
+		</div>
+		{% endif %}
+		<ul class="nav nav-tabs" id="teamstab" role="tablist">
+			<li class="nav-item">
+				<a class="vic-tablink" id="team-settings" href="{% url 'teamsettings_general' requested_team.pk %}">General</a>
+			</li>
+			<li class="nav-item">
+				<a class="vic-tablink" id="team-description" href="{% url 'teamsettings_description' requested_team.pk %}">Description</a>
+			</li>
+			<li class="nav-item">
+				<a class="vic-tablink" id="team-members" href="{% url 'teamsettings_members' requested_team.pk %}">Members</a>
+			</li>
+			<li class="nav-item">
+				<a class="vic-tablink active" id="team-applications"  href="{% url 'teamsettings_applications' requested_team.pk %}">Applications</a>
+			</li>
+		</ul>
 		<div class="custompanel">
-			{% if messages %}
-			<div class="alert alert-success" role="alert">
-				{% for message in messages %}
-				<p>{{ message }}</p>
-				{% endfor %}
-			</div>
-			{% endif %}
-			<ul class="nav nav-tabs" id="teamstab" role="tablist">
-				<li class="nav-item">
-					<a class="vic-tablink" id="team-settings" href="{% url 'teamsettings_general' requested_team.pk %}">General</a>
-				</li>
-				<li class="nav-item">
-					<a class="vic-tablink" id="team-description" href="{% url 'teamsettings_description' requested_team.pk %}">Description</a>
-				</li>
-				<li class="nav-item">
-					<a class="vic-tablink" id="team-members" href="{% url 'teamsettings_members' requested_team.pk %}">Members</a>
-				</li>
-				<li class="nav-item">
-					<a class="vic-tablink active" id="team-applications"  href="{% url 'teamsettings_applications' requested_team.pk %}">Applications</a>
-				</li>
-			</ul>
-			<hr style="border-color:rgba(0, 0, 0, 0.23);">
 			<p>All non-accepted applications are here.<br>
 				If u accept an user to the team the user will recieve an email and an SMS with they has been accepted into the team! If a user tho has applied to more than one team, they'd have to logon to confirm the team they wanna join.<br>
 			With that said all applications that are accepted you can find <a href="#"><u>By clicking me.(Coming soon.)</u></a></p>

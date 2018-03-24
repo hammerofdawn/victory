@@ -11,8 +11,8 @@ from django.contrib import messages
 from django.shortcuts import get_object_or_404, render, redirect
 from django.conf import settings
 from django.core.mail import send_mail, BadHeaderError
-from .models import Article, UnauthenticatedSession, Team, DriversLicenceCategories, TeamApplication, TeamMembership
-from .forms import SignUpForm, UpdateProfileForm, SendApplication, FeedbackSupportForm, TeamSettings_GeneralForm, TeamSettings_DescriptionForm, TeamSettings_acceptForm, TeamSettings_needinfo_andrefuseForm, TeamSettings_AddForm
+from .models import ExtendedUser, Article, UnauthenticatedSession, Team, DriversLicenceCategories, TeamApplication, TeamMembership, Language, TShirt
+from .forms import UpdateSociallinksForm, UpdateTeambackground, UpdateTeamlogo, UpdateProfileBackground, SignUpForm, UpdateProfileForm, SendApplication, FeedbackSupportForm, TeamSettings_GeneralForm, TeamSettings_DescriptionForm, TeamSettings_acceptForm, TeamSettings_needinfo_andrefuseForm, TeamSettings_AddForm, UpdateProfileAvatar
 from uuid import uuid4
 from random import randint
 import requests
@@ -102,13 +102,14 @@ def login(request):
 				token = str(uuid4())
 				otp = str(randint(1111, 9999))
 
-				gwapi = OAuth1Session('OCBzbvY1b1FCQpTzEa4_131V', client_secret='g^oqsxSClJ(A@-Yttu-D6.C5lB6YdeBVz&LJ6E3W')
-
+				key = 'OCBzbvY1b1FCQpTzEa4_131V'
+				secret = 'g^oqsxSClJ(A@-Yttu-D6.C5lB6YdeBVz&LJ6E3W'
+				gwapi = OAuth1Session(key, client_secret=secret)
 				req = {
+					'sender': 'VICTORY',
 					'message': 'Victory login code:\n{} {} {} {}'.format(otp[0:1], otp[1:2], otp[2:3], otp[3:4]),
 					'recipients': [{'msisdn': user.extendeduser.phone_number[1:]}],
 					'destaddr': 'DISPLAY',
-					'sender': 'VICTORY',
 				}
 				res = gwapi.post('https://gatewayapi.com/rest/mtsms', json=req)
 				res.raise_for_status()
@@ -210,34 +211,122 @@ def user(request, user_pk):
 
 @login_required
 def usersettings(request, user_pk):
-	if request.method == 'POST':
-		form = UpdateProfileForm(request.POST, instance=request.user)
-		if form.is_valid():
-			user = form.save()
-			user.refresh_from_db()  # load the profile instance created by the signal
-			user.extendeduser.postal_code = form.cleaned_data.get('postal_code')
-			user.extendeduser.phone_number = form.cleaned_data.get('phone_number')
-			user.extendeduser.nickname = form.cleaned_data.get('username')
-			user.extendeduser.phone_number_show = form.cleaned_data.get('phone_number_show')
-			user.save()
-			messages.success(request, "Your profile has been updated!")
-			return redirect('usersettings', user_pk=request.user.pk)
-
 	logged_in_user = get_object_or_404(User, pk=request.user.pk)
 	requested_user = get_object_or_404(User, pk=user_pk)
 	driverslicence = DriversLicenceCategories.objects.all()
+	language = Language.objects.all()
+	tshirt = TShirt.objects.all()
 	form = UpdateProfileForm(instance=request.user)
+	social = UpdateSociallinksForm(instance=request.user)
 	feedback = FeedbackSupportForm()
 	password = PasswordChangeForm(request.user)
 	context = {
 		'logged_in_user': logged_in_user,
 		'requested_user': requested_user,
 		'driverslicence': driverslicence,
+		'language'		: language,
+		'tshirt'		: tshirt,
 		'form'			: form,
+		'social'		: social,
 		'feedback'		: feedback,
 		'password'		: password,
 	}
 	return render(request, 'user/settings.html', context)
+
+@login_required
+def userprofileupdate(request, user_pk):
+	if request.method == 'POST':
+		form = UpdateProfileForm(request.POST, instance=request.user)
+		logged_in_user = get_object_or_404(User, pk=request.user.pk)
+
+		if logged_in_user.username != request.POST['username']:
+			users = User.objects.filter(username=request.POST['username']).count()
+			if users > 0:
+				messages.info(request, "Username already taken.")
+				return redirect('usersettings', user_pk=request.user.pk)
+
+		if form.is_valid():
+			user = form.save()
+			user.refresh_from_db()  # load the profile instance created by the signal
+			user.extendeduser.nickname = form.cleaned_data.get('username')
+			user.extendeduser.postal_code = form.cleaned_data.get('postal_code')
+			user.extendeduser.phone_number = form.cleaned_data.get('phone_number')
+			user.extendeduser.phone_number_show = form.cleaned_data.get('phone_number_show')
+			user.extendeduser.emergency_number = form.cleaned_data.get('emergency_number')
+			user.extendeduser.birthdate = form.cleaned_data.get('birthdate')
+			user.extendeduser.languages = form.cleaned_data.get('languages')
+			user.extendeduser.drivers_licence = form.cleaned_data.get('drivers_licence')
+			user.extendeduser.tshirt = form.cleaned_data.get('tshirt')
+			user.extendeduser.special_considerations = form.cleaned_data.get('special_considerations')
+			user.save()
+			user.extendeduser.save()
+			messages.success(request, "Your profile has been updated!")
+			return redirect('usersettings', user_pk=request.user.pk)
+	messages.success(request, "Please update your profile before going here.")
+	return redirect('usersettings', user_pk=request.user.pk)
+
+@login_required
+def usersociallinks(request, user_pk):
+	if request.method == 'POST':
+		form = UpdateSociallinksForm(request.POST, instance=request.user)
+		if form.is_valid():
+			user = form.save()
+			user.refresh_from_db()  # load the profile instance created by the signal
+			user.extendeduser.facebook_link = form.cleaned_data.get('facebook_link')
+			user.extendeduser.twitter_link = form.cleaned_data.get('twitter_link')
+			user.extendeduser.soundcloud_link = form.cleaned_data.get('soundcloud_link')
+			user.extendeduser.youtube_link = form.cleaned_data.get('youtube_link')
+			user.save()
+			user.extendeduser.save()
+			messages.success(request, "Your Social links has been updated!")
+			return redirect('usersettings', user_pk=request.user.pk)
+		else:
+			messages.success(request, "Need's to be a URL")
+			return redirect('usersettings', user_pk=request.user.pk)
+	messages.success(request, "Please update your profile before going here.")
+	return redirect('usersettings', user_pk=request.user.pk)
+
+@login_required
+def useravatar(request, user_pk):
+	if request.method == 'POST':
+		form = UpdateProfileAvatar(request.POST, request.FILES, instance=request.user)
+		if form.is_valid():
+			print(request.POST)
+			user = form.save(commit=False)
+			user.extendeduser.avatar = request.FILES['avatar']
+			user.save()
+			messages.success(request, 'Your avatar was successfully Uploaded!')
+			return redirect('useravatar', user_pk=request.user.pk)
+	logged_in_user = get_object_or_404(User, pk=request.user.pk)
+	requested_user = get_object_or_404(User, pk=user_pk)
+	driverslicence = DriversLicenceCategories.objects.all()
+	feedback = FeedbackSupportForm()
+	password = PasswordChangeForm(request.user)
+	avatar = UpdateProfileAvatar(instance=request.user)
+	background = UpdateProfileBackground(instance=request.user)
+	context = {
+		'avatar'		: avatar,
+		'background'	: background,
+		'logged_in_user': logged_in_user,
+		'requested_user': requested_user,
+		'feedback'		: feedback,
+		'password'		: password,
+	}
+	return render(request, 'user/avatar.html', context)
+
+@login_required
+def userbackground(request, user_pk):
+	if request.method == 'POST':
+		form = UpdateProfileBackground(request.POST, request.FILES, instance=request.user)
+		if form.is_valid():
+			user = form.save(commit=False)
+			user.extendeduser.background = request.FILES['background']
+			user.save()
+			messages.success(request, 'Your background was successfully Uploaded!')
+			return redirect('useravatar', user_pk=request.user.pk)
+
+	messages.error(request, 'Error please select the image u want to upload.')
+	return redirect('useravatar', user_pk=request.user.pk)
 
 def user_change_password(request, user_pk):
 	if request.method == 'POST':
@@ -290,14 +379,46 @@ def teamsettings_general(request, team_pk):
 		if member.user.pk == request.user.pk and member.leader:
 			feedback = FeedbackSupportForm()
 			form = TeamSettings_GeneralForm(instance=requested_team)
+			logo = UpdateTeamlogo(request.POST, request.FILES, instance=requested_team)
+			background = UpdateTeambackground(request.POST, request.FILES, instance=requested_team)
 			context = {
 				'requested_team': requested_team,
 				'feedback': feedback,
 				'form' : form,
+				'logo' : logo,
+				'background': background,
 				'logged_in_user': logged_in_user,
 			}
 			return render(request, 'team/settings.html', context)
 			break
+	return redirect('team', team_pk)
+
+@login_required
+def teamsettings_logo(request, team_pk):
+	logged_in_user = get_object_or_404(User, pk=request.user.pk)
+	requested_team = get_object_or_404(Team, pk=team_pk)
+	if request.method == 'POST':
+		for member in requested_team.teammembership_set.all().order_by('-leader'):
+			if member.user.pk == request.user.pk and member.leader:
+				form = UpdateTeamlogo(request.POST, request.FILES, instance=requested_team)
+				if form.is_valid():
+					form.save()
+					messages.success(request, "You avatar have been uploaded!")
+					return redirect('teamsettings_general', team_pk=team_pk)
+	return redirect('team', team_pk)
+
+@login_required
+def teamsettings_background(request, team_pk):
+	logged_in_user = get_object_or_404(User, pk=request.user.pk)
+	requested_team = get_object_or_404(Team, pk=team_pk)
+	if request.method == 'POST':
+		for member in requested_team.teammembership_set.all().order_by('-leader'):
+			if member.user.pk == request.user.pk and member.leader:
+				form = UpdateTeambackground(request.POST, request.FILES, instance=requested_team)
+				if form.is_valid():
+					form.save()
+					messages.success(request, "You avatar have been uploaded!")
+					return redirect('teamsettings_general', team_pk=team_pk)
 	return redirect('team', team_pk)
 
 @login_required
