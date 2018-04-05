@@ -37,14 +37,15 @@ Apply
 				<div class="p-2 text-black" style="background: #ffc107">Need more info.</div>
 				<div class="p-2 text-white" style="background: #dc3545">Refused</div>
 			</div>
+
 			{% if teamapplication %}
 				{% for apply in teamapplication %}
-				<div class="post" {% if apply.accepted %} style="border: 3px solid #28a745" {% elif apply.need_info %} style="border: 3px solid #ffc107" {% elif apply.refused %} style="border: 3px solid #dc3545" {% endif %}>
+				<div class="post" {% if apply.accepted %} style="border: 3px solid #28a745" {% elif apply.need_user_accept %} style="border: 3px solid #28a745" {% elif apply.need_info %} style="border: 3px solid #ffc107" {% elif apply.refused %} style="border: 3px solid #dc3545" {% endif %}>
 					<div class="postinfo">
 						<span class="float-right"><strong>{{ apply.send|date:"F j, Y, H:i"}}</strong></span>
 						<p class="posttitle">
 							{% for team in apply.to_team.all %}
-								{{ team.name }},
+								{{ team.name }}
 							{% endfor %}
 						</p>
 					</div>
@@ -52,7 +53,15 @@ Apply
 						{{ apply.application_text|linebreaksbr }}
 					</div>
 					<div class="postinfo">
-						<form action="{% url 'applydelete' %}" method="post">
+						{% if apply.need_user_accept %}
+						<form style="display:inline-block;" action="{% url 'useraccept' %}" method="post">
+							{% csrf_token %}
+							<input type="hidden" id="id_apply_pk" name="apply_pk" value="{{ apply.pk }}">
+							<input type="hidden" id="id_team_pk" name="team_pk" value="{% for team in apply.to_team.all %}{{ team.pk }}{% endfor %}">
+							<button type="submit" class="vicbtn vicbtn-green">Join Team</button>
+						</form>
+						{%endif%}
+						<form style="display:inline-block;" action="{% url 'applydelete' %}" method="post">
 							{% csrf_token %}
 							<input type="hidden" id="id_apply_pk" name="apply_pk" value="{{ apply.pk }}">
 							<button type="submit" class="vicbtn vicbtn-red">Delete</button>

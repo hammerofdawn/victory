@@ -31,20 +31,11 @@ class Team(models.Model):
 	def __str__(self):
 		return self.name
 
-class TeamGroup(models.Model):
-	name = models.CharField(max_length=32)
-	team = models.ForeignKey(Team)
-
-	def __str__(self):
-		return self.name
-
 class TeamMembership(models.Model):
 	user = models.ForeignKey(User)
 	team = models.ForeignKey(Team)
-	ingroup = models.ForeignKey(TeamGroup)
 	leader = models.BooleanField(default=False)
 	groupleader = models.BooleanField(default=False)
-
 
 class DriversLicenceCategories(models.Model): # No plural
 	category = models.CharField(max_length=3)
@@ -125,5 +116,8 @@ class TeamApplication(models.Model):
 	to_team = models.ManyToManyField(Team)
 	application_text = models.TextField()
 	accepted = models.BooleanField(default=False)
+	need_user_accept = models.BooleanField(default=False)
 	need_info = models.BooleanField(default=False)
+	need_info_comment = models.TextField(blank=True)
 	refused = models.BooleanField(default=False)
+	refused_comment = models.TextField(blank=True)

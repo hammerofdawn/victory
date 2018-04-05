@@ -1224,3 +1224,47 @@ input:checked + .slider:before {
 	color: #FFF;
 	margin: .5rem 1rem .8rem 1rem;
 }
+
+.application-shade {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	background: #ccc;
+}
+
+.applicationboxheader {
+	color: black;
+	padding: 0em !important;
+}
+
+.applicationboxheader h3 {
+	padding-top: 0.5em;
+	margin-bottom: 0.2em;
+}
+
+.application-lang{
+	color: #fff;
+	background-color: dodgerblue;
+	cursor: default;
+	margin-right: 5px;
+	margin-top: 5px;
+	padding: 0 5px;
+}
+
+.application-text {
+	padding: .5em 1em .5em;
+	background: #fff;
+	border: 3px solid #CCC;
+	border-top: none;
+}
+
+.application-actions {
+	border: 3px solid #CCC;
+	border-top: none;
+}.application-actions form {
+	display: inline-block;
+}
+
+.bg-shadow {
+	box-shadow: 0 0 35px rgba(0, 0, 0, 0.1);
+}

@@ -18,7 +18,6 @@ from .models import (
 	UnauthenticatedSession,
 	TeamMembership,
 	TeamApplication,
-	TeamGroup,
 )
 
 class UserInline(admin.StackedInline):
@@ -50,7 +49,6 @@ class TeamMembershipAdmin(admin.ModelAdmin):
 	list_display = ('team', 'user', 'leader')
 	ordering = ('team',)
 
-admin.site.register(TeamGroup)
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
 admin.site.register(Team, TeamAdmin)

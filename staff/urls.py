@@ -30,6 +30,7 @@ urlpatterns = [
 	url(r'^teams/(?P<team_pk>[0-9]+)/settings/applications/refuse/$', views.teamsettings_refuse_applications, name='teamsettings_refuse_applications'),
 	url(r'^apply/$', views.apply, name='apply'),
 	url(r'^apply/sent/$', views.applysent, name='applysent'),
+	url(r'^apply/accept/$', views.useraccept, name='useraccept'),
 	url(r'^apply/delete/$', views.applydelete, name='applydelete'),
 	url(r'^contact/$', views.contact, name='contact'),
 ]

@@ -540,8 +540,20 @@ def teamsettings_accept_applications(request, team_pk):
 						messages.success(request, "Error - User is already on a team.")
 						return redirect('teamsettings_applications', team_pk=team_pk)
 				if teamapplications.count() > 1: #if user has more than one application.
-					messages.success(request, "Error - User has more than one application, We dont have the thing to fix this yet<br> please try message the person if he/she wants to join yours. (the user will need to delete the other application for you to accept)")
-					return redirect('teamsettings_applications', team_pk=team_pk)
+					if formaccept.is_valid(): #user only has this application and form is valid then add him to the team.
+						teamapplications = TeamApplication.objects.all().filter(from_user=accepteduserid).filter(to_team=requested_team)
+						teamapplications.update(need_user_accept=True)
+						getuser = get_object_or_404(User, pk=accepteduserid)
+						subject = "Genki: You been accepted to join the team: "+requested_team.name
+						from_email = 'info@victory.genki.dk'
+						message = "You been accepted to join the team "+requested_team.name+" If this is the only team you send an application to then you'd be automaticly added. Else you will need to login to accept it yourself. Best, The team behind Victory"
+						try:
+							send_mail(subject, message, from_email, [getuser.email,], fail_silently=True,)
+						except BadHeaderError:
+							return HttpResponse('Invalid header found.')
+
+						messages.success(request, "The accepted user has applied to multiple teams, he/she must validate that they want to join this team.")
+						return redirect('teamsettings_applications', team_pk=team_pk)
 				else:
 					if formaccept.is_valid(): #user only has this application and form is valid then add him to the team.
 						teamapplications = TeamApplication.objects.all().filter(from_user=accepteduserid)
@@ -553,7 +565,7 @@ def teamsettings_accept_applications(request, team_pk):
 						#Send email SMS
 						subject = "Genki: You been accepted to join the team: "+requested_team.name
 						from_email = 'info@victory.genki.dk'
-						message = "You been accepted to join the team "+requested_team.name+" If this is the only team you send an application to then you'd be automaticly added. Best, The Victory"
+						message = "You been accepted to join the team "+requested_team.name+" If this is the only team you send an application to then you'd be automaticly added. Best, The team behind Victory"
 						try:
 							send_mail(subject, message, from_email, [newmember.email,], fail_silently=False,)
 						except BadHeaderError:
@@ -574,13 +586,18 @@ def teamsettings_needinfo_applications(request, team_pk):
 					accepteduserid = formneedinfo.data['user']
 					teamapplications = TeamApplication.objects.all().filter(from_user=accepteduserid).filter(to_team=requested_team)
 					teamapplications.update(need_info=True)
+					if formneedinfo.cleaned_data.get('comment'):
+						comment = formneedinfo.cleaned_data.get('comment')
+						teamapplications.update(need_info_comment=comment)
+					else:
+						comment = False
 					newmember = get_object_or_404(User, pk=accepteduserid)
 					#Send email SMS
 					subject = "Genki: We need more info to the team: "+requested_team.name
 					from_email = 'info@victory.genki.dk'
-					message = "You been asked to send more info to the team "+requested_team.name+" The way you send more info is that u delete the old application you have and send a new one. Best, The Victory"
+					message = "You been asked to send more info to the team "+requested_team.name+" The way you send more info is that u delete the old application you have and send a new one. Best, The team behind Victory"
 					try:
-						send_mail(subject, message, from_email, [newmember.email,], fail_silently=False,)
+						send_mail(subject, message, from_email, [newmember.email,], fail_silently=True,)
 					except BadHeaderError:
 						return HttpResponse('Invalid header found.')
 					messages.success(request, "We have notified the user (By email) that you want more info.")
@@ -598,13 +615,18 @@ def teamsettings_refuse_applications(request, team_pk):
 					accepteduserid = formrefuse.data['user']
 					teamapplications = TeamApplication.objects.all().filter(from_user=accepteduserid).filter(to_team=requested_team)
 					teamapplications.update(refused=True)
+					if formrefuse.cleaned_data.get('comment'):
+						comment = formrefuse.cleaned_data.get('comment')
+						teamapplications.update(refused_comment=comment)
+					else:
+						comment = False
 					newmember = get_object_or_404(User, pk=accepteduserid)
 					#Send email SMS
 					subject = "Genki: Refused to join the team: "+requested_team.name
 					from_email = 'info@victory.genki.dk'
-					message = "You been Refused to join the team "+requested_team.name+" There can be many reasons why but you can allways send a new one. Best, The Victory"
+					message = "You been Refused to join the team "+requested_team.name+" There can be many reasons why but you can allways send a new one. Best, The team behind Victory"
 					try:
-						send_mail(subject, message, from_email, [newmember.email,], fail_silently=False,)
+						send_mail(subject, message, from_email, [newmember.email,], fail_silently=True,)
 					except BadHeaderError:
 						return HttpResponse('Invalid header found.')
 					messages.success(request, "We have notified the user (By email) that the application is refused")
@@ -653,10 +675,29 @@ def applysent(request):
 	if request.user.is_authenticated():
 		logged_in_user = get_object_or_404(User, pk=request.user.pk)
 		context['logged_in_user'] = logged_in_user
-		if TeamMembership.objects.all().filter(user=request.user.pk).count() > 1:
+		if TeamMembership.objects.all().filter(user=request.user.pk).count() > 0:
 			context['onateam'] = True
 
 	return render(request, 'applysend.html', context)
+
+@login_required
+def useraccept(request):
+	if request.method == 'POST':
+		teamapppk = request.POST['apply_pk']
+		teampk = request.POST['team_pk']
+		requested_team = get_object_or_404(Team, pk=teampk)
+		logged_in_user = get_object_or_404(User, pk=request.user.pk)
+		teamapplications = TeamApplication.objects.all().filter(id=teamapppk)
+		teamapplications.update(accepted=True)
+		new_team_membership = TeamMembership()
+		new_team_membership.user = logged_in_user
+		new_team_membership.team = requested_team
+		new_team_membership.save()
+		messages.success(request, "Grats you have now joined the team - "+requested_team.name)
+		return redirect('applysent')
+	else:
+		messages.error(request, "Couldn get the Application you wanted to accept.")
+		return redirect('applysent')
 
 @login_required
 def applydelete(request):

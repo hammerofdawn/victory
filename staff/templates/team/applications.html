@@ -39,37 +39,42 @@ Team Settings - Chaos, Genki
 		</div>
 
 		{% for apply in applications %}
-		{% if apply.accepted or apply.need_info or apply.refused %}
+		{% if apply.accepted or apply.need_info or apply.refused or apply.need_user_accept %}
 		{% else %}
-		<div class="custompanel">
-			<div class="post">
-				<div class="postinfo">
-					<span class="float-right"><strong>{{ apply.send|date:"F j, Y, H:i"}}</strong></span>
-					<p class="postowner"><a href="{% url 'user' apply.from_user.pk %}">{{ apply.from_user.first_name }} "{{ apply.from_user.extendeduser.nickname }}" {{ apply.from_user.last_name }}</a></p>
-					<p class="posttitle line-topsmall">
-						{{ requested_team.name }}
-					</p>
+		<div class="team bg-shadow">
+			<div class="bgbox bgbox--browse">
+				<div class="banner banner--scaled">
+					<div class="application-shade"></div>
 				</div>
-				<div class="postcontent">
+				<div class="details-box applicationboxheader clearfix">
+					<img class="artwork" src="https://victory.genki.dk/media/users/avatars/23275604_1884047851629934_8465319611201930121_o.jpg">
+					<a href="{% url 'user' apply.from_user.pk %}" target="_blank"><h3>{{ apply.from_user.first_name }} "{{ apply.from_user.extendeduser.nickname }}" {{ apply.from_user.last_name }} <i class="fa fa-external-link" aria-hidden="true"></i></h3></a>
+					<p><b>Sent:</b> {{ apply.send|date:"F j, Y, H:i"}}</p>
+					<p><b>Age:</b> {{ apply.from_user.extendeduser.birthdate|date:"Y"}}
+					<p><b>Language:</b> {% for lang in apply.from_user.extendeduser.languages.all %}<span class="application-lang">{{lang.name}}</span>{% endfor %}</p>
+					<p><b>Special cons:</b> {% if apply.from_user.extendeduser.special_considerations %}{{apply.from_user.extendeduser.special_considerations}}{%else%}Nothing specified{% endif %}</p>
+				</div>
+				<div class="application-text w100">
 					{{ apply.application_text|linebreaksbr }}
 				</div>
-				<div class="postinfo" style="display:flex;">
+				<div class="application-actions">
 					<form style="margin-right:2px;" action="{% url 'teamsettings_accept_applications' requested_team.pk %}" method="post">
 						{% csrf_token %}
-						<input type="hidden" id="id-user" name="user" value="{{ apply.from_user.pk }}">
-						<button type="submit" class="vicbtn vicbtn-green"><i class="fa fa-check" aria-hidden="true"></i> Accept</button>
+						<input type="hidden" id="id-user" name="user" value="{{apply.from_user.pk}}">
+						<button type="submit" class="vicbtn vicbtn-green full-width"><i class="fa fa-check" aria-hidden="true"></i> Accept</button>
 					</form>
 					<form style="margin-right:2px;" action="{% url 'teamsettings_needinfo_applications' requested_team.pk %}" method="post">
 						{% csrf_token %}
-						<input type="hidden" id="id-user" name="user" value="{{ apply.from_user.pk }}">
-						<button type="submit" class="vicbtn vicbtn-yellow" alt="Gives user away that u need more info."><i class="fa fa-question" aria-hidden="true"></i> Need info</button>
+						<input type="hidden" id="id-user" name="user" value="{{apply.from_user.pk}}">
+						<button type="submit" class="vicbtn vicbtn-yellow full-width"><i class="fa fa-question" aria-hidden="true"></i> Need info</button>
+						<textarea rows="2" class="victext-input vic-block" id="id_comment" name="comment" placeholder="Write a comment here"></textarea>
 					</form>
 					<form style="margin-right:2px;" action="{% url 'teamsettings_refuse_applications' requested_team.pk %}" method="post">
 						{% csrf_token %}
-						<input type="hidden" id="id-user" name="user" value="{{ apply.from_user.pk }}">
-						<button type="submit" class="vicbtn vicbtn-red"><i class="fa fa-times" aria-hidden="true"></i> Refuse</button>
+						<input type="hidden" id="id-user" name="user" value="{{apply.from_user.pk}}">
+						<button type="submit" class="vicbtn vicbtn-red full-width"><i class="fa fa-times" aria-hidden="true"></i> Refuse</button>
+						<textarea rows="2" class="victext-input vic-block" id="id_comment" name="comment" placeholder="Write a comment here"></textarea>
 					</form>
-					<button type="submit" disabled class="disabled vicbtn vicbtn-red"><i class="fa fa-flag" aria-hidden="true"></i> Flag(Coming soon.)</button>
 				</div>
 			</div>
 		</div>

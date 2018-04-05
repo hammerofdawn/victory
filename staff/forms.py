@@ -109,8 +109,9 @@ class TeamSettings_acceptForm(forms.ModelForm):
 
 class TeamSettings_needinfo_andrefuseForm(forms.Form):
 	user = forms.IntegerField()
+	comment = forms.CharField(widget=forms.Textarea, required=False)
 	class Meta:
-		fields = ('user',)
+		fields = ('user', 'comment',)
 
 class TeamSettings_AddForm(forms.ModelForm):
 	class Meta:
