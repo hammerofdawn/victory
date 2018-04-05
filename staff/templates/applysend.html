@@ -52,6 +52,13 @@ Apply
 					<div class="postcontent">
 						{{ apply.application_text|linebreaksbr }}
 					</div>
+					{% if apply.need_info_comment or apply.refused_comment %}
+					<div class="postcontent">
+						<h4 class="viclabelline-bottom">Comment from Teamleader.</h4>
+						{{ apply.need_info_comment|linebreaksbr }}
+						{{ apply.refused_comment|linebreaksbr }}
+					</div>
+					{% endif %}
 					<div class="postinfo">
 						{% if apply.need_user_accept %}
 						<form style="display:inline-block;" action="{% url 'useraccept' %}" method="post">

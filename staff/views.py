@@ -548,7 +548,7 @@ def teamsettings_accept_applications(request, team_pk):
 						from_email = 'info@victory.genki.dk'
 						message = "You been accepted to join the team "+requested_team.name+" If this is the only team you send an application to then you'd be automaticly added. Else you will need to login to accept it yourself. Best, The team behind Victory"
 						try:
-							send_mail(subject, message, from_email, [getuser.email,], fail_silently=True,)
+							send_mail(subject, message, from_email, [getuser.email,], fail_silently=False,)
 						except BadHeaderError:
 							return HttpResponse('Invalid header found.')
 
@@ -595,9 +595,9 @@ def teamsettings_needinfo_applications(request, team_pk):
 					#Send email SMS
 					subject = "Genki: We need more info to the team: "+requested_team.name
 					from_email = 'info@victory.genki.dk'
-					message = "You been asked to send more info to the team "+requested_team.name+" The way you send more info is that u delete the old application you have and send a new one. Best, The team behind Victory"
+					message = "You been asked to send more info to the team "+requested_team.name+" The way you send more info is that you delete the old application you have and send a new one. Also the Team leader may have left a comment, log into your account and go check it out.  Best, The team behind Victory"
 					try:
-						send_mail(subject, message, from_email, [newmember.email,], fail_silently=True,)
+						send_mail(subject, message, from_email, [newmember.email,], fail_silently=False,)
 					except BadHeaderError:
 						return HttpResponse('Invalid header found.')
 					messages.success(request, "We have notified the user (By email) that you want more info.")
@@ -624,9 +624,9 @@ def teamsettings_refuse_applications(request, team_pk):
 					#Send email SMS
 					subject = "Genki: Refused to join the team: "+requested_team.name
 					from_email = 'info@victory.genki.dk'
-					message = "You been Refused to join the team "+requested_team.name+" There can be many reasons why but you can allways send a new one. Best, The team behind Victory"
+					message = "You been Refused to join the team "+requested_team.name+" There can be many reasons why but you can allways send a new one. Also the Team leader may have left a comment, log into your account and go check it out. Best, The team behind Victory"
 					try:
-						send_mail(subject, message, from_email, [newmember.email,], fail_silently=True,)
+						send_mail(subject, message, from_email, [newmember.email,], fail_silently=False,)
 					except BadHeaderError:
 						return HttpResponse('Invalid header found.')
 					messages.success(request, "We have notified the user (By email) that the application is refused")
