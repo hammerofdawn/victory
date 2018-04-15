@@ -10,6 +10,7 @@ Team Settings - Chaos, Genki
 <section role="content">
 	<div class="container">
 		<h1 class="line-top">Team Applications for {{ requested_team.name }}.</h1>
+		<a href="{% url 'teamsettings_message' requested_team.pk %}" class="vicbtn vicbtn-blue vicbtn-bottom"><i class="fa fa-envelope" aria-hidden="true"></i> Send message</a>
 		{% if messages %}
 		<div class="alert alert-success" role="alert">
 			{% for message in messages %}
@@ -50,7 +51,7 @@ Team Settings - Chaos, Genki
 					<img class="artwork" src="https://victory.genki.dk/media/users/avatars/23275604_1884047851629934_8465319611201930121_o.jpg">
 					<a href="{% url 'user' apply.from_user.pk %}" target="_blank"><h3>{{ apply.from_user.first_name }} "{{ apply.from_user.extendeduser.nickname }}" {{ apply.from_user.last_name }} <i class="fa fa-external-link" aria-hidden="true"></i></h3></a>
 					<p><b>Sent:</b> {{ apply.send|date:"F j, Y, H:i"}}</p>
-					<p><b>Age:</b> {{ apply.from_user.extendeduser.birthdate|date:"Y"}}
+					<p><b>BirthYear:</b> {{ apply.from_user.extendeduser.birthdate|date:"Y"}}
 					<p><b>Language:</b> {% for lang in apply.from_user.extendeduser.languages.all %}<span class="application-lang">{{lang.name}}</span>{% endfor %}</p>
 					<p><b>Special cons:</b> {% if apply.from_user.extendeduser.special_considerations %}{{apply.from_user.extendeduser.special_considerations}}{%else%}Nothing specified{% endif %}</p>
 				</div>

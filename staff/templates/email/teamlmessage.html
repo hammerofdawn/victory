@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title></title>
+    <style>
+			body {
+				font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+				font-size: 16px;
+		    font-weight: 400;
+		    line-height: 1.5;
+				color: #000;
+			}
+			.bg-shadow {
+				box-shadow: 0 0 35px rgba(0, 0, 0, 0.1);
+			}
+			.img-responsive {
+		    display: block;
+		    max-width: 100%;
+		    height: auto;
+				margin-bottom: 1em;
+			}
+			.tbbody {
+				padding: 0 1.2em;
+				width: 100%;
+			}
+			.tbbody-message{
+				padding: 0.5em 1.2em;
+			}
+			.tb-dark{
+				background-color: #32373b;
+				color: #FFF;
+			}
+		</style>
+  </head>
+  <body>
+		<table class="cellnobottom" bgcolor="#e4e7e9" border="0" cellspacing="40" height="100%" width="100%" id="bodyTable">
+		  <tr>
+		    <td align="center" valign="top">
+		      <table class="bg-shadow" bgcolor="#FFF" border="0" cellpadding="20" cellspacing="0" width="600" id="emailContainer">
+						<tr>
+							<td align="left" valign="top">
+								<table border="0" cellpadding="0" cellspacing="0" width="100%" id="emailBody">
+									<tr>
+										<td align="center" valign="top">
+											<img class="img-responsive" src="https://victory.genki.dk/static/img/crewlogo.png">
+											<h1>Hey {{user.first_name}}.</h1>
+											<hr style="border-color:rgba(0, 0, 0, 1);">
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+		          <td align="left" valign="top">
+		            <table class="tbbody" bgcolor="#f8f8f8" border="0" cellpadding="0" cellspacing="0" width="100%" id="emailBody">
+		              <tr>
+		                <td align="left" valign="top">
+											<p>There is a new message from your teamleader at {{team.name}}.</p>
+		                </td>
+		              </tr>
+		            </table>
+		          </td>
+		        </tr>
+						<tr>
+		          <td align="left" valign="top">
+		            <table class="tbbody-message" bgcolor="#f8f8f8" border="0" cellpadding="0" cellspacing="0" width="100%" id="emailBody">
+		              <tr>
+		                <td align="left" valign="top">
+											{{message}}
+		                </td>
+		              </tr>
+		            </table>
+		          </td>
+		        </tr>
+						<tr>
+							<td align="center" valign="top">
+								<table class="tbbody" bgcolor="#f8f8f8" border="0" cellpadding="0" cellspacing="0" width="100%" id="emailBody">
+									<tr>
+										<td align="left" valign="top">
+											<p>Best,<br>{{team.name}}</p>
+											<p>If there are any questions don't hesitate to ask =)</p>
+											<p>OBS! DO NOT REPLY TO THIS EMAIL!</p>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+		      </table>
+		    </td>
+		  </tr>
+		</table>
+  </body>
+</html>

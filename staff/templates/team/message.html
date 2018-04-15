@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}
+Team Settings - Chaos, Genki
+{% endblock %}
+
+{% block header %}
+<link rel="stylesheet" href="{% static 'css/application.css' %}">
+{% endblock %}
+
+{% block content %}
+<section role="content">
+	<div class="container">
+		<h1 class="line-top">Send message to people on {{ requested_team.name }}.</h1>
+		<a href="{% url 'teamsettings_message' requested_team.pk %}" class="vicbtn vicbtn-blue vicbtn-bottom"><i class="fa fa-envelope" aria-hidden="true"></i> Send message</a>
+		{% if messages %}
+		<div class="alert alert-success" role="alert">
+			{% for message in messages %}
+			<p>{{ message }}</p>
+			{% endfor %}
+		</div>
+		{% endif %}
+		<ul class="nav nav-tabs" id="teamstab" role="tablist">
+			<li class="nav-item">
+				<a class="vic-tablink" id="team-settings" href="{% url 'teamsettings_general' requested_team.pk %}">General</a>
+			</li>
+			<li class="nav-item">
+				<a class="vic-tablink" id="team-description" href="{% url 'teamsettings_description' requested_team.pk %}">Description</a>
+			</li>
+			<li class="nav-item">
+				<a class="vic-tablink" id="team-members" href="{% url 'teamsettings_members' requested_team.pk %}">Members</a>
+			</li>
+			<li class="nav-item">
+				<a class="vic-tablink" id="team-applications"  href="{% url 'teamsettings_applications' requested_team.pk %}">Applications</a>
+			</li>
+		</ul>
+
+		<form action="{% url 'teamsettings_message' requested_team.pk %}" method="POST">
+			{% csrf_token %}
+			<div class="custompanel no-m-bottom">
+				<h3>Message</h3>
+				<hr style="border-color:rgba(0, 0, 0, 1);">
+				<div class="form-group">
+					<label class="viclabelline-bottom">Select what you want to send.</label>
+					<select class="message-type-select form-control" name="type" required id="id_type">
+						<option value="1">Email only</option>
+						<option disabled value="2">SMS only</option>
+						<option disabled value="3">Email & SMS</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label class="viclabelline-bottom vic-block">Send to</label>
+					<select id="id_people" name="people" class="send_to settings-width" multiple="multiple">
+						<option value="ALL">ALL</option>
+						{% for member in memberships %}
+						<option value="{{member.user.pk}}">{{member.user.first_name}} "{{member.user.username}}" {{member.user.last_name}}</option>
+						{% endfor %}
+					</select>
+					<small>Selecting ALL sends to all no need to add other afterwords.</small>
+				</div>
+				<hr style="border-color:rgba(0, 0, 0, 1);">
+				<div class="form-group">
+					<label class="viclabelline-bottom vic-block">Subject</label>
+					<input class="victext-input vic-block full-width" type="text" name="subject">
+				</div>
+				<div class="message-text">
+					<div class="form-group">
+						<label class="viclabelline-bottom" for="id_message">Write your Message here</label>
+						<textarea class="victext-input vic-block full-width" id="id_message" name="message" rows="6"></textarea>
+					</div>
+				</div>
+			</div>
+			<button type="submit" class="vicbtn vicbtn-green w-100">Send message</button>
+
+		</form>
+
+
+	</div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/application.js' %}"></script>
+<script type="text/javascript">
+	$('.message-type-select').select2();
+	$('.send_to').select2({
+	  placeholder: 'Select Users or ALL - PSST write to search.'
+	});
+</script>
+{% endblock %}

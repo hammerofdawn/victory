@@ -10,7 +10,8 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, render, redirect
 from django.conf import settings
-from django.core.mail import send_mail, BadHeaderError
+from django.core.mail import send_mail, BadHeaderError, EmailMultiAlternatives
+from django.template.loader import render_to_string
 from .models import ExtendedUser, Article, UnauthenticatedSession, Team, DriversLicenceCategories, TeamApplication, TeamMembership, Language, TShirt
 from .forms import UpdateSociallinksForm, UpdateTeambackground, UpdateTeamlogo, UpdateProfileBackground, SignUpForm, UpdateProfileForm, SendApplication, FeedbackSupportForm, TeamSettings_GeneralForm, TeamSettings_DescriptionForm, TeamSettings_acceptForm, TeamSettings_needinfo_andrefuseForm, TeamSettings_AddForm, UpdateProfileAvatar
 from uuid import uuid4
@@ -385,6 +386,67 @@ def teamsettings_general(request, team_pk):
 				'logged_in_user': logged_in_user,
 			}
 			return render(request, 'team/settings.html', context)
+			break
+	return redirect('team', team_pk)
+
+
+
+@login_required
+def teamsettings_message(request, team_pk):
+	logged_in_user = get_object_or_404(User, pk=request.user.pk)
+	requested_team = get_object_or_404(Team, pk=team_pk)
+	memberships = requested_team.teammembership_set.all().order_by('-leader')
+	if request.method == 'POST':
+		for member in requested_team.teammembership_set.all().order_by('-leader'):
+			if member.user.pk == request.user.pk and member.leader:
+				if request.POST['type'] and request.POST['people'] and request.POST['subject'] and request.POST['message']:
+					type = request.POST['type']
+					if type==1:
+						messages.success(request, "Email send out to ALL!")
+						return redirect('teamsettings_general', team_pk)
+						# Send email only
+						for member in request.POST['people'].all():
+							if member == "ALL":
+								for ship in memberships:
+									subject = request.POST['subject']
+									message = request.POST['message']
+									from_email, to = 'info@victory.genki.dk', ship.user.email
+									context = {
+										'team': requested_team,
+										'message': message,
+									}
+									text_content = render_to_string('email/teamlmessage.html', context)
+									msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+									msg.content_subtype = "html"  # Main content is now text/html
+									msg.send()
+									messages.success(request, "Email send out to ALL!")
+									return redirect('teamsettings_general', team_pk)
+							else:
+								user = get_object_or_404(User, pk=ship)
+								subject = request.POST['subject']
+								message = request.POST['message']
+								from_email, to = 'info@victory.genki.dk', user.email
+								context = {
+									'user':	user,
+									'team': requested_team,
+									'message': message,
+								}
+								text_content = render_to_string('email/teamlmessage.html', context)
+								msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+								msg.content_subtype = "html"  # Main content is now text/html
+								msg.send()
+						messages.success(request, "Emails send to the specific users")
+						return redirect('teamsettings_general', team_pk)
+	for member in memberships:
+		if member.user.pk == request.user.pk and member.leader:
+			feedback = FeedbackSupportForm()
+			context = {
+				'memberships':	memberships,
+				'requested_team': requested_team,
+				'feedback': feedback,
+				'logged_in_user': logged_in_user,
+			}
+			return render(request, 'team/message.html', context)
 			break
 	return redirect('team', team_pk)
 

@@ -18,6 +18,7 @@ urlpatterns = [
 	url(r'^teams/$', views.teams, name='teams'),
 	url(r'^teams/(?P<team_pk>[0-9]+)/$', views.team, name='team'),
 	url(r'^teams/(?P<team_pk>[0-9]+)/settings/$', views.teamsettings_general, name='teamsettings_general'),
+	url(r'^teams/(?P<team_pk>[0-9]+)/settings/message$', views.teamsettings_message, name='teamsettings_message'),
 	url(r'^teams/(?P<team_pk>[0-9]+)/settings/logo/$', views.teamsettings_logo, name='teamsettings_logo'),
 	url(r'^teams/(?P<team_pk>[0-9]+)/settings/background/$', views.teamsettings_background, name='teamsettings_background'),
 	url(r'^teams/(?P<team_pk>[0-9]+)/settings/description/$', views.teamsettings_description, name='teamsettings_description'),
