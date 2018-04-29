@@ -44,18 +44,18 @@ Team Settings - Chaos, Genki
 				<hr style="border-color:rgba(0, 0, 0, 1);">
 				<div class="form-group">
 					<label class="viclabelline-bottom">Select what you want to send.</label>
-					<select class="message-type-select form-control" name="type" required id="id_type">
-						<option value="1">Email only</option>
-						<option disabled value="2">SMS only</option>
-						<option disabled value="3">Email & SMS</option>
+					<select class="message-type-select form-control" name="typemessage" required id="id_type">
+						<option value="email">Email only</option>
+						<option value="sms">SMS only</option>
+						<option value="both">Email & SMS</option>
 					</select>
 				</div>
 				<div class="form-group">
 					<label class="viclabelline-bottom vic-block">Send to</label>
-					<select id="id_people" name="people" class="send_to settings-width" multiple="multiple">
+					<select id="id_people" name="people[]" class="send_to settings-width" multiple="multiple">
 						<option value="ALL">ALL</option>
 						{% for member in memberships %}
-						<option value="{{member.user.pk}}">{{member.user.first_name}} "{{member.user.username}}" {{member.user.last_name}}</option>
+						<option value="{{member.pk}}">{{member.user.first_name}} "{{member.user.username}}" {{member.user.last_name}}</option>
 						{% endfor %}
 					</select>
 					<small>Selecting ALL sends to all no need to add other afterwords.</small>

@@ -18,6 +18,7 @@ from .models import (
 	UnauthenticatedSession,
 	TeamMembership,
 	TeamApplication,
+	EmailAndSmsMessages,
 )
 
 class UserInline(admin.StackedInline):
@@ -61,3 +62,4 @@ admin.site.register(Alert)
 admin.site.register(UnauthenticatedSession, UnauthenticatedSessionAdmin)
 admin.site.register(TeamMembership, TeamMembershipAdmin)
 admin.site.register(TeamApplication, TeamApplicationAdmin)
+admin.site.register(EmailAndSmsMessages)

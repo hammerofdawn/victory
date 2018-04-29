@@ -47,7 +47,7 @@
 						<button class="vicbtn vicbtn-blue">Message</button>
 						{% endif %}
 						{% if request.user.pk == requested_user.pk %}
-						<a href="{% url 'usersettings' requested_user.extendeduser.pk %}" class="vicbtn vicbtn-blue">Edit</a>
+						<a href="{% url 'usersettings' requested_user.pk %}" class="vicbtn vicbtn-blue">Edit</a>
 						{% endif %}
 						{% if userhasrightsthatdonotexist %}
 						<button class="vicbtn vicbtn-red">Write Review</button>

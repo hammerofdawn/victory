@@ -121,3 +121,11 @@ class TeamApplication(models.Model):
 	need_info_comment = models.TextField(blank=True)
 	refused = models.BooleanField(default=False)
 	refused_comment = models.TextField(blank=True)
+
+class EmailAndSmsMessages(models.Model):
+	token = models.CharField(max_length=36)
+	msgtype = models.CharField(max_length=36)
+	team = models.ForeignKey(Team)
+	members = models.ManyToManyField(TeamMembership)
+	subject = models.CharField(max_length=50)
+	message =  models.TextField(blank=True)

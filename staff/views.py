@@ -7,12 +7,13 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
+from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, render, redirect
 from django.conf import settings
 from django.core.mail import send_mail, BadHeaderError, EmailMultiAlternatives
 from django.template.loader import render_to_string
-from .models import ExtendedUser, Article, UnauthenticatedSession, Team, DriversLicenceCategories, TeamApplication, TeamMembership, Language, TShirt
+from .models import EmailAndSmsMessages, ExtendedUser, Article, UnauthenticatedSession, Team, DriversLicenceCategories, TeamApplication, TeamMembership, Language, TShirt
 from .forms import UpdateSociallinksForm, UpdateTeambackground, UpdateTeamlogo, UpdateProfileBackground, SignUpForm, UpdateProfileForm, SendApplication, FeedbackSupportForm, TeamSettings_GeneralForm, TeamSettings_DescriptionForm, TeamSettings_acceptForm, TeamSettings_needinfo_andrefuseForm, TeamSettings_AddForm, UpdateProfileAvatar
 from uuid import uuid4
 from random import randint
@@ -294,7 +295,6 @@ def useravatar(request, user_pk):
 			return redirect('useravatar', user_pk=request.user.pk)
 	logged_in_user = get_object_or_404(User, pk=request.user.pk)
 	requested_user = get_object_or_404(User, pk=user_pk)
-	driverslicence = DriversLicenceCategories.objects.all()
 	feedback = FeedbackSupportForm()
 	password = PasswordChangeForm(request.user)
 	avatar = UpdateProfileAvatar(instance=request.user)
@@ -386,10 +386,34 @@ def teamsettings_general(request, team_pk):
 				'logged_in_user': logged_in_user,
 			}
 			return render(request, 'team/settings.html', context)
-			break
 	return redirect('team', team_pk)
 
 
+
+
+
+
+
+
+def webmessage(request):
+	token_id = request.GET.get('t', '')
+	user_pk = request.GET.get('u', '')
+	if token_id and user_pk:
+		message = get_object_or_404(EmailAndSmsMessages, token=token_id)
+		user = get_object_or_404(User, pk=user_pk)
+		team = message.team
+		if message.members.all().filter(user=user.pk):
+			context = {
+				'user'   : user,
+				'team'   : team,
+				'message': message,
+			}
+			return render(request, 'email/teamlmessageweb.html', context)
+		else:
+			raise Http404
+	else:
+		raise Http404
+	
 
 @login_required
 def teamsettings_message(request, team_pk):
@@ -397,46 +421,105 @@ def teamsettings_message(request, team_pk):
 	requested_team = get_object_or_404(Team, pk=team_pk)
 	memberships = requested_team.teammembership_set.all().order_by('-leader')
 	if request.method == 'POST':
-		for member in requested_team.teammembership_set.all().order_by('-leader'):
+		for member in memberships:
 			if member.user.pk == request.user.pk and member.leader:
-				if request.POST['type'] and request.POST['people'] and request.POST['subject'] and request.POST['message']:
-					type = request.POST['type']
-					if type==1:
-						messages.success(request, "Email send out to ALL!")
-						return redirect('teamsettings_general', team_pk)
-						# Send email only
-						for member in request.POST['people'].all():
-							if member == "ALL":
-								for ship in memberships:
-									subject = request.POST['subject']
-									message = request.POST['message']
-									from_email, to = 'info@victory.genki.dk', ship.user.email
-									context = {
-										'team': requested_team,
-										'message': message,
-									}
-									text_content = render_to_string('email/teamlmessage.html', context)
-									msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
-									msg.content_subtype = "html"  # Main content is now text/html
-									msg.send()
-									messages.success(request, "Email send out to ALL!")
-									return redirect('teamsettings_general', team_pk)
-							else:
-								user = get_object_or_404(User, pk=ship)
-								subject = request.POST['subject']
-								message = request.POST['message']
-								from_email, to = 'info@victory.genki.dk', user.email
+				typemessage = request.POST['typemessage']
+				people = request.POST.getlist('people[]')
+				subject = request.POST['subject']
+				message = request.POST['message']	
+				if typemessage and people and subject and message:
+					if any("ALL" in s for s in people):
+						token = str(uuid4().hex)
+						emailsmsdata = EmailAndSmsMessages()
+						emailsmsdata.token = token
+						emailsmsdata.msgtype = typemessage
+						emailsmsdata.team = requested_team
+						emailsmsdata.subject = subject
+						emailsmsdata.message = message
+						emailsmsdata.save()
+						for member in memberships:
+							emailsmsdata.members.add(member)
+							if request.POST['typemessage'] == "email" or request.POST['typemessage'] == "both":
+								from_email, to = 'info@victory.genki.dk', member.user.email
+								messagelink = '?u='+str(member.user.id)+'&t='+str(emailsmsdata.token)
 								context = {
-									'user':	user,
-									'team': requested_team,
-									'message': message,
+									'weblink'	: messagelink,
+									'user'      : member.user,
+									'team'      : requested_team,
+									'message'   : message,
 								}
 								text_content = render_to_string('email/teamlmessage.html', context)
 								msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
 								msg.content_subtype = "html"  # Main content is now text/html
 								msg.send()
-						messages.success(request, "Emails send to the specific users")
-						return redirect('teamsettings_general', team_pk)
+							if request.POST['typemessage'] == "sms" or request.POST['typemessage'] == "both":
+								## CREATE THE MESSAGE
+								startmsg = 'Hello '+member.user.first_name+'\n\nThere is a new message from your teamleader in '+requested_team.name+'\n\n'
+								messagecount = len(message)
+								if messagecount >= 255:
+									msglink = 'https://victory.genki.dk/message/?u='+str(member.user.id)+'&t='+str(emailsmsdata.token)
+									middlemsg = 'To view it check your mail or click this link to read it directly\n'+msglink+'\n\n'
+								else:
+									middlemsg = message+'\n\n'
+								endmsg = 'Best,\n'+requested_team.name
+								## SEND IT
+								gwapi = OAuth1Session('OCBzbvY1b1FCQpTzEa4_131V', client_secret='g^oqsxSClJ(A@-Yttu-D6.C5lB6YdeBVz&LJ6E3W')
+								req = {
+									'sender': requested_team.name,
+									'message': startmsg+middlemsg+endmsg,
+									'recipients': [{'msisdn': member.user.extendeduser.phone_number[1:]}],
+								}
+								res = gwapi.post('https://gatewayapi.com/rest/mtsms', json=req)
+								res.raise_for_status()
+						messages.success(request, "Message send out to ALL! on "+requested_team.name)
+						return redirect('teamsettings_message', team_pk)
+					else:
+						token = str(uuid4().hex)
+						emailsmsdata = EmailAndSmsMessages()
+						emailsmsdata.token = token
+						emailsmsdata.msgtype = typemessage
+						emailsmsdata.team = requested_team
+						emailsmsdata.subject = subject
+						emailsmsdata.message = message
+						emailsmsdata.save()
+						for person in people:
+							member = get_object_or_404(TeamMembership, pk=person)
+							emailsmsdata.members.add(member)
+							if request.POST['typemessage'] == "email" or request.POST['typemessage'] == "both":
+								from_email, to = 'info@victory.genki.dk', member.user.email
+								messagelink = '?u='+str(member.user.id)+'&t='+str(emailsmsdata.token)
+								context = {
+									'weblink'	: messagelink,
+									'user'      : member.user,
+									'team'      : requested_team,
+									'message'   : message,
+								}
+								text_content = render_to_string('email/teamlmessage.html', context)
+								msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+								msg.content_subtype = "html"  # Main content is now text/html
+								msg.send()
+							if request.POST['typemessage'] == "sms" or request.POST['typemessage'] == "both":
+    							## CREATE THE MESSAGE
+								startmsg = 'Hello '+member.user.first_name+'\n\nThere is a new message from your teamleader in '+requested_team.name+'\n\n'
+								messagecount = len(message)
+								if messagecount >= 255:
+									msglink = 'https://victory.genki.dk/message/?u='+str(member.user.id)+'&t='+str(emailsmsdata.token)
+									middlemsg = 'To view it check your mail or click this link to read it directly\n'+msglink+'\n\n'
+								else:
+									middlemsg = message+'\n\n'
+								endmsg = 'Best,\n'+requested_team.name
+								## SEND IT
+								gwapi = OAuth1Session('OCBzbvY1b1FCQpTzEa4_131V', client_secret='g^oqsxSClJ(A@-Yttu-D6.C5lB6YdeBVz&LJ6E3W')
+								req = {
+									'sender': requested_team.name,
+									'message': startmsg+middlemsg+endmsg,
+									'recipients': [{'msisdn': member.user.extendeduser.phone_number[1:]}],
+								}
+								res = gwapi.post('https://gatewayapi.com/rest/mtsms', json=req)
+								res.raise_for_status()
+						messages.success(request, "Message send specific people in "+requested_team.name)
+						return redirect('teamsettings_message', team_pk)
+	## THIS IS THE GET METHOD
 	for member in memberships:
 		if member.user.pk == request.user.pk and member.leader:
 			feedback = FeedbackSupportForm()
@@ -449,6 +532,12 @@ def teamsettings_message(request, team_pk):
 			return render(request, 'team/message.html', context)
 			break
 	return redirect('team', team_pk)
+
+
+
+
+
+
 
 @login_required
 def teamsettings_logo(request, team_pk):

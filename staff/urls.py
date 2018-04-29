@@ -8,6 +8,7 @@ urlpatterns = [
 	url(r'^logout/$', views.logout, name='logout'),
 	url(r'^register/$', views.register, name='register'),
 	url(r'^users/$', views.users, name='users'),
+	url(r'^message/$', views.webmessage, name='webmessage'),
 	url(r'^users/(?P<user_pk>[0-9]+)/$', views.user, name='user'),
 	url(r'^users/(?P<user_pk>[0-9]+)/settings/$', views.usersettings, name='usersettings'),
 	url(r'^users/(?P<user_pk>[0-9]+)/settings/profile/$', views.userprofileupdate, name='userprofileupdate'),
