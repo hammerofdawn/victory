@@ -162,14 +162,23 @@ def contact(request):
 	if request.method == 'POST':
 		form = FeedbackSupportForm(request.POST)
 		if form.is_valid():
-			user_mail = form.cleaned_data['email']
-			first_name = form.cleaned_data['first_name']
-			last_name = form.cleaned_data['last_name']
-			subject = "Message from contact form. Victory"
-			from_email = 'info@victory.genki.dk'
-			message = "New mail from: "+first_name+" "+last_name+" "+user_mail+" : "+form.cleaned_data['message']
 			try:
-				send_mail(subject, message, from_email, ['melonendk@gmail.com', 'deni@radera.net'], fail_silently=False,)
+				user_mail = form.cleaned_data['email']
+				first_name = form.cleaned_data['first_name']
+				last_name = form.cleaned_data['last_name']
+				message = form.cleaned_data['message']
+				subject = "Message from contact form. Victory"
+				from_email = 'info@victory.genki.dk'
+				context = {
+					'user_mail'  : user_mail,
+					'first_name' : first_name,
+					'last_name'	 : last_name,
+					'message'	 : message,
+				}
+				text_content = render_to_string('email/contactmessage.html', context)
+				msg = EmailMultiAlternatives(subject, text_content, from_email, ['melonendk@gmail.com', 'deni@radera.net'])
+				msg.content_subtype = "html"  # Main content is now text/html
+				msg.send()
 			except BadHeaderError:
 				return HttpResponse('Invalid header found.')
 			messages.success(request, "Sweet! Your message has been send! Please allow up to 24 hours for response time.")
@@ -388,13 +397,6 @@ def teamsettings_general(request, team_pk):
 			return render(request, 'team/settings.html', context)
 	return redirect('team', team_pk)
 
-
-
-
-
-
-
-
 def webmessage(request):
 	token_id = request.GET.get('t', '')
 	user_pk = request.GET.get('u', '')
@@ -413,7 +415,6 @@ def webmessage(request):
 			raise Http404
 	else:
 		raise Http404
-	
 
 @login_required
 def teamsettings_message(request, team_pk):
@@ -426,7 +427,9 @@ def teamsettings_message(request, team_pk):
 				typemessage = request.POST['typemessage']
 				people = request.POST.getlist('people[]')
 				subject = request.POST['subject']
-				message = request.POST['message']	
+				message = request.POST['message']
+				countsms = 0
+				countemail = 0
 				if typemessage and people and subject and message:
 					if any("ALL" in s for s in people):
 						token = str(uuid4().hex)
@@ -452,6 +455,7 @@ def teamsettings_message(request, team_pk):
 								msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
 								msg.content_subtype = "html"  # Main content is now text/html
 								msg.send()
+								countemail += 1
 							if request.POST['typemessage'] == "sms" or request.POST['typemessage'] == "both":
 								## CREATE THE MESSAGE
 								startmsg = 'Hello '+member.user.first_name+'\n\nThere is a new message from your teamleader in '+requested_team.name+'\n\n'
@@ -465,13 +469,14 @@ def teamsettings_message(request, team_pk):
 								## SEND IT
 								gwapi = OAuth1Session('OCBzbvY1b1FCQpTzEa4_131V', client_secret='g^oqsxSClJ(A@-Yttu-D6.C5lB6YdeBVz&LJ6E3W')
 								req = {
-									'sender': requested_team.name,
+									'sender': 'Genki',
 									'message': startmsg+middlemsg+endmsg,
 									'recipients': [{'msisdn': member.user.extendeduser.phone_number[1:]}],
 								}
 								res = gwapi.post('https://gatewayapi.com/rest/mtsms', json=req)
 								res.raise_for_status()
-						messages.success(request, "Message send out to ALL! on "+requested_team.name)
+								countsms += 1
+						messages.success(request, "Message send out to ALL! on "+requested_team.name+" Emails: "+str(countemail)+" SMS: "+str(countsms))
 						return redirect('teamsettings_message', team_pk)
 					else:
 						token = str(uuid4().hex)
@@ -498,6 +503,7 @@ def teamsettings_message(request, team_pk):
 								msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
 								msg.content_subtype = "html"  # Main content is now text/html
 								msg.send()
+								countemail += 1
 							if request.POST['typemessage'] == "sms" or request.POST['typemessage'] == "both":
     							## CREATE THE MESSAGE
 								startmsg = 'Hello '+member.user.first_name+'\n\nThere is a new message from your teamleader in '+requested_team.name+'\n\n'
@@ -511,13 +517,14 @@ def teamsettings_message(request, team_pk):
 								## SEND IT
 								gwapi = OAuth1Session('OCBzbvY1b1FCQpTzEa4_131V', client_secret='g^oqsxSClJ(A@-Yttu-D6.C5lB6YdeBVz&LJ6E3W')
 								req = {
-									'sender': requested_team.name,
+									'sender': 'Genki',
 									'message': startmsg+middlemsg+endmsg,
 									'recipients': [{'msisdn': member.user.extendeduser.phone_number[1:]}],
 								}
 								res = gwapi.post('https://gatewayapi.com/rest/mtsms', json=req)
 								res.raise_for_status()
-						messages.success(request, "Message send specific people in "+requested_team.name)
+								countsms += 1
+						messages.success(request, "Message send specific people in "+requested_team.name+" Emails: "+str(countemail)+" SMS: "+str(countsms))
 						return redirect('teamsettings_message', team_pk)
 	## THIS IS THE GET METHOD
 	for member in memberships:
@@ -530,18 +537,10 @@ def teamsettings_message(request, team_pk):
 				'logged_in_user': logged_in_user,
 			}
 			return render(request, 'team/message.html', context)
-			break
 	return redirect('team', team_pk)
-
-
-
-
-
-
 
 @login_required
 def teamsettings_logo(request, team_pk):
-	logged_in_user = get_object_or_404(User, pk=request.user.pk)
 	requested_team = get_object_or_404(Team, pk=team_pk)
 	if request.method == 'POST':
 		for member in requested_team.teammembership_set.all().order_by('-leader'):
