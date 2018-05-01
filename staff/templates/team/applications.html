@@ -48,7 +48,7 @@ Team Settings - Chaos, Genki
 					<div class="application-shade"></div>
 				</div>
 				<div class="details-box applicationboxheader clearfix">
-					<img class="artwork" src="https://victory.genki.dk/media/users/avatars/23275604_1884047851629934_8465319611201930121_o.jpg">
+					<img class="artwork" src="{{ apply.from_user.extendeduser.avatar.url }}">
 					<a href="{% url 'user' apply.from_user.pk %}" target="_blank"><h3>{{ apply.from_user.first_name }} "{{ apply.from_user.extendeduser.nickname }}" {{ apply.from_user.last_name }} <i class="fa fa-external-link" aria-hidden="true"></i></h3></a>
 					<p><b>Sent:</b> {{ apply.send|date:"F j, Y, H:i"}}</p>
 					<p><b>BirthYear:</b> {{ apply.from_user.extendeduser.birthdate|date:"Y"}}
