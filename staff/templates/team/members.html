@@ -37,20 +37,23 @@ Team Settings - Chaos, Genki
 			<hr style="border-color:rgba(0, 0, 0, 0.23);">
 			<div id="userslist">
 				{% for member in requested_team.teammembership_set.all %}
-				<div class="listmember {% if member.leader %}memberlsleader{% endif %}">
-					<div class="memberinfo">
-						<div id="memberimg">
-							<img src="{{ member.user.extendeduser.avatar.url }}">
+				
+					<div class="listmember {% if member.leader %}memberlsleader{% endif %}">
+						<div class="memberinfo">
+							<div id="memberimg">
+								<img src="{{ member.user.extendeduser.avatar.url }}">
+							</div>
+							<a target="_blank" href="{% url 'user' member.user.pk %}">
+								<p>{{ member.user.first_name }} "{{ member.user.extendeduser.nickname }}" {{ member.user.last_name }} <i class="fa fa-external-link" aria-hidden="true"></i></p>
+							</a>
+							<form action="{% url 'teamsettings_members_delete' requested_team.pk %}" method="post">
+								{% csrf_token %}
+								<input type="hidden" id="id-user" name="user" value="{{ member.user.pk }}">
+								<input type="hidden" id="id-user" name="membership" value="{{ member.pk }}">
+								<button style="border: unset;" type="submit" class="badge badge-danger"><i class="fa fa-times" aria-hidden="true"></i> Remove</button>
+							</form>
 						</div>
-						<p>{{ member.user.first_name }} "{{ member.user.extendeduser.nickname }}" {{ member.user.last_name }} </p>
-						<form action="{% url 'teamsettings_members_delete' requested_team.pk %}" method="post">
-							{% csrf_token %}
-							<input type="hidden" id="id-user" name="user" value="{{ member.user.pk }}">
-							<input type="hidden" id="id-user" name="membership" value="{{ member.pk }}">
-							<button style="border: unset;" type="submit" class="badge badge-danger"><i class="fa fa-times" aria-hidden="true"></i> Remove</button>
-						</form>
 					</div>
-				</div>
 				{% endfor %}
 			</div>
 		</div>
