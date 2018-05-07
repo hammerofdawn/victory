@@ -672,7 +672,6 @@ def teamsettings_applications(request, team_pk):
 				'applications': teamapplications,
 			}
 			return render(request, 'team/applications.html', context)
-			break
 	return redirect('team', team_pk)
 
 @login_required
