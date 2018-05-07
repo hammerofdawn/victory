@@ -41,7 +41,7 @@ Login
 				<label class="viclabelline-bottom" for="id_password">Password</label>
 				<input type="password" name="password" required id="id_password" class="victext-input vic-block full-width">
 				<small id="forgotpass" class="form-text text-muted">
-					<a href="{{ url 'password_reset' }}">Forgot password?</a>
+					<a href="{% url 'password_reset' %}">Forgot password?</a>
 				</small>
 			</div>
 			<hr>

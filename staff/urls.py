@@ -40,7 +40,8 @@ urlpatterns = [
 	url(r'^password_reset/$', auth_views.password_reset, {
 		'template_name'			  : 'reset/password_reset_form.html',
 		'subject_template_name'	  : 'email/password_reset_subject.txt',
-		'html_email_template_name': 'email/password_reset_email.html'
+		'html_email_template_name': 'email/password_reset_email.html',
+		'from_email'			  : 'info@victory.genki.dk'
 		}, name='password_reset'),
     url(r'^password_reset/done/$', auth_views.password_reset_done,{'template_name': 'reset/password_reset_done.html'}, name='password_reset_done'),
 	url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
