@@ -67,14 +67,16 @@
 						</div>
 						<div id="userslist">
 							{% for member in requested_team.teammembership_set.all %}
-							<div class="listmember {% if member.leader %}memberlsleader{% endif %}">
-								<div class="memberinfo">
-									<div id="memberimg">
-										<img src="{{ member.user.extendeduser.avatar.url }}">
+							<a target="_blank" href="{% url 'user' member.user.pk %}">
+								<div class="listmember {% if member.leader %}memberlsleader{% endif %}">
+									<div class="memberinfo">
+										<div id="memberimg">
+											<img src="{{ member.user.extendeduser.avatar.url }}">
+										</div>
+										<p>{{ member.user.first_name }} "{{ member.user.extendeduser.nickname }}" {{ member.user.last_name }} <i class="fa fa-external-link" aria-hidden="true"></i></p>
 									</div>
-									<p>{{ member.user.first_name }} "{{ member.user.extendeduser.nickname }}" {{ member.user.last_name }}</p>
 								</div>
-							</div>
+							</a>							
 							{% endfor %}
 						</div>
 					</div>
