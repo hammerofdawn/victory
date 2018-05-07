@@ -203,14 +203,19 @@ def users(request):
 def user(request, user_pk):
 	logged_in_user = get_object_or_404(User, pk=request.user.pk)
 	requested_user = get_object_or_404(User, pk=user_pk)
+	memberof = get_object_or_404(TeamMembership, user=user_pk)
 	feedback = FeedbackSupportForm()
-
+	
+	
 	context = {
 		'logged_in_user': logged_in_user,
 		'requested_user': requested_user,
 		'editable': True, # Has to do actual permission logic.
 		'feedback': feedback,
 	}
+	if memberof:
+		context['memberof'] = memberof
+	
 
 	return render(request, 'user/profile.html', context)
 

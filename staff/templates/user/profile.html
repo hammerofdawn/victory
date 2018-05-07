@@ -27,7 +27,9 @@
 					{% else %}
 					<h3>Phone: <a href="#"><u>Hidden</u></a></h3>
 					{% endif %}
-
+					{% if memberof%}
+					<h3>On team: <a href="{% url 'team' memberof.team.pk %}">{{memberof.team.name}}</a></h3>
+					{% endif %}
 					<div class="options push-right">
 						{% if requested_user.extendeduser.facebook_link %}
 						<a href="{{requested_user.extendeduser.facebook_link}}" target="_blank"><i class="fa fa-facebook"></i></a>
