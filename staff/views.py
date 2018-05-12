@@ -203,9 +203,11 @@ def users(request):
 def user(request, user_pk):
 	logged_in_user = get_object_or_404(User, pk=request.user.pk)
 	requested_user = get_object_or_404(User, pk=user_pk)
-	memberof = get_object_or_404(TeamMembership, user=user_pk)
 	feedback = FeedbackSupportForm()
-	
+	try:
+		memberof = TeamMembership.objects.get(user=user_pk)
+	except TeamMembership.DoesNotExist:
+		memberof = None
 	
 	context = {
 		'logged_in_user': logged_in_user,
