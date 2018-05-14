@@ -51,7 +51,7 @@
         // display the country dial code next to the selected flag so it's not part of the typed number
         separateDialCode: false,
         // specify the path to the libphonenumber script to enable validation/formatting
-        utilsScript: "utils.js"
+        utilsScript: "./utils.js"
     }, keys = {
         UP: 38,
         DOWN: 40,

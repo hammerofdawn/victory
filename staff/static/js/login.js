@@ -17,3 +17,14 @@ function checkPasswordMatchVer2() {
 	else
 		$("#passwordchecking").html("Passwords match.").css({'background-color':'#d4edda','border-color':'#c3e6cb','color':'#155724','display':'block'});
 }
+
+$(document).ready(function() {
+	$("#id_phone_number").intlTelInput();
+	$("#id_password1, #id_password2").keyup(checkPasswordMatch);
+})
+
+function SubmitRegister(){
+	var phonenumb = $("#id_phone_number").intlTelInput("getNumber", intlTelInputUtils.numberFormat.E164);
+	document.getElementById('id_phone_number').value = phonenumb;
+	document.getElementsByName('registerform').submit();
+}
